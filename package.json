@@ -1,0 +1,39 @@
+{
+  "name": "authorwebsit",
+  "version": "1.0.0",
+  "description": "Author website built with React and Vite",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mercycermy/Authorwebsit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mercycermy/Authorwebsit/issues"
+  },
+  "homepage": "https://github.com/Mercycermy/Authorwebsit#readme",
+  "dependencies": {
+    "adm-zip": "^0.5.17",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-pdf": "^10.4.1",
+    "react-router-dom": "^7.14.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.10"
+  },
+  "main": "vite.config.js"
+}
