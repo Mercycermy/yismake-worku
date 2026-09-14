@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.sigwanuniverse.com/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.sigwanuniverse.com/book2.png</image:loc>
+      <image:title>Karamon – Pigeon and Falcon by Azaries Dessie</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/author/azaries-dessie</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.sigwanuniverse.com/Azaries%20Photo.png</image:loc>
+      <image:title>Azaries Dessie, Ethiopian author and poet</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/books</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/books/karamon-pigeon-and-falcon</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.sigwanuniverse.com/book2.png</image:loc>
+      <image:title>Karamon – Pigeon and Falcon book cover</image:title>
+      <image:caption>Karamon – Pigeon and Falcon, a novel by Azaries Dessie</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/books/halwot</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.sigwanuniverse.com/book1.jpg</image:loc>
+      <image:title>Halwot poetry collection book cover</image:title>
+      <image:caption>Halwot, a poetry collection by Azaries Dessie</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/insights</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sigwanuniverse.com/contact</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
