@@ -1,0 +1,33 @@
+[
+    {
+        "id": "d9f2eb4a-7e3b-4594-bc84-0c945241c820",
+        "bookSlug": "halwot",
+        "bookTitle": "Halwot",
+        "username": "mercy",
+        "comment": "grate book",
+        "rating": 5,
+        "source": "web",
+        "bookCode": "",
+        "createdAt": "2026-06-22T08:04:01.501Z"
+    },
+    {
+        "id": "1cab2b65-1295-4ec8-91e1-f407f00f68b5",
+        "bookSlug": "karamon",
+        "bookTitle": "Karamon - Pigeon and Falcon",
+        "username": "ss",
+        "comment": "aa",
+        "rating": 5,
+        "source": "web",
+        "bookCode": "",
+        "likes": 1,
+        "replies": [
+            {
+                "id": "f0f9d2dc-303c-452c-89f3-3b377ce5b9f5",
+                "username": "www",
+                "comment": "ggg",
+                "createdAt": "2026-07-24T01:49:12.788Z"
+            }
+        ],
+        "createdAt": "2026-07-24T01:48:59.449Z"
+    }
+]
