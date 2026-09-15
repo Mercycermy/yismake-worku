@@ -37,7 +37,7 @@ export const authorData = {
     am: "ይስማዕከ ወርቁ በዘመናዊው የኢትዮጵያ ስነ-ጽሁፍ ውስጥ ትልቅ የለውጥ ማዕበል ካስነሱ ድንቅ ደራሲያን መካከል ግንባር ቀደሙ ነው። በ22 ዓመቱ በ2001 ዓ.ም ባሳተመው 'ዴርቶጋዳ' በተሰኘው ልብ አንጠልጣይ የሳይንስና የስለላ ልቦለዱ የአገሪቱን የመጻሕፍት ገበያ ታሪክ ሰበረ። ጥንታዊውን የኢትዮጵያ ገዳማዊ ጥበብና የብራና ምሥጢር ከዘመናዊው የጠፈር ምርምር፣ ቴክኖሎጂና አገራዊ ሉዓላዊነት ጋር በማዋሃድ አዲስ የአጻጻፍ ፈሊጥ ፈጠረ። በነሐሴ 2009 ዓ.ም የደረሰበትን ከባድ የመኪና አደጋ በጽናት ተቋቁሞ ወደ ጥበብ ዓለም የተመለሰው ደራሲ፣ ሥራዎቹ በአገር ውስጥም ሆነ በዓለም አቀፍ ደረጃ ከፍተኛ ትኩረት ተችሯቸዋል።"
   },
   portrait: "/images/yismake-portrait.jpg",
-  avatar: "https://cdn4.telesco.pe/file/s7pvyFISO6G1nMALQA-Vd5qQtykTSWAXNUJ6MiKaNnjfL1BViAr7hkGCMsv-pIOjVnDdgopiJUQ2WjpD3PypecpAj9z0zl5kD8uBZlNc3Org-Q5A8ayDYPI8k2XLCEk14777aOfdXAKMvfEuNpkgD3G-_X-YVHmWwXA3efuOlq_mdOQ7uaBhu3lCq_6I7eZzz8qq0ZBprc827FHwLEjPNZBWYS25GoHlngt6ukHL8uQSxTLhyselyRWz1D8ooKNjGyXgWVlvsOcvkkow8NHKOisxNYrbVoYwCV8VVctrWxJWm-Yqenk1hYKQwqfM5ayMJbc51O1iIgfzaf2KqSbRNg.jpg",
+  avatar: "/images/yismake-portrait.jpg",
   telegram: {
     handle: "@yismakeworku",
     url: "https://t.me/yismakeworku",

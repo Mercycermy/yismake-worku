@@ -1,140 +1,235 @@
 import React from 'react';
 
 /**
- * Premium Procedural & Photographic Book Cover Component
- * Renders authentic Amharic & English titles, Ge'ez filigree, spine lighting,
- * and atmospheric color grading tailored to each specific title.
+ * Procedural & Tactile Literary Codex Component
+ * Renders books as physical literary artifacts: foil-stamped Amharic titles,
+ * Ethiopian manuscript rubrication (ቀይ ቀለም), leatherette/cloth textures,
+ * book spines, and archival provenance tags.
  */
 export default function BookCover({ book, size = 'normal', showSpine = true, className = '' }) {
   if (!book) return null;
 
-  const sizeClasses = {
+  const sizeStyles = {
     small: 'w-36 h-52 text-xs',
     normal: 'w-56 h-80 text-sm',
     large: 'w-72 h-[420px] text-base',
-    hero: 'w-80 sm:w-96 h-[480px] sm:h-[540px] text-lg'
+    hero: 'w-72 sm:w-84 md:w-96 h-[440px] sm:h-[500px] md:h-[540px] text-lg'
   }[size] || 'w-56 h-80 text-sm';
 
-  const accentColor = book.accentColor || '#00f0ff';
-
-  // Specific theme gradients
-  const gradientStyles = {
-    dertogada: 'radial-gradient(circle at 50% 20%, #004d54 0%, #061824 50%, #02070d 100%)',
-    ramatohara: 'radial-gradient(circle at 50% 20%, #5a3500 0%, #291802 50%, #0a0601 100%)',
-    xantoxara: 'radial-gradient(circle at 50% 20%, #3e1654 0%, #1c0828 50%, #08020c 100%)',
-    'kebur-dengay': 'radial-gradient(circle at 50% 20%, #4a0e14 0%, #200508 50%, #090102 100%)',
-    zamra: 'radial-gradient(circle at 50% 20%, #093f35 0%, #041c17 50%, #010806 100%)',
-    gefuan: 'radial-gradient(circle at 50% 20%, #441416 0%, #210809 50%, #090202 100%)',
-    yoratorad: 'radial-gradient(circle at 50% 20%, #113359 0%, #07172b 50%, #02060d 100%)',
-    yotod: 'radial-gradient(circle at 50% 20%, #30164e 0%, #150824 50%, #05020a 100%)',
-    melos: 'radial-gradient(circle at 50% 20%, #0f3659 0%, #06192c 50%, #01060d 100%)',
-    telmid: 'radial-gradient(circle at 50% 20%, #4b2609 0%, #231102 50%, #080300 100%)',
-    'yewond-mit': 'radial-gradient(circle at 50% 20%, #2d3436 0%, #171a1b 50%, #080909 100%)',
-    'yekend-awta-nuro': 'radial-gradient(circle at 50% 20%, #0c3d33 0%, #041d18 50%, #010806 100%)',
-    'yeogaden-demetoch': 'radial-gradient(circle at 50% 20%, #4e2908 0%, #271403 50%, #090400 100%)',
-    dehinetu: 'radial-gradient(circle at 50% 20%, #192a3e 0%, #0b1420 50%, #030508 100%)',
-    tekerchem: 'radial-gradient(circle at 50% 20%, #282828 0%, #131313 50%, #050505 100%)'
-  }[book.slug] || 'radial-gradient(circle at 50% 20%, #1a233a 0%, #0b0f19 60%, #04060a 100%)';
+  // Specific codex cloth/leatherette backgrounds tailored to the literature
+  const codexThemes = {
+    dertogada: {
+      bg: 'linear-gradient(135deg, #101c26 0%, #080f15 50%, #030609 100%)',
+      accent: '#c29b38',
+      rubric: '#ba323a',
+      tagAm: '፩ኛ መጽሐፍ',
+      symbol: '✦'
+    },
+    ramatohara: {
+      bg: 'linear-gradient(135deg, #2a180b 0%, #150c05 50%, #080402 100%)',
+      accent: '#d4a34b',
+      rubric: '#ba323a',
+      tagAm: '፪ኛ መጽሐፍ',
+      symbol: '❖'
+    },
+    xantoxara: {
+      bg: 'linear-gradient(135deg, #22122b 0%, #120917 50%, #060308 100%)',
+      accent: '#c29b38',
+      rubric: '#9e348f',
+      tagAm: '፫ኛ መጽሐፍ',
+      symbol: '፠'
+    },
+    'kebur-dengay': {
+      bg: 'linear-gradient(135deg, #300d11 0%, #170608 50%, #090203 100%)',
+      accent: '#dfb547',
+      rubric: '#c13b3c',
+      tagAm: 'ልዩ ድንቅ ስራ',
+      symbol: '፨'
+    },
+    zamra: {
+      bg: 'linear-gradient(135deg, #0a251d 0%, #05130f 50%, #020705 100%)',
+      accent: '#c29b38',
+      rubric: '#2ecc71',
+      tagAm: 'የተፈጥሮ ሀብት ጥናት',
+      symbol: '❖'
+    },
+    gefuan: {
+      bg: 'linear-gradient(135deg, #260c0d 0%, #140607 50%, #080203 100%)',
+      accent: '#c29b38',
+      rubric: '#e74c3c',
+      tagAm: 'ማህበራዊ ኢ-ልቦለድ',
+      symbol: '፠'
+    },
+    yoratorad: {
+      bg: 'linear-gradient(135deg, #0d1f33 0%, #07101b 50%, #02060a 100%)',
+      accent: '#c29b38',
+      rubric: '#ba323a',
+      tagAm: '፬ኛ መጽሐፍ',
+      symbol: '✦'
+    },
+    yotod: {
+      bg: 'linear-gradient(135deg, #1d102c 0%, #0e0716 50%, #040207 100%)',
+      accent: '#dfb547',
+      rubric: '#ba323a',
+      tagAm: '፭ኛ መጽሐፍ (ፍጻሜ)',
+      symbol: '❖'
+    },
+    melos: {
+      bg: 'linear-gradient(135deg, #122131 0%, #09111a 50%, #03060a 100%)',
+      accent: '#c29b38',
+      rubric: '#3498db',
+      tagAm: 'ስነ-ልቦናዊ ልቦለድ',
+      symbol: '፠'
+    },
+    telmid: {
+      bg: 'linear-gradient(135deg, #29180c 0%, #150c06 50%, #080402 100%)',
+      accent: '#c29b38',
+      rubric: '#e67e22',
+      tagAm: 'መንፈሳዊ ፍልስፍና',
+      symbol: '❖'
+    },
+    'yewond-mit': {
+      bg: 'linear-gradient(135deg, #1e2022 0%, #101112 50%, #060607 100%)',
+      accent: '#c29b38',
+      rubric: '#ba323a',
+      tagAm: 'የመጀመሪያ የግጥም ስራ',
+      symbol: '፨'
+    },
+    'yekend-awta-nuro': {
+      bg: 'linear-gradient(135deg, #0d2720 0%, #061511 50%, #020705 100%)',
+      accent: '#c29b38',
+      rubric: '#1abc9c',
+      tagAm: 'ማህበራዊ ምጸት',
+      symbol: '❖'
+    },
+    'yeogaden-demetoch': {
+      bg: 'linear-gradient(135deg, #2d1808 0%, #170c04 50%, #090401 100%)',
+      accent: '#c29b38',
+      rubric: '#e67e22',
+      tagAm: 'የበረሃ ትሪለር',
+      symbol: '፠'
+    },
+    dehinetu: {
+      bg: 'linear-gradient(135deg, #121922 0%, #090d12 50%, #030406 100%)',
+      accent: '#c29b38',
+      rubric: '#ba323a',
+      tagAm: 'የስለላ ልቦለድ',
+      symbol: '✦'
+    },
+    tekerchem: {
+      bg: 'linear-gradient(135deg, #1d1d1f 0%, #0e0e10 50%, #050506 100%)',
+      accent: '#c29b38',
+      rubric: '#ba323a',
+      tagAm: 'የነጻነት ልቦለድ',
+      symbol: '፨'
+    }
+  }[book.slug] || {
+    bg: 'linear-gradient(135deg, #141a22 0%, #0a0d12 50%, #040507 100%)',
+    accent: '#c29b38',
+    rubric: '#ba323a',
+    tagAm: 'ልቦለድ',
+    symbol: '❖'
+  };
 
   return (
     <div
-      className={`relative select-none transition-all duration-500 rounded-lg overflow-hidden ${sizeClasses} ${className}`}
+      className={`relative select-none codex-shadow transition-transform duration-500 rounded-none overflow-hidden ${sizeStyles} ${className}`}
       style={{
-        boxShadow: `0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px ${accentColor}25`,
-        border: `1px solid rgba(255, 255, 255, 0.12)`
+        border: '1px solid rgba(245, 240, 230, 0.16)',
+        backgroundColor: '#0a0c0f'
       }}
     >
-      {/* Background with custom procedural gradient */}
+      {/* Background Cloth & Vellum Texture */}
       <div
         className="absolute inset-0 z-0"
-        style={{ background: gradientStyles }}
+        style={{ background: codexThemes.bg }}
       />
 
-      {/* Subtle Ge'ez manuscript decorative texture watermark */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+      {/* Traditional Ethiopian Rubric Border (Framing rules around the book face) */}
+      <div
+        className="absolute inset-2 z-10 pointer-events-none"
+        style={{
+          border: `1px solid ${codexThemes.accent}30`,
+          outline: `1px solid rgba(245, 240, 230, 0.06)`,
+          outlineOffset: '2px'
+        }}
+      />
 
-      {/* Cybernetic circuit lines for Dertogada Universe */}
-      {book.series?.includes('Dertogada') && (
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <line x1="10%" y1="0" x2="10%" y2="100%" stroke={accentColor} strokeWidth="1" strokeDasharray="4 6" />
-            <line x1="90%" y1="0" x2="90%" y2="100%" stroke={accentColor} strokeWidth="1" strokeDasharray="4 6" />
-            <circle cx="50%" cy="50%" r="60" stroke={accentColor} strokeWidth="1" fill="none" opacity="0.4" />
-            <circle cx="50%" cy="50%" r="90" stroke={accentColor} strokeWidth="0.75" strokeDasharray="8 8" fill="none" opacity="0.3" />
-          </svg>
-        </div>
-      )}
+      {/* Traditional Ge'ez Corner Florets */}
+      <div className="absolute top-3 left-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+        {codexThemes.symbol}
+      </div>
+      <div className="absolute top-3 right-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+        {codexThemes.symbol}
+      </div>
+      <div className="absolute bottom-3 left-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+        {codexThemes.symbol}
+      </div>
+      <div className="absolute bottom-3 right-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+        {codexThemes.symbol}
+      </div>
 
-      {/* 3D Spine Depth Highlight (Left side of book) */}
-      {showSpine && (
-        <div
-          className="absolute top-0 bottom-0 left-0 w-4 z-20 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.5) 40%, rgba(255,255,255,0.08) 80%, rgba(0,0,0,0.3) 100%)'
-          }}
-        />
-      )}
+      {/* 3D Physical Spine Depth Highlight */}
+      {showSpine && <div className="codex-spine" />}
 
-      {/* Cover Editorial Layout */}
-      <div className="relative z-10 h-full p-4 sm:p-5 flex flex-col justify-between text-center">
-        {/* Top Header: Author Name */}
+      {/* Editorial Cover Composition */}
+      <div className="relative z-10 h-full p-5 sm:p-6 flex flex-col justify-between text-center">
+        {/* Top Header: Author Imprimatur */}
         <div className="pt-1">
-          <div className="text-[11px] sm:text-xs tracking-[0.25em] font-semibold text-[#d4af37] uppercase">
-            Yismake Worku
+          <div className="text-[10px] sm:text-[11px] tracking-[0.24em] font-mono uppercase text-[var(--highland-gold)]">
+            YISMAKE WORKU
           </div>
-          <div className="text-sm sm:text-base font-bold text-white/90 font-['Noto_Serif_Ethiopic'] tracking-wider mt-0.5">
+          <div className="font-serif-ethiopic text-xs sm:text-sm font-semibold text-[var(--text-vellum-soft)] tracking-wider mt-0.5">
             ይስማዕከ ወርቁ
           </div>
+
           {book.seriesOrder && (
-            <div className="inline-block mt-1.5 px-2 py-0.5 text-[9px] sm:text-[10px] uppercase tracking-widest rounded-full bg-white/5 border border-white/15 text-cyan-300 font-mono">
-              Book {book.seriesOrder} · {book.series?.split(' ')[1] || 'Saga'}
+            <div className="mt-1.5 inline-block font-mono text-[9px] sm:text-[10px] tracking-widest text-[var(--text-stone)] uppercase border-b border-[var(--rule-line)] pb-0.5">
+              PART 0{book.seriesOrder} · SAGA
             </div>
           )}
         </div>
 
-        {/* Center: Monumental Titles */}
-        <div className="my-auto py-2">
-          {/* Amharic Title (Dominant & Sacred) */}
+        {/* Center: Hero Amharic Title & Gold Leaf English */}
+        <div className="my-auto py-3">
+          {/* Sacred Amharic Monument Title */}
           <div
-            className="text-2xl sm:text-3xl lg:text-4xl font-black font-['Noto_Serif_Ethiopic'] leading-tight drop-shadow-md"
+            className="font-serif-ethiopic text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-vellum)] leading-tight drop-shadow"
             style={{
-              color: '#ffffff',
-              textShadow: `0 0 20px ${accentColor}80`
+              letterSpacing: '0.02em',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)'
             }}
           >
             {book.titleAm}
           </div>
 
-          {/* Golden Ethiopic Seal / Emblem */}
-          <div className="flex items-center justify-center my-2.5 opacity-85">
-            <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#d4af37]" />
-            <span className="mx-2 text-[#d4af37] text-xs">❖</span>
-            <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#d4af37]" />
+          {/* Traditional Rubric Divider */}
+          <div className="flex items-center justify-center my-2 opacity-70">
+            <span className="h-[1px] w-6 bg-[var(--highland-gold)]" />
+            <span className="mx-2 text-xs" style={{ color: codexThemes.rubric }}>❖</span>
+            <span className="h-[1px] w-6 bg-[var(--highland-gold)]" />
           </div>
 
-          {/* English Title / Transliteration */}
-          <div className="text-xs sm:text-sm font-semibold tracking-widest text-[#ebe4d3] uppercase font-['Cinzel'] drop-shadow">
+          {/* Latin Title Transliteration */}
+          <div className="font-['Cinzel'] text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[var(--highland-gold)]">
             {book.titleEn}
           </div>
         </div>
 
-        {/* Bottom Footer: Publication & Genre */}
-        <div className="pb-1">
-          <div className="text-[10px] sm:text-[11px] text-white/60 line-clamp-1 font-mono tracking-wide">
-            {book.genre?.split('/')[0]}
-          </div>
-          <div className="mt-1 flex items-center justify-between text-[9px] sm:text-[10px] text-white/40 pt-1.5 border-t border-white/10 font-mono">
+        {/* Bottom Footer: Publication Stamp */}
+        <div className="pb-1 pt-2 border-t border-[var(--rule-line-subtle)]">
+          <div className="font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)] tracking-wider uppercase flex items-center justify-between">
             <span>{book.year} G.C.</span>
-            <span>{book.yearEc} ዓ.ም.</span>
+            <span className="font-serif-ethiopic text-[var(--highland-gold)]">{book.yearEc} ዓ.ም.</span>
           </div>
         </div>
       </div>
 
-      {/* Foil Rim Glow */}
+      {/* Subtle Foil Emboss Effect on Right Border */}
       <div
-        className="absolute inset-0 rounded-lg pointer-events-none"
+        className="absolute top-0 bottom-0 right-0 w-[2px] pointer-events-none"
         style={{
-          boxShadow: `inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 0 15px ${accentColor}15`
+          background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent)'
         }}
       />
     </div>

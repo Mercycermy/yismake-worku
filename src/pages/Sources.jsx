@@ -6,88 +6,116 @@ export default function Sources() {
   const { lang } = useLanguage();
 
   return (
-    <main className="pt-28 pb-24 bg-[#080b11] text-[#f6f0e2]">
-      {/* Header */}
-      <section className="relative py-14 sm:py-20 border-b border-white/10 overflow-hidden">
-        <div className="absolute inset-0 cyber-grid-bg opacity-30 pointer-events-none" />
-
-        <div className="site-container relative z-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 text-[#d4af37] text-xs font-mono tracking-widest uppercase mb-3">
-            <span>❖ {lang === 'am' ? 'የመረጃና የጥናት ምንጮች' : 'ACADEMIC & FACTUAL CITATIONS'} ❖</span>
+    <main className="pt-28 sm:pt-32 pb-24 bg-[#0a0c0f] text-[var(--text-vellum)]">
+      {/* Sources Header */}
+      <section className="pb-16 border-b border-[var(--rule-line)]">
+        <div className="site-container">
+          <div className="chapter-numeral">
+            <span>FACTUAL VERIFICATION & SCHOLASTIC CITATIONS</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white font-['Cinzel'] tracking-tight">
-            RESEARCH <span className="text-gradient-gold">BIBLIOGRAPHY</span>
-            <span className="block text-2xl sm:text-4xl font-['Noto_Serif_Ethiopic'] text-[#ebe4d3] font-bold mt-2">
-              የማጣቀሻና የመረጃ ምንጮች
-            </span>
+          <h1 className="monument-title-am text-4xl sm:text-6xl lg:text-7xl text-[var(--text-vellum)]">
+            የማጣቀሻና የመረጃ ምንጮች
           </h1>
 
-          <p className="mt-3 text-sm sm:text-base text-[#9aa5b8] font-['Noto_Serif_Ethiopic'] leading-relaxed">
+          <div className="font-['Cinzel'] text-xs sm:text-sm text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mt-2">
+            ACADEMIC BIBLIOGRAPHY & INDEPENDENT VERIFICATION RECORD
+          </div>
+
+          <p className="mt-4 max-w-3xl font-serif-ethiopic text-sm sm:text-base text-[var(--text-stone)] leading-relaxed">
             {lang === 'am'
               ? "በዚህ ድረ-ገጽ ላይ የቀረቡት መረጃዎች፣ የህትመት ዘመናት፣ የሽያጭ መረጃዎችና የህይወት ታሪኮች የተሰባሰቡባቸው ተአማኒ የአካዳሚ፣ የአሳታሚና የሚዲያ ምንጮች ዝርዝር።"
-              : "Rigorous transparency: Every factual milestone, publication date, translator credential, and biographical record on this site is cross-referenced with verified academic and literary sources."}
+              : "Rigorous scholarly transparency: Every factual milestone, publication date, translator credential, and biographical record on this site is cross-referenced with verified academic and literary sources."}
           </p>
         </div>
       </section>
 
-      {/* Sources Table & Methodology */}
-      <section className="section-padding">
-        <div className="site-container max-w-4xl mx-auto">
+      {/* Methodology & Sources List */}
+      <section className="site-container py-16">
+        <div className="max-w-4xl mx-auto space-y-10">
           {/* Methodology Card */}
-          <div className="glass-panel p-6 sm:p-8 mb-10 border-l-4 border-[#00f0ff]">
-            <h3 className="text-lg font-bold text-white font-['Cinzel'] mb-2">
-              {lang === 'am' ? 'የመረጃ ማረጋገጫ መርህ' : 'Editorial & Archival Standards'}
-            </h3>
-            <p className="text-sm text-[#ebe4d3] font-['Noto_Serif_Ethiopic'] leading-relaxed">
+          <div className="archival-plate archival-plate-framed p-6 sm:p-8 bg-[var(--ink-surface)] border-l-4 border-l-[var(--highland-gold)]">
+            <h2 className="font-['Cinzel'] text-sm sm:text-base font-bold text-[var(--highland-gold)] uppercase tracking-wider mb-2">
+              {lang === 'am' ? 'የመረጃ ማረጋገጫ መርህ' : 'EDITORIAL & ARCHIVAL STANDARDS'}
+            </h2>
+            <p className="font-serif-ethiopic text-sm sm:text-base text-[var(--text-vellum-soft)] leading-relaxed">
               {lang === 'am'
                 ? "በዚህ ድረ-ገጽ ላይ ያልተረጋገጡ ወይም የተፈበረኩ ወሬዎች ፈጽሞ አልተካተቱም። የተጠቀሱት 15+ መጻሕፍት፣ በታይለር ኤንድ ፍራንሲስ የታተመው አካዳሚያዊ ጥናት፣ በእንግሊዝ አገር ለሽልማት የቀረበው የትርጉም ስራ እና የደራሲው ቃለ-መጠይቆች በገለልተኛ አካላት ተረጋግጠው የቀረቡ ናቸው።"
-                : "No fabricated quotes, speculative gossip, or unverified claims are featured on this digital archive. Bibliographic data, sales figures, and biographical details are cross-referenced across peer-reviewed African literary studies, Addis Ababa University theses, official publisher catalogs, and direct broadcast interviews."}
+                : "No fabricated quotes, speculative gossip, or unverified claims are featured on this digital archive. Bibliographic data, sales figures, and biographical details are cross-referenced across peer-reviewed African literary studies (Taylor & Francis), Addis Ababa University theses, official publisher catalogs, and direct broadcast interviews."}
             </p>
           </div>
 
           {/* Source Citations List */}
           <div className="space-y-6">
             {academicSources.map((source, idx) => (
-              <div
+              <article
                 key={idx}
-                className="glass-panel p-6 hover:border-[#d4af37]/40 transition-all font-mono"
+                className="archival-plate p-6 sm:p-7 bg-[var(--ink-surface)] font-mono text-xs hover:border-[var(--highland-gold-border)] transition-colors"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                  <span className="badge badge-gold text-[10px]">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--rule-line-subtle)] text-[10px] text-[var(--text-muted)] uppercase">
+                  <span className="archival-tag archival-tag-gold">
                     {source.type}
                   </span>
                   {source.year && (
-                    <span className="text-xs text-white/40">Year: {source.year}</span>
+                    <span>PUBLISHED: {source.year}</span>
                   )}
                 </div>
 
-                <h4 className="text-base font-bold text-white font-sans">
+                <h3 className="font-serif-ethiopic text-base sm:text-lg font-bold text-[var(--text-vellum)] leading-snug">
                   {source.title}
-                </h4>
+                </h3>
 
-                <div className="mt-2 text-xs text-[#9aa5b8] space-y-1 font-sans">
-                  {source.authors && <div><strong className="text-white/60">Authors:</strong> {source.authors}</div>}
-                  {source.translator && <div><strong className="text-white/60">Translator:</strong> {source.translator}</div>}
-                  {source.publication && <div><strong className="text-white/60">Journal/Publisher:</strong> {source.publication}</div>}
-                  {source.institution && <div><strong className="text-white/60">Institution:</strong> {source.institution}</div>}
-                  {source.recognition && <div><strong className="text-[#00f0ff]">Recognition:</strong> {source.recognition}</div>}
-                  {source.subscribers && <div><strong className="text-[#00f0ff]">Audience:</strong> {source.subscribers}</div>}
-                </div>
+                {source.authors && (
+                  <div className="text-[var(--highland-gold)] text-xs mt-1">
+                    Authors / Scholars: {source.authors}
+                  </div>
+                )}
 
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                  <span className="text-white/40 font-mono text-[11px]">Primary Source Index 0{idx + 1}</span>
+                {source.publication && (
+                  <div className="text-[var(--text-stone)] text-xs mt-0.5">
+                    Publication: {source.publication}
+                  </div>
+                )}
+
+                {source.translator && (
+                  <div className="text-[var(--rubric-bright)] text-xs mt-0.5">
+                    Translator: {source.translator}
+                  </div>
+                )}
+
+                {source.recognition && (
+                  <div className="text-[var(--highland-gold)] text-xs mt-1 italic">
+                    ★ {source.recognition}
+                  </div>
+                )}
+
+                {source.publisher && (
+                  <div className="text-[var(--text-stone)] text-xs mt-0.5">
+                    Publisher / Entity: {source.publisher}
+                  </div>
+                )}
+
+                {source.subscribers && (
+                  <div className="text-[var(--text-stone)] text-xs mt-0.5">
+                    Audience: {source.subscribers}
+                  </div>
+                )}
+
+                <div className="mt-5 pt-3 border-t border-[var(--rule-line-subtle)] flex items-center justify-between">
                   <a
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#00f0ff] hover:underline flex items-center gap-1 font-sans"
+                    className="btn-link-editorial text-[11px]"
                   >
-                    <span>Visit Reference URL</span>
+                    <span>VERIFY SOURCE ACCESS</span>
                     <span>↗</span>
                   </a>
+                  <span className="text-[9px] text-[var(--text-muted)] uppercase">
+                    CITATION #{String(idx + 1).padStart(2, '0')}
+                  </span>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>

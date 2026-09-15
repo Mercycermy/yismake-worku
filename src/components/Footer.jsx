@@ -3,183 +3,203 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
 
 export default function Footer() {
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
 
   return (
-    <footer className="relative bg-[#05070a] border-t border-white/10 pt-16 pb-12 overflow-hidden">
-      {/* Background Subtle Grid & Depth */}
-      <div className="absolute inset-0 cyber-grid-bg opacity-30 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-cyan-500/5 blur-[100px] pointer-events-none" />
-
-      <div className="site-container relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
-          {/* Col 1: Author Brand & Vision */}
-          <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-3 group text-decoration-none inline-flex">
-              <div className="author-seal">
-                <span>ይ</span>
-              </div>
-              <div>
-                <div className="text-xl font-bold tracking-wider text-white font-['Cinzel']">
-                  YISMAKE WORKU
-                </div>
-                <div className="text-sm text-[#d4af37] font-semibold font-['Noto_Serif_Ethiopic'] -mt-1">
-                  ይስማዕከ ወርቁ
-                </div>
-              </div>
-            </Link>
-
-            <p className="mt-4 text-sm text-[#9aa5b8] max-w-sm leading-relaxed">
-              {lang === 'am'
-                ? "የኢትዮጵያን ጥንታዊ ገዳማዊ ጥበብና ታሪክ ከዘመናዊው የቴክኖሎጂ እና የጠፈር ሳይንስ ልቦለድ ጋር በማዋሃድ አዲስ የስነ-ጽሑፍ ዘመን የፈጠረ የጥበብ ዓለም።"
-                : "A visionary literary universe where ancient Ethiopian monastic scholarship, secret Ge'ez manuscripts, and Afrofuturist quantum science collide."}
-            </p>
-
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://t.me/yismakeworku"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-1.5 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black transition-all text-xs font-semibold flex items-center gap-1.5"
-              >
-                <span>Telegram: @yismakeworku (18.6K+)</span>
-              </a>
+    <footer className="relative bg-[#0a0c0f] border-t border-[var(--rule-line)] pt-20 pb-16 text-[var(--text-stone)]">
+      {/* Decorative Traditional Ethiopian Rubric Stamp */}
+      <div className="site-container">
+        {/* Top Colophon Imprimatur */}
+        <div className="pb-14 border-b border-[var(--rule-line-subtle)] flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-xs font-mono text-[var(--highland-gold)] tracking-[0.25em] uppercase">
+                {lang === 'am' ? 'የደራሲው ማህተመ-ቃል' : 'COLOPHON & IMPRIMATUR'}
+              </span>
+              <span className="text-[var(--rubric-bright)] text-xs">❖</span>
+              <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">
+                LAKE TANA BASIN · 11°56′N 37°18′E
+              </span>
             </div>
+
+            <div className="font-serif-ethiopic text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--text-vellum)] tracking-tight">
+              ይስማዕከ ወርቁ
+            </div>
+
+            <p className="mt-4 max-w-xl text-sm sm:text-base font-serif-ethiopic text-[var(--text-vellum-soft)] leading-relaxed italic">
+              {lang === 'am'
+                ? "«አርበኛ ማለት 'አርነት በእኛ' ማለት ነው። አርበኝነት ታሪክ ብቻ ሳይሆን፣ የአእምሮአችንንና የዕውቀታችንን ነጻነት በየዕለቱ የመጠበቅ አደራ ነው።»"
+                : "“A patriot truly means 'liberty through us' — it is not merely a memory, but the daily defense of our intellectual inheritance and sovereign mind.”"}
+            </p>
           </div>
 
-          {/* Col 2: The Universe */}
+          <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
+            <span className="font-mono text-xs text-[var(--highland-gold)] tracking-widest uppercase">
+              OFFICIAL TELEGRAM DISPATCH
+            </span>
+            <a
+              href="https://t.me/yismakeworku"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost-archival text-xs py-2 px-4"
+            >
+              <span>@YISMAKEWORKU · 18.6K+ READERS</span>
+              <span className="text-[var(--highland-gold)]">↗</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Archival Index Columns (4 Columns with Clean Rules) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-[var(--rule-line-subtle)] text-xs font-mono">
+          {/* Column 1: Books */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-bold mb-4 font-['Cinzel']">
-              {lang === 'am' ? "የዴርቶጋዳ ዓለም" : "The Universe"}
-            </h4>
-            <ul className="space-y-2.5 text-sm text-[#9aa5b8] list-none">
+            <div className="text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-1.5">
+              <span>01</span>
+              <span>/</span>
+              <span>{lang === 'am' ? 'መጻሕፍት' : 'CANON'}</span>
+            </div>
+            <ul className="space-y-2.5 text-[var(--text-stone)] list-none">
               <li>
-                <Link to="/books/dertogada" className="hover:text-[#00f0ff] transition-colors">
-                  1. {lang === 'am' ? 'ዴርቶጋዳ' : 'Dertogada (2009)'}
+                <Link to="/books/dertogada" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'ዴርቶጋዳ (2009)' : 'Dertogada (2009)'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/ramatohara" className="hover:text-[#00f0ff] transition-colors">
-                  2. {lang === 'am' ? 'ራማቶሓራ' : 'Ramatohara (2010)'}
+                <Link to="/books/ramatohara" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'ራማቶሓራ (2010)' : 'Ramatohara (2010)'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/xantoxara" className="hover:text-[#00f0ff] transition-colors">
-                  3. {lang === 'am' ? 'ዣንቶዣራ' : 'Xantoxara (2011)'}
+                <Link to="/books/xantoxara" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'ዣንቶዣራ (2011)' : 'Xantoxara (2011)'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/yoratorad" className="hover:text-[#00f0ff] transition-colors">
-                  4. {lang === 'am' ? 'ዮራቶራድ' : 'Yoratorad (2014)'}
+                <Link to="/books/kebur-dengay" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'ክቡር ድንጋይ (2013)' : 'Kebur Dengay / Lost Spell'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/yotod" className="hover:text-[#00f0ff] transition-colors">
-                  5. {lang === 'am' ? 'ዮቶድ' : 'Yotod (2016)'}
-                </Link>
-              </li>
-              <li className="pt-1">
-                <Link to="/universe" className="text-xs text-[#00f0ff] font-semibold hover:underline">
-                  {lang === 'am' ? '→ ሙሉውን ካርታ ይመልከቱ' : '→ Explore Storyworld Map'}
+                <Link to="/books" className="text-[var(--highland-gold)] hover:text-[var(--text-vellum)] transition-colors inline-block mt-1">
+                  → {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት' : 'View Full 15+ Works'}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Key Standalone Works */}
+          {/* Column 2: Storyworld */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-bold mb-4 font-['Cinzel']">
-              {lang === 'am' ? "ታዋቂ ስራዎች" : "Masterpieces"}
-            </h4>
-            <ul className="space-y-2.5 text-sm text-[#9aa5b8] list-none">
+            <div className="text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-1.5">
+              <span>02</span>
+              <span>/</span>
+              <span>{lang === 'am' ? 'የልቦለድ ዓለም' : 'WORLD'}</span>
+            </div>
+            <ul className="space-y-2.5 text-[var(--text-stone)] list-none">
               <li>
-                <Link to="/books/kebur-dengay" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'ክቡር ድንጋይ (The Lost Spell)' : 'The Lost Spell (Kebur Dengay)'}
+                <Link to="/universe" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'የዴርቶጋዳ 5 ተከታታይ' : 'The 5-Part Pentology'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/zamra" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'ዛምራ' : 'Zamra (Eco-Thriller)'}
+                <Link to="/universe#lake-tana" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'የጣና ሐይቅ ምስጢር' : 'Lake Tana Subterranean'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/gefuan" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'ግፉዓን' : 'Gefuan (The Oppressed)'}
+                <Link to="/universe#characters" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'ሻጊዝ እጅጉ እና ሲፓራ' : 'Shagiz Ejigu & Zipporah'}
                 </Link>
               </li>
               <li>
-                <Link to="/books/melos" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'ሜሎስ' : 'Melos'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/books/yewond-mit" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'የወንድ ምጥ' : 'Yewond Mit (Poetry)'}
-                </Link>
-              </li>
-              <li className="pt-1">
-                <Link to="/books" className="text-xs text-[#d4af37] font-semibold hover:underline">
-                  {lang === 'am' ? '→ 15+ መጻሕፍትን ያስሱ' : '→ View All 15+ Titles'}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Archival & Sources */}
-          <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-bold mb-4 font-['Cinzel']">
-              {lang === 'am' ? "ማህደርና ማጣቀሻ" : "Archive & Links"}
-            </h4>
-            <ul className="space-y-2.5 text-sm text-[#9aa5b8] list-none">
-              <li>
-                <Link to="/author" className="hover:text-[#00f0ff] transition-colors">
+                <Link to="/author" className="hover:text-[var(--text-vellum)] transition-colors">
                   {lang === 'am' ? 'የደራሲው የህይወት ታሪክ' : 'Author Biography'}
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Academic Archive */}
+          <div>
+            <div className="text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-1.5">
+              <span>03</span>
+              <span>/</span>
+              <span>{lang === 'am' ? 'ምርምርና ጥናት' : 'RESEARCH'}</span>
+            </div>
+            <ul className="space-y-2.5 text-[var(--text-stone)] list-none">
               <li>
-                <Link to="/archive" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'ቃለ-መጠይቆችና ሚዲያ' : 'Interviews & Media'}
+                <Link to="/sources" className="hover:text-[var(--text-vellum)] transition-colors">
+                  Taylor & Francis Study
                 </Link>
               </li>
               <li>
-                <Link to="/sources" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'አካዳሚያዊ ማጣቀሻዎች' : 'Academic Bibliography'}
+                <Link to="/sources" className="hover:text-[var(--text-vellum)] transition-colors">
+                  TA First Translation Prize (UK)
+                </Link>
+              </li>
+              <li>
+                <Link to="/sources" className="hover:text-[var(--text-vellum)] transition-colors">
+                  Henningham Family Press
+                </Link>
+              </li>
+              <li>
+                <Link to="/archive" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'የቴሌቪዥን ቃለ-መጠይቆች' : 'Broadcast & Media Archive'}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Communication */}
+          <div>
+            <div className="text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-1.5">
+              <span>04</span>
+              <span>/</span>
+              <span>{lang === 'am' ? 'ግንኙነት' : 'DISPATCH'}</span>
+            </div>
+            <ul className="space-y-2.5 text-[var(--text-stone)] list-none">
+              <li>
+                <a
+                  href="https://t.me/yismakeworku"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[var(--text-vellum)] transition-colors"
+                >
+                  Telegram: @yismakeworku
+                </a>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-[var(--text-vellum)] transition-colors">
+                  {lang === 'am' ? 'የሚዲያና የአካዳሚ ጥያቄ' : 'Academic / Media Inquiries'}
                 </Link>
               </li>
               <li>
                 <a
-                  href="https://henninghamfamilypress.com/the-lost-spell/"
+                  href="https://www.goodreads.com/book/show/16133457-dertogada"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#00f0ff] transition-colors"
+                  className="hover:text-[var(--text-vellum)] transition-colors"
                 >
-                  Henningham Family Press (UK)
+                  Goodreads Reader Archive ↗
                 </a>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-[#00f0ff] transition-colors">
-                  {lang === 'am' ? 'የአንባቢና የሚዲያ ግንኙነት' : 'Reader & Press Inquiries'}
-                </Link>
+                <span className="text-[var(--text-muted)] block mt-1">
+                  Debre Markos University · Ethiopia
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Legal, Fair Use & Verification Notice */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <div className="text-center md:text-left">
-            <span>© {new Date().getFullYear()} Yismake Worku (ይስማዕከ ወርቁ). All literary rights reserved.</span>
-            <span className="block text-[11px] text-white/35 mt-1">
-              Official literary archive and discovery showcase. Dedicated to scholarly study and reading discovery.
-            </span>
+        {/* Bottom Colophon Note */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[var(--text-muted)]">
+          <div>
+            <span>© {new Date().getFullYear()} YISMAKE WORKU (ይስማዕከ ወርቁ) · ALL RIGHTS RESERVED</span>
           </div>
-
-          <div className="flex items-center gap-6 text-[11px] text-white/40">
-            <Link to="/sources" className="hover:text-[#d4af37]">Sources & Verification</Link>
+          <div className="flex items-center gap-4 text-[10px] tracking-widest uppercase">
+            <span>TYPESET IN NOTO SERIF ETHIOPIC & CORMORANT GARAMOND</span>
             <span>•</span>
-            <a href="https://t.me/yismakeworku" target="_blank" rel="noopener noreferrer" className="hover:text-[#00f0ff]">
-              Official Telegram
-            </a>
+            <span className="text-[var(--highland-gold)]">AUTHORED DIGITAL ARCHIVE</span>
           </div>
         </div>
       </div>

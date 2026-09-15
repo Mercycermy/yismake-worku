@@ -10,7 +10,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 25);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -20,14 +20,12 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location]);
 
-  const navLinks = [
-    { to: '/', labelEn: 'Home', labelAm: 'መነሻ' },
-    { to: '/universe', labelEn: 'The Universe', labelAm: 'የልቦለድ ዓለም' },
-    { to: '/books', labelEn: 'Books', labelAm: 'መጻሕፍት' },
-    { to: '/author', labelEn: 'The Author', labelAm: 'ደራሲው' },
-    { to: '/archive', labelEn: 'Archive', labelAm: 'ማህደር' },
-    { to: '/sources', labelEn: 'Sources', labelAm: 'ማጣቀሻዎች' },
-    { to: '/contact', labelEn: 'Contact', labelAm: 'ግንኙነት' }
+  const navItems = [
+    { to: '/books', num: '01', en: 'BOOKS', am: 'መጻሕፍት' },
+    { to: '/universe', num: '02', en: 'UNIVERSE', am: 'የዴርቶጋዳ ዓለም' },
+    { to: '/author', num: '03', en: 'THE AUTHOR', am: 'ደራሲው' },
+    { to: '/archive', num: '04', en: 'ARCHIVE', am: 'ማህደር' },
+    { to: '/sources', num: '05', en: 'SOURCES', am: 'ማጣቀሻዎች' },
   ];
 
   const isActive = (path) => {
@@ -39,130 +37,149 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#080b11]/95 backdrop-blur-md border-b border-white/10 shadow-2xl py-3'
-          : 'bg-gradient-to-b from-[#080b11]/95 via-[#080b11]/70 to-transparent py-4'
+          ? 'bg-[#0a0c0f]/96 border-b border-[var(--rule-line)] backdrop-blur-sm py-3'
+          : 'bg-[#0a0c0f]/80 border-b border-transparent py-4 sm:py-5'
       }`}
     >
       <div className="site-container flex items-center justify-between">
-        {/* Brand Logo & Author Name */}
-        <Link to="/" className="flex items-center gap-3 group text-decoration-none shrink-0">
-          <div className="author-seal transition-transform duration-300 group-hover:scale-105">
+        {/* Left: Editorial Monogram & Author Identifier */}
+        <Link to="/" className="flex items-center gap-3.5 group text-decoration-none shrink-0">
+          <div className="author-seal">
             <span>ይ</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-base sm:text-xl font-bold tracking-wider text-white font-['Cinzel'] group-hover:text-[#d4af37] transition-colors">
-              YISMAKE WORKU
-            </span>
-            <span className="text-xs text-[#d4af37] font-semibold font-['Noto_Serif_Ethiopic'] tracking-wider -mt-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-sm sm:text-base font-bold tracking-[0.18em] text-[var(--text-vellum)] font-['Cinzel'] group-hover:text-[var(--highland-gold)] transition-colors">
+                Y.W.
+              </span>
+              <span className="hidden sm:inline-block font-mono text-[10px] text-[var(--text-muted)] tracking-widest uppercase">
+                11°56′N 37°18′E
+              </span>
+            </div>
+            <span className="text-xs font-semibold text-[var(--highland-gold)] font-['Noto_Serif_Ethiopic'] tracking-wide -mt-0.5">
               ይስማዕከ ወርቁ
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-          {navLinks.map((link) => {
-            const active = isActive(link.to);
+        {/* Center: Editorial Index Navigation (01 BOOKS · 02 UNIVERSE...) */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          {navItems.map((item) => {
+            const active = isActive(item.to);
             return (
               <Link
-                key={link.to}
-                to={link.to}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-decoration-none ${
+                key={item.to}
+                to={item.to}
+                className={`group flex items-baseline gap-1.5 py-1 text-xs font-mono tracking-[0.16em] transition-all ${
                   active
-                    ? 'text-[#00f0ff] bg-cyan-500/10 border border-cyan-500/30'
-                    : 'text-[#e5dec9] hover:text-white hover:bg-white/5'
+                    ? 'text-[var(--text-vellum)] border-b border-[var(--highland-gold)]'
+                    : 'text-[var(--text-stone)] hover:text-[var(--text-vellum)]'
                 }`}
               >
-                {lang === 'am' ? link.labelAm : link.labelEn}
+                <span className={`text-[10px] transition-colors ${active ? 'text-[var(--highland-gold)] font-bold' : 'text-[var(--text-muted)] group-hover:text-[var(--highland-gold)]'}`}>
+                  {item.num}
+                </span>
+                <span className={lang === 'am' ? "font-['Noto_Serif_Ethiopic'] text-xs font-medium" : ""}>
+                  {lang === 'am' ? item.am : item.en}
+                </span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Right Utility: Telegram & Language Switcher */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Telegram Channel Link (Desktop) */}
+        {/* Right: Restrained Archival Tools (Language Switch + Telegram Link + Mobile Toggle) */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Telegram Dispatch Link */}
           <a
             href="https://t.me/yismakeworku"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10 hover:border-[#00f0ff]/40 text-[#c7d2e5] hover:text-[#00f0ff] transition-all"
-            title="Official Telegram Community (18.6K+ subscribers)"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono tracking-widest text-[var(--text-stone)] hover:text-[var(--highland-gold)] border border-[var(--rule-line-subtle)] hover:border-[var(--rule-line)] transition-all"
+            title="Official Telegram Dispatch (18.6K+ subscribers)"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.63 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.88 7.97-3.44 3.8-1.58 4.59-1.86 5.11-1.87.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.22-.04.38z" />
-            </svg>
-            <span>@yismakeworku</span>
+            <span>TG</span>
+            <span className="text-[var(--highland-gold)]">↗</span>
           </a>
 
-          {/* Primary Language Switcher (Always Visible Everywhere) */}
+          {/* Minimalist Editorial Language Switch */}
           <button
             onClick={toggleLang}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#d4af37]/15 hover:bg-[#d4af37]/25 border border-[#d4af37]/40 text-[#e5c358] text-xs font-bold transition-all cursor-pointer"
+            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-mono border border-[var(--rule-line)] hover:border-[var(--highland-gold)] text-[var(--text-vellum)] transition-colors cursor-pointer"
             aria-label="Switch Language"
             title="Toggle between English and Amharic"
           >
-            <span className={lang === 'en' ? 'text-white font-black' : 'opacity-40'}>EN</span>
-            <span className="opacity-30">/</span>
-            <span className={`font-['Noto_Serif_Ethiopic'] ${lang === 'am' ? 'text-white font-black' : 'opacity-40'}`}>አማ</span>
+            <span className={lang === 'en' ? 'text-[var(--highland-gold)] font-bold' : 'text-[var(--text-muted)]'}>EN</span>
+            <span className="text-[var(--text-muted)]">/</span>
+            <span className={`font-['Noto_Serif_Ethiopic'] ${lang === 'am' ? 'text-[var(--highland-gold)] font-bold' : 'text-[var(--text-muted)]'}`}>አማ</span>
           </button>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-white hover:text-[#00f0ff] focus:outline-none cursor-pointer"
-            aria-label="Toggle Navigation Menu"
+            className="lg:hidden p-2 border border-[var(--rule-line)] text-[var(--text-vellum)] hover:text-[var(--highland-gold)] transition-colors cursor-pointer"
+            aria-label="Toggle Archival Index"
           >
-            {mobileMenuOpen ? (
-              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
+            <span className="font-mono text-[10px] tracking-widest uppercase">
+              {mobileMenuOpen ? 'CLOSE' : 'INDEX'}
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Archival Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-3 px-4 pt-4 pb-6 bg-[#0c111c]/98 border-b border-white/15 shadow-2xl">
-          <nav className="flex flex-col gap-1.5">
-            {navLinks.map((link) => {
-              const active = isActive(link.to);
+        <div className="lg:hidden mt-3 px-6 pt-6 pb-8 bg-[#0a0c0f] border-b border-[var(--rule-line-strong)] animate-fade-in">
+          <div className="mb-4 pb-2 border-b border-[var(--rule-line-subtle)] flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)] tracking-widest uppercase">
+            <span>ARCHIVAL INDEX</span>
+            <span>GOJJAM · LAKE TANA</span>
+          </div>
+
+          <nav className="flex flex-col space-y-1">
+            {navItems.map((item) => {
+              const active = isActive(item.to);
               return (
                 <Link
-                  key={link.to}
-                  to={link.to}
-                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                    active
-                      ? 'bg-cyan-500/15 text-[#00f0ff] border border-cyan-500/30'
-                      : 'text-[#e5dec9] hover:bg-white/5'
-                  }`}
+                  key={item.to}
+                  to={item.to}
+                  className={`index-row ${active ? 'border-[var(--highland-gold)] text-[var(--highland-gold)]' : 'text-[var(--text-vellum)]'}`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span>{lang === 'am' ? link.labelAm : link.labelEn}</span>
-                    <span className="text-xs text-white/40 font-mono">
-                      {lang === 'am' ? link.labelEn : link.labelAm}
-                    </span>
+                  <div className="flex items-baseline gap-3">
+                    <span className="index-num">{item.num}</span>
+                    <span className="font-serif-latin text-base tracking-wider">{item.en}</span>
                   </div>
+                  <span className="font-['Noto_Serif_Ethiopic'] text-xs text-[var(--text-stone)]">
+                    {item.am}
+                  </span>
                 </Link>
               );
             })}
 
-            <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
-              <a
-                href="https://t.me/yismakeworku"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-xs text-[#00f0ff]"
-              >
-                <span>Telegram: @yismakeworku (18.6K+)</span>
-              </a>
-            </div>
+            <Link
+              to="/contact"
+              className="index-row text-[var(--text-vellum)]"
+            >
+              <div className="flex items-baseline gap-3">
+                <span className="index-num">06</span>
+                <span className="font-serif-latin text-base tracking-wider">DISPATCH & CONTACT</span>
+              </div>
+              <span className="font-['Noto_Serif_Ethiopic'] text-xs text-[var(--text-stone)]">
+                ግንኙነት
+              </span>
+            </Link>
           </nav>
+
+          <div className="mt-6 pt-4 border-t border-[var(--rule-line-subtle)] flex items-center justify-between text-xs font-mono text-[var(--text-stone)]">
+            <a
+              href="https://t.me/yismakeworku"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--highland-gold)] transition-colors flex items-center gap-1.5"
+            >
+              <span>TELEGRAM @YISMAKEWORKU</span>
+              <span className="text-[var(--highland-gold)]">↗</span>
+            </a>
+            <span className="text-[var(--text-muted)] text-[10px]">18.6K+ READERS</span>
+          </div>
         </div>
       )}
     </header>

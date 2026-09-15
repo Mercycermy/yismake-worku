@@ -8,121 +8,143 @@ import BookCover from '../components/BookCover';
 export default function Universe() {
   const { lang } = useLanguage();
 
-  const universeBooks = verifiedBooks.filter(b => b.series?.includes('Dertogada'));
+  const universeBooks = verifiedBooks
+    .filter((b) => b.series?.includes('Dertogada'))
+    .sort((a, b) => a.seriesOrder - b.seriesOrder);
+
+  const romanNumerals = ['I', 'II', 'III', 'IV', 'V'];
+  const geezNumerals = ['፩', '፪', '፫', '፬', '፭'];
 
   return (
-    <main className="pt-28 pb-20 bg-[#080b11] text-[#f6f0e2]">
-      {/* Hero Header */}
-      <section className="relative py-16 sm:py-24 border-b border-white/10 overflow-hidden">
-        {/* Background Subterranean Glow & Grid */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20 filter brightness-50"
-          style={{ backgroundImage: "url('/images/dertogada-art.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080b11] via-[#080b11]/80 to-transparent" />
-        <div className="absolute inset-0 cyber-grid-bg opacity-30" />
-
-        <div className="site-container relative z-10 text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[#00f0ff] text-xs font-mono tracking-widest uppercase mb-4">
-            <span>❖ {lang === 'am' ? 'የኢትዮጵያ ሳይንስ ልቦለድ ምድረ-ገነት' : 'AFROFUTURIST TECHNO-FICTION'} ❖</span>
+    <main className="pt-28 sm:pt-32 pb-24 bg-[#0a0c0f] text-[var(--text-vellum)]">
+      {/* Archival Universe Header */}
+      <section className="pb-16 border-b border-[var(--rule-line)]">
+        <div className="site-container">
+          <div className="chapter-numeral">
+            <span>THE CANONICAL STORYWORLD</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black text-white font-['Cinzel'] tracking-tight">
-            THE <span className="text-gradient-cyan">DERTOGADA</span> UNIVERSE
-            <span className="block text-3xl sm:text-5xl font-['Noto_Serif_Ethiopic'] text-[#d4af37] font-bold mt-2">
-              የዴርቶጋዳ ዓለም
-            </span>
+          <h1 className="monument-title-am text-4xl sm:text-6xl lg:text-7xl text-[var(--text-vellum)]">
+            የዴርቶጋዳ ዓለም
           </h1>
 
-          <p className="mt-6 text-base sm:text-xl text-[#ebe4d3] leading-relaxed font-['Noto_Serif_Ethiopic']">
+          <div className="font-['Cinzel'] text-xs sm:text-sm text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mt-2">
+            THE DERTOGADA PENTOLOGY & SUBTERRANEAN SAGA (2009–2016)
+          </div>
+
+          <div className="mt-4 pb-4 border-b border-[var(--rule-line-subtle)] flex flex-wrap items-center gap-4 font-mono text-[11px] text-[var(--text-muted)] uppercase tracking-widest">
+            <span>SECTOR: LAKE TANA MONASTIC BASIN</span>
+            <span>•</span>
+            <span>COORDINATES: 11°56′N 37°18′E</span>
+            <span>•</span>
+            <span className="text-[var(--highland-gold)]">5 CONNECTED VOLUMES</span>
+          </div>
+
+          <p className="mt-6 max-w-3xl font-serif-ethiopic text-base sm:text-lg text-[var(--text-vellum-soft)] leading-relaxed">
             {lang === 'am'
-              ? "የኢትዮጵያን ታሪክ የቀየረው ባለ 5 ቅጽ የልቦለድ ድንቅ ስራ። በጣና ሐይቅ የደሴት ገዳማት ሥር ከተሰወረ የጠፈርና የኳንተም ምርምር ማዕከል እስከ ዓለም አቀፍ የስለላ መረቦች ድረስ የተዘረጋ ታላቅ ትረካ።"
-              : "The historic five-volume speculative saga that captivated millions. A clandestine alliance of patriotic scientists beneath ancient Lake Tana defying global intelligence cartels to build the future."}
+              ? "የኢትዮጵያን ዘመናዊ ስነ-ጽሁፍ የቀየረው ባለ 5 ቅጽ የሳይንስና የስለላ ልቦለድ ድንቅ ስራ። በጣና ሐይቅ የደሴት ገዳማት ሥር ከተሰወረ የጠፈርና የቴክኖሎጂ የምርምር ማዕከል እስከ ዓለም አቀፍ የስለላ መረቦች ድረስ የተዘረጋው የይስማዕከ ወርቁ አይበገሬ የሉዓላዊነትና የዕውቀት ትግል ትረካ።"
+              : "A monumental milestone in contemporary African speculative fiction. Centered on a clandestine consortium of patriotic Ethiopian scholars operating from a subterranean laboratory beneath ancient Lake Tana, defying international intelligence cartels (CIA, Mossad) to revive indigenous technological sovereignty."}
           </p>
         </div>
       </section>
 
-      {/* Interactive Universe Constellation & Character Dossiers */}
+      {/* The Manuscript Constellation & Character Dossiers */}
       <DertogadaUniverseMap />
 
-      {/* Deep-Dive Pentology Grid */}
-      <section className="section-padding bg-[#05070a] border-t border-white/10">
-        <div className="site-container">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-['Cinzel']">
-              THE FIVE <span className="text-gradient-gold">CHRONICLES</span>
-              <span className="block text-xl sm:text-2xl font-['Noto_Serif_Ethiopic'] text-[#d4af37] font-semibold mt-1">
-                አምስቱ ተከታታይ ክፍሎች
-              </span>
-            </h2>
-            <p className="mt-2 text-sm text-[#9aa5b8] font-['Noto_Serif_Ethiopic']">
-              {lang === 'am'
-                ? "እያንዳንዱ መጽሐፍ ከቀዳሚው ጋር በጥብቅ የተሳሰረ ሲሆን፣ በንባብ ቅደም ተከተል መነበብ ይመረጣል።"
-                : "Each novel builds upon its predecessor. For the optimal narrative experience, read in sequential order."}
-            </p>
+      {/* In-Depth Pentology Chronological Archive */}
+      <section className="site-container py-16">
+        <div className="max-w-2xl mb-12">
+          <div className="chapter-numeral">
+            <span>CANONICAL CHRONOLOGY</span>
           </div>
+          <h2 className="monument-title-am text-3xl sm:text-4xl text-[var(--text-vellum)]">
+            አምስቱ ተከታታይ ቅጾች
+          </h2>
+          <div className="font-['Cinzel'] text-xs text-[var(--highland-gold)] uppercase tracking-widest mt-1">
+            THE COMPLETE 5-BOOK SAGA IN READING ORDER
+          </div>
+        </div>
 
-          <div className="space-y-12">
-            {universeBooks.map((book, idx) => (
-              <div
-                key={book.id}
-                className="glass-panel p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-cyan-500/35 transition-all"
-              >
+        <div className="space-y-12">
+          {universeBooks.map((book, idx) => (
+            <article
+              key={book.id}
+              className="archival-plate archival-plate-framed p-6 sm:p-10 bg-[var(--ink-surface)]"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Book Cover */}
                 <div className="lg:col-span-4 flex justify-center">
-                  <Link to={`/books/${book.slug}`} className="group block">
+                  <Link to={`/books/${book.slug}`} className="block group">
                     <BookCover book={book} size="normal" />
                   </Link>
                 </div>
 
-                <div className="lg:col-span-8">
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="badge badge-cyan font-mono">
-                      Part 0{book.seriesOrder}
+                {/* Dossier Content */}
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase">
+                    <span className="archival-tag archival-tag-gold">
+                      {geezNumerals[idx]} · PART 0{book.seriesOrder} (CHRONICLE {romanNumerals[idx]})
                     </span>
-                    <span className="badge badge-gold font-mono">
-                      {book.year} G.C. ({book.yearEc} ዓ.ም.)
+                    <span className="archival-tag">
+                      {book.year} G.C. · {book.yearEc} ዓ.ም.
                     </span>
-                    <span className="badge badge-outline font-mono">
-                      {book.pageCount} Pages
-                    </span>
+                    {book.pageCount && (
+                      <span className="archival-tag">
+                        {book.pageCount} PAGES
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-['Noto_Serif_Ethiopic']">
-                    {book.titleAm}
-                    <span className="ml-2 text-lg sm:text-xl font-light text-[#d4af37] font-['Cinzel'] uppercase">
-                      ({book.titleEn})
-                    </span>
-                  </h3>
+                  <div>
+                    <h3 className="font-serif-ethiopic text-2xl sm:text-3xl font-bold text-[var(--text-vellum)]">
+                      {book.titleAm}
+                    </h3>
+                    <div className="font-['Cinzel'] text-sm font-semibold text-[var(--highland-gold)] uppercase tracking-widest mt-0.5">
+                      {book.titleEn}
+                    </div>
+                  </div>
 
-                  <p className="mt-2 text-sm text-cyan-300 font-['Noto_Serif_Ethiopic'] italic">
+                  <div className="border-l-2 border-[var(--rubric-bright)] pl-4 py-0.5 font-serif-ethiopic italic text-sm text-[var(--text-vellum-soft)]">
                     "{lang === 'am' ? book.tagline.am : book.tagline.en}"
-                  </p>
+                  </div>
 
-                  <p className="mt-4 text-sm sm:text-base text-[#ebe4d3] leading-relaxed font-['Noto_Serif_Ethiopic']">
+                  <p className="font-serif-ethiopic text-sm sm:text-base text-[var(--text-stone)] leading-relaxed">
                     {lang === 'am' ? book.description.am : book.description.en}
                   </p>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <Link to={`/books/${book.slug}`} className="btn-cyan text-xs">
-                      <span>{lang === 'am' ? 'የመጽሐፉ ሙሉ ገጽ' : 'Read Full Dossier'}</span>
+                  {/* Themes */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {(lang === 'am' ? book.themesAm : book.themes).map((theme, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 text-xs font-serif-ethiopic bg-[var(--ink-base)] border border-[var(--rule-line)] text-[var(--text-vellum-soft)]"
+                      >
+                        {theme}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 flex items-center gap-4 font-mono text-xs">
+                    <Link to={`/books/${book.slug}`} className="btn-folio text-xs">
+                      <span>{lang === 'am' ? 'ሙሉ ዝርዝር' : 'READ DOSSIER'}</span>
                       <span>→</span>
                     </Link>
-
                     {book.purchaseLinks?.[0] && (
                       <a
                         href={book.purchaseLinks[0].url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-secondary text-xs"
+                        className="btn-ghost-archival text-xs"
                       >
-                        {lang === 'am' ? 'መጽሐፉን ያግኙ / ይዘዙ' : 'Find / Purchase'}
+                        <span>FIND COPY</span>
+                        <span>↗</span>
                       </a>
                     )}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
       </section>
     </main>

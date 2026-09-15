@@ -18,125 +18,132 @@ export default function Contact() {
   };
 
   return (
-    <main className="pt-28 pb-24 bg-[#080b11] text-[#f6f0e2]">
+    <main className="pt-28 sm:pt-32 pb-24 bg-[#0a0c0f] text-[var(--text-vellum)]">
       {/* Header */}
-      <section className="relative py-14 sm:py-20 border-b border-white/10 overflow-hidden">
-        <div className="absolute inset-0 cyber-grid-bg opacity-30 pointer-events-none" />
-
-        <div className="site-container relative z-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[#00f0ff] text-xs font-mono tracking-widest uppercase mb-3">
-            <span>❖ {lang === 'am' ? 'የአንባቢና የሚዲያ ግንኙነት' : 'COMMUNITY & INQUIRIES'} ❖</span>
+      <section className="pb-16 border-b border-[var(--rule-line)]">
+        <div className="site-container">
+          <div className="chapter-numeral">
+            <span>DISPATCH & DIRECT INQUIRY</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white font-['Cinzel'] tracking-tight">
-            CONNECT WITH <span className="text-gradient-cyan">YISMAKE</span>
-            <span className="block text-2xl sm:text-4xl font-['Noto_Serif_Ethiopic'] text-[#d4af37] font-bold mt-2">
-              ግንኙነትና መልዕክት
-            </span>
+          <h1 className="monument-title-am text-4xl sm:text-6xl lg:text-7xl text-[var(--text-vellum)]">
+            ግንኙነትና መልዕክት
           </h1>
 
-          <p className="mt-3 text-sm sm:text-base text-[#9aa5b8] font-['Noto_Serif_Ethiopic'] leading-relaxed">
+          <div className="font-['Cinzel'] text-xs sm:text-sm text-[var(--highland-gold)] font-bold tracking-[0.2em] uppercase mt-2">
+            ACADEMIC INQUIRIES, TRANSLATION RIGHTS & READER ENGAGEMENT
+          </div>
+
+          <p className="mt-4 max-w-3xl font-serif-ethiopic text-sm sm:text-base text-[var(--text-stone)] leading-relaxed">
             {lang === 'am'
-              ? "ለአንባቢ አስተያየቶች፣ ለአካዳሚያዊ ጥናቶች፣ ለትርጉም ስራዎች እና የሚዲያ ቃለ-መጠይቆች የቀረበ ይፋዊ የመገናኛ መድረክ።"
-              : "Direct channels for readers, academic researchers, translation inquiries, and literary media requests."}
+              ? "ለአንባቢ አስተያየቶች፣ ለአካዳሚያዊ ጥናቶች፣ ለትርጉም ስራዎች እና ለስነ-ጽሑፋዊ ሚዲያ ቃለ-መጠይቆች የቀረበ ይፋዊ የመገናኛ መድረክ።"
+              : "Direct channels for readers, academic researchers, translation licensing inquiries, and literary press interviews."}
           </p>
         </div>
       </section>
 
-      <section className="section-padding">
-        <div className="site-container max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left Column: Telegram Channel & Direct Contact info */}
-            <div className="lg:col-span-5 space-y-6">
-              {/* Telegram Official Bridge */}
-              <div className="glass-panel-cyan p-6 sm:p-8">
-                <div className="w-12 h-12 rounded-full bg-[#00f0ff]/15 border border-[#00f0ff]/40 flex items-center justify-center text-[#00f0ff] mb-4">
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.63 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.88 7.97-3.44 3.8-1.58 4.59-1.86 5.11-1.87.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.22-.04.38z" />
-                  </svg>
-                </div>
+      {/* Main Dispatch Channels */}
+      <section className="site-container py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto">
+          {/* Left: Telegram & Official Coordinates */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Telegram Channel Card */}
+            <div className="archival-plate archival-plate-framed p-6 sm:p-8 bg-[var(--ink-surface)]">
+              <div className="font-mono text-xs text-[var(--highland-gold)] uppercase tracking-widest mb-3">
+                PRIMARY COMMUNITY CHANNEL
+              </div>
 
-                <h3 className="text-xl font-bold text-white font-['Cinzel']">
-                  {lang === 'am' ? 'ይፋዊ የቴሌግራም ቻናል' : 'Primary Public Channel'}
-                </h3>
-                <p className="mt-2 text-sm text-[#ebe4d3] font-['Noto_Serif_Ethiopic'] leading-relaxed">
-                  {lang === 'am'
-                    ? "ከ18,600 በላይ አንባቢዎች ጋር በየዕለቱ የሚገናኙበት፣ ግጥሞችና አዳዲስ መረጃዎች የሚቀርቡበት ዋና መድረክ።"
-                    : "The author's active daily broadcast and discussion platform with over 18,600 readers in Ethiopia and globally."}
-                </p>
+              <h2 className="font-serif-ethiopic text-xl font-bold text-[var(--text-vellum)]">
+                ይፋዊ የቴሌግራም ቻናል
+              </h2>
 
+              <p className="mt-3 font-serif-ethiopic text-xs text-[var(--text-stone)] leading-relaxed">
+                {lang === 'am'
+                  ? "ከ18,600 በላይ አባላት ባሉበት ይፋዊ ቻናል ላይ በየዕለቱ የደራሲነት ማስታወሻዎችንና ውይይቶችን ይከታተሉ።"
+                  : "Daily dispatches, Amharic poetry excerpts, writing craft notes, and direct community engagement."}
+              </p>
+
+              <div className="mt-6 pt-4 border-t border-[var(--rule-line-subtle)]">
                 <a
                   href={authorData.telegram.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-cyan w-full text-center text-xs mt-6"
+                  className="btn-folio text-xs w-full text-center"
                 >
-                  <span>{lang === 'am' ? 'ቴሌግራም ክፈት' : 'Open Telegram @yismakeworku'}</span>
+                  <span>JOIN @YISMAKEWORKU (18.6K+)</span>
                   <span>↗</span>
                 </a>
               </div>
+            </div>
 
-              {/* Academic & Literary Guild */}
-              <div className="glass-panel p-6">
-                <div className="text-xs uppercase tracking-widest text-[#d4af37] font-mono mb-2">
-                  {lang === 'am' ? 'አካዳሚያዊ መረጃ' : 'Academic & Translation Hub'}
+            {/* Academic & Geographic Coordinates */}
+            <div className="archival-plate p-6 bg-[var(--ink-surface)] font-mono text-xs space-y-3">
+              <div className="text-[var(--highland-gold)] uppercase tracking-widest">
+                GEOGRAPHIC & ACADEMIC BASES
+              </div>
+              <div className="text-[var(--text-stone)] space-y-2 text-[11px]">
+                <div>
+                  <span className="text-[var(--text-vellum)]">ACADEMIC BASE:</span> Debre Markos University, East Gojjam, Ethiopia
                 </div>
-                <div className="text-sm text-white/80 font-['Noto_Serif_Ethiopic'] space-y-2">
-                  <p>
-                    <strong>Department:</strong> {authorData.academicAffiliation.en}
-                  </p>
-                  <p>
-                    <strong>UK Translation Contact:</strong> Henningham Family Press (London)
-                  </p>
-                  <p className="text-xs text-white/50 pt-2 border-t border-white/10">
-                    For dissertation permissions, academic excerpts, and rights inquiries.
-                  </p>
+                <div>
+                  <span className="text-[var(--text-vellum)]">LITERARY SECTOR:</span> Lake Tana Basin & Addis Ababa
+                </div>
+                <div>
+                  <span className="text-[var(--text-vellum)]">COORDINATES:</span> 11°56′N 37°18′E
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Right Column: Inquiry Form */}
-            <div className="lg:col-span-7 glass-panel p-8 sm:p-10">
+          {/* Right: Archival Inquiry Desk (Form) */}
+          <div className="lg:col-span-7">
+            <div className="archival-plate archival-plate-framed p-7 sm:p-10 bg-[var(--ink-surface)]">
+              <div className="font-mono text-xs text-[var(--highland-gold)] uppercase tracking-widest mb-2">
+                INQUIRY & DISPATCH FORM
+              </div>
+
+              <h2 className="font-serif-ethiopic text-2xl font-bold text-[var(--text-vellum)] mb-6">
+                መልዕክት ይላኩ
+              </h2>
+
               {formSubmitted ? (
-                <div className="text-center py-12">
-                  <div className="text-5xl mb-4 text-[#00f0ff]">✓</div>
-                  <h3 className="text-2xl font-bold text-white font-['Cinzel']">
-                    {lang === 'am' ? 'መልዕክትዎ ደርሷል!' : 'Message Received'}
-                  </h3>
-                  <p className="mt-3 text-sm text-[#ebe4d3] font-['Noto_Serif_Ethiopic'] max-w-md mx-auto">
+                <div className="p-6 bg-[var(--ink-plate)] border border-[var(--highland-gold-border)] font-mono text-xs space-y-3">
+                  <div className="text-[var(--highland-gold)] font-bold tracking-widest uppercase">
+                    ✓ DISPATCH REGISTERED
+                  </div>
+                  <p className="font-serif-ethiopic text-sm text-[var(--text-vellum)]">
                     {lang === 'am'
-                      ? "ስለ መልዕክትዎ እናመሰግናለን። የደራሲው ማህደር ቡድን በተቻለ ፍጥነት ምላሽ ይሰጣል።"
-                      : "Thank you for reaching out. Your message has been logged with the official archive coordinator."}
+                      ? "መልዕክትዎ በማህደሩ ውስጥ ተመዝግቧል። እናመሰግናለን!"
+                      : "Your dispatch has been registered in the archive. Thank you for your inquiry."}
                   </p>
+                  <div className="text-[10px] text-[var(--text-muted)] pt-2 border-t border-[var(--rule-line-subtle)]">
+                    DISPATCH REF: #YW-{Math.floor(1000 + Math.random() * 9000)} · STATUS: LOGGED
+                  </div>
                   <button
                     onClick={() => setFormSubmitted(false)}
-                    className="btn-secondary text-xs mt-6 cursor-pointer"
+                    className="btn-link-editorial mt-3 block"
                   >
-                    {lang === 'am' ? 'ሌላ መልዕክት ላክ' : 'Send Another Message'}
+                    SEND ANOTHER DISPATCH →
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6 font-['Noto_Serif_Ethiopic']">
-                  <h3 className="text-xl font-bold text-white font-['Cinzel']">
-                    {lang === 'am' ? 'መልዕክት ይላኩ' : 'Send an Inquiry'}
-                  </h3>
-
+                <form onSubmit={handleSubmit} className="space-y-5 font-mono text-xs">
                   <div>
-                    <label className="block text-xs font-mono text-white/70 uppercase mb-2">
-                      {lang === 'am' ? 'ስምዎ' : 'Your Full Name'} *
+                    <label className="block text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                      {lang === 'am' ? 'ሙሉ ስም' : 'Your Name / Institution'} *
                     </label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/15 text-white focus:outline-none focus:border-[#00f0ff] transition-all text-sm"
-                      placeholder={lang === 'am' ? 'ሙሉ ስም' : 'Abebe Bikila'}
+                      placeholder="e.g. Dr. Abebe / University of ..."
+                      className="w-full px-4 py-2.5 bg-[var(--ink-base)] border border-[var(--rule-line)] text-[var(--text-vellum)] focus:outline-none focus:border-[var(--highland-gold)] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-white/70 uppercase mb-2">
+                    <label className="block text-[var(--text-muted)] uppercase tracking-wider mb-2">
                       {lang === 'am' ? 'ኢሜይል' : 'Email Address'} *
                     </label>
                     <input
@@ -144,43 +151,46 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/15 text-white focus:outline-none focus:border-[#00f0ff] transition-all text-sm"
-                      placeholder="name@example.com"
+                      placeholder="your.email@institution.edu"
+                      className="w-full px-4 py-2.5 bg-[var(--ink-base)] border border-[var(--rule-line)] text-[var(--text-vellum)] focus:outline-none focus:border-[var(--highland-gold)] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-white/70 uppercase mb-2">
-                      {lang === 'am' ? 'የመልዕክቱ ዓላማ' : 'Inquiry Purpose'}
+                    <label className="block text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                      {lang === 'am' ? 'የመልዕክቱ ዓላማ' : 'Purpose of Inquiry'}
                     </label>
                     <select
                       value={formData.purpose}
                       onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/15 text-white focus:outline-none focus:border-[#00f0ff] transition-all text-sm cursor-pointer"
+                      className="w-full px-4 py-2.5 bg-[var(--ink-base)] border border-[var(--rule-line)] text-[var(--text-vellum)] focus:outline-none focus:border-[var(--highland-gold)] transition-colors"
                     >
-                      <option value="reader">{lang === 'am' ? 'የአንባቢ አስተያየት' : 'Reader Reflection / Letter'}</option>
-                      <option value="academic">{lang === 'am' ? 'አካዳሚያዊ ጥናት / ዩኒቨርሲቲ' : 'Academic Study / Research Thesis'}</option>
-                      <option value="media">{lang === 'am' ? 'የሚዲያና የቃለ-መጠይቅ ጥያቄ' : 'Media Interview / Press Inquiry'}</option>
-                      <option value="translation">{lang === 'am' ? 'የትርጉም ወይም የአሳታሚነት ጥያቄ' : 'Translation / Publishing Rights'}</option>
+                      <option value="reader">{lang === 'am' ? 'የአንባቢ አስተያየት' : 'Reader Reflection / Comment'}</option>
+                      <option value="academic">{lang === 'am' ? 'አካዳሚያዊ ጥናትና ምርምር' : 'Academic Research / Thesis Inquiry'}</option>
+                      <option value="translation">{lang === 'am' ? 'የትርጉም ፈቃድና ህትመት' : 'Translation Rights & Publishing'}</option>
+                      <option value="media">{lang === 'am' ? 'የሚዲያና ጋዜጣዊ ቃለ-መጠይቅ' : 'Media Interview & Literary Press'}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-white/70 uppercase mb-2">
-                      {lang === 'am' ? 'መልዕክት' : 'Your Message'} *
+                    <label className="block text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                      {lang === 'am' ? 'መልዕክት' : 'Dispatch / Message'} *
                     </label>
                     <textarea
-                      rows={5}
                       required
+                      rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/15 text-white focus:outline-none focus:border-[#00f0ff] transition-all text-sm"
-                      placeholder={lang === 'am' ? 'መልዕክትዎን እዚህ ያስፍሩ...' : 'Write your inquiry or letter here...'}
+                      placeholder={lang === 'am' ? 'መልዕክትዎን እዚህ ይጻፉ...' : 'Write your inquiry or message here...'}
+                      className="w-full px-4 py-2.5 bg-[var(--ink-base)] border border-[var(--rule-line)] text-[var(--text-vellum)] focus:outline-none focus:border-[var(--highland-gold)] font-serif-ethiopic text-sm transition-colors"
                     />
                   </div>
 
-                  <button type="submit" className="btn-primary w-full text-center text-sm py-3.5">
-                    <span>{lang === 'am' ? 'መልዕክቱን ላክ' : 'Transmit Message'}</span>
+                  <button
+                    type="submit"
+                    className="btn-folio w-full text-center"
+                  >
+                    <span>{lang === 'am' ? 'መልዕክቱን አስመዝግብ' : 'SUBMIT ARCHIVAL DISPATCH'}</span>
                     <span>→</span>
                   </button>
                 </form>
