@@ -40,7 +40,6 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/books/:slug" element={<BookDetail />} />
           <Route path="/author" element={<About />} />
-          <Route path="/author/azaries-dessie" element={<Navigate to="/author" replace />} />
           <Route path="/about" element={<Navigate to="/author" replace />} />
           <Route path="/archive" element={<Archive />} />
           <Route path="/insights" element={<Navigate to="/archive" replace />} />

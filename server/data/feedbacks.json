@@ -1,10 +1,10 @@
 [
     {
         "id": "d9f2eb4a-7e3b-4594-bc84-0c945241c820",
-        "bookSlug": "halwot",
-        "bookTitle": "Halwot",
-        "username": "mercy",
-        "comment": "grate book",
+        "bookSlug": "dertogada",
+        "bookTitle": "Dertogada (ዴርቶጋዳ)",
+        "username": "Ermias",
+        "comment": "A monumental masterpiece of Ethiopian literature. Shagiz's journey beneath Lake Tana redefined Amharic fiction for our generation.",
         "rating": 5,
         "source": "web",
         "bookCode": "",
@@ -12,22 +12,28 @@
     },
     {
         "id": "1cab2b65-1295-4ec8-91e1-f407f00f68b5",
-        "bookSlug": "karamon",
-        "bookTitle": "Karamon - Pigeon and Falcon",
-        "username": "ss",
-        "comment": "aa",
+        "bookSlug": "ramatohara",
+        "bookTitle": "Ramatohara (ራማቶሓራ)",
+        "username": "Selamawit",
+        "comment": "Brilliant continuation of the saga. The blend of ecclesiastical manuscript secrets with high-tech suspense is unmatched.",
         "rating": 5,
         "source": "web",
         "bookCode": "",
-        "likes": 1,
-        "replies": [
-            {
-                "id": "f0f9d2dc-303c-452c-89f3-3b377ce5b9f5",
-                "username": "www",
-                "comment": "ggg",
-                "createdAt": "2026-07-24T01:49:12.788Z"
-            }
-        ],
+        "likes": 4,
+        "replies": [],
         "createdAt": "2026-07-24T01:48:59.449Z"
+    },
+    {
+        "id": "3cab2b65-1295-4ec8-91e1-f407f00f68b6",
+        "bookSlug": "kebur-dengay",
+        "bookTitle": "Kebur Dengay (ክቡር ድንጋይ)",
+        "username": "Dawit",
+        "comment": "Incisive, poignant, and brilliantly philosophical magical realism. Deserves every bit of international recognition.",
+        "rating": 5,
+        "source": "web",
+        "bookCode": "",
+        "likes": 2,
+        "replies": [],
+        "createdAt": "2026-08-10T14:20:12.110Z"
     }
 ]

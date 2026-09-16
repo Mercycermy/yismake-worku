@@ -687,8 +687,14 @@ export default function Admin() {
                                         value={genForm.bookTitle}
                                         onChange={(e) => setGenForm((f) => ({ ...f, bookTitle: e.target.value }))}>
                                         <option value="">Select a book…</option>
-                                        <option>Karamon - Pigon and Falcon</option>
-                                        <option>Halwot</option>
+                                        <option>Dertogada (ዴርቶጋዳ)</option>
+                                        <option>Ramatohara (ራማቶሓራ)</option>
+                                        <option>Xantoxara (ዣንቶዣራ)</option>
+                                        <option>Yoratorad (ዮራቶራድ)</option>
+                                        <option>Yotod (ዮቶድ)</option>
+                                        <option>Kebur Dengay (ክቡር ድንጋይ)</option>
+                                        <option>Zamra (ዛምራ)</option>
+                                        <option>Gefuan (ገፉአን)</option>
                                     </select>
                                 </div>
                                 <div className="form-group">

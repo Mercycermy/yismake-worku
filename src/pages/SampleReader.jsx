@@ -90,7 +90,7 @@ export default function SampleReader() {
 
             {/* Watermark notice */}
             <div className="reader-footer">
-                <p>© Azaries Dessie — Sample preview only. Purchase the full book for the complete experience.</p>
+                <p>© Yismake Worku — Sample preview only. Purchase the full book for the complete experience.</p>
             </div>
         </section>
     );

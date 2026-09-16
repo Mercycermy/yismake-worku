@@ -148,26 +148,23 @@ export default function AuthorHero() {
 
             {/* Dertogada Canonical Codex Callout */}
             {dertogadaBook && (
-              <div className="max-w-sm w-full p-4 bg-[var(--ink-surface)] border border-[var(--rule-line-subtle)] hover:border-[var(--rule-line)] transition-all">
-                <div className="flex items-center gap-4">
-                  <div className="shrink-0 w-16">
-                    <BookCover book={dertogadaBook} size="small" showSpine={false} />
-                  </div>
-                  <div>
-                    <span className="font-mono text-[9px] text-[var(--highland-gold)] uppercase tracking-widest">
-                      CANONICAL GENESIS (2009)
-                    </span>
-                    <h4 className="font-serif-ethiopic text-sm font-bold text-[var(--text-vellum)] mt-0.5">
-                      {dertogadaBook.titleAm}
-                    </h4>
-                    <p className="font-serif-ethiopic text-[11px] text-[var(--text-stone)] line-clamp-2 mt-1">
-                      {lang === 'am' ? dertogadaBook.tagline.am : dertogadaBook.tagline.en}
-                    </p>
-                    <Link to={`/books/${dertogadaBook.slug}`} className="btn-link-editorial text-[10px] mt-2 inline-flex">
-                      <span>{lang === 'am' ? 'ሙሉ ማህደር' : 'VIEW DOSSIER'}</span>
-                      <span>→</span>
-                    </Link>
-                  </div>
+              <div className="max-w-sm w-full p-4 bg-[var(--ink-surface)] border border-[var(--rule-line-subtle)] hover:border-[var(--highland-gold-border)] transition-all">
+                <div className="flex items-start justify-between gap-3 mb-2 font-mono text-[9px] uppercase tracking-widest text-[var(--text-muted)]">
+                  <span className="text-[var(--highland-gold)]">CANONICAL GENESIS</span>
+                  <span>2009 G.C. · 2001 ዓ.ም.</span>
+                </div>
+                <h4 className="font-serif-ethiopic text-base font-bold text-[var(--text-vellum)]">
+                  {dertogadaBook.titleAm} <span className="font-['Cinzel'] text-xs text-[var(--highland-gold)]">({dertogadaBook.titleEn})</span>
+                </h4>
+                <p className="font-serif-ethiopic text-xs text-[var(--text-stone)] line-clamp-2 mt-1.5 leading-relaxed">
+                  {lang === 'am' ? dertogadaBook.tagline.am : dertogadaBook.tagline.en}
+                </p>
+                <div className="mt-3 pt-2 border-t border-[var(--rule-line-subtle)] flex items-center justify-between font-mono text-[10px]">
+                  <span className="text-[var(--rubric-bright)]">200,000+ COPIES</span>
+                  <Link to={`/books/${dertogadaBook.slug}`} className="btn-link-editorial text-[10px]">
+                    <span>{lang === 'am' ? 'ሙሉ ማህደር' : 'VIEW DOSSIER'}</span>
+                    <span>→</span>
+                  </Link>
                 </div>
               </div>
             )}

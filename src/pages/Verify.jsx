@@ -20,8 +20,9 @@ export default function Verify() {
     const getSlugFromTitle = (title) => {
         if (!title) return "";
         const t = title.toLowerCase();
-        if (t.includes("karamon")) return "karamon";
-        if (t.includes("halwot")) return "halwot";
+        if (t.includes("dertogada")) return "dertogada";
+        if (t.includes("ramatohara")) return "ramatohara";
+        if (t.includes("xantoxara")) return "xantoxara";
         return t.replace(/[^a-z0-9]/g, "");
     };
 

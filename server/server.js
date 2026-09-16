@@ -441,8 +441,11 @@ function generateCode() {
 
 function bookSlugFromTitle(title) {
     var normalized = String(title || "").toLowerCase();
-    if (normalized.includes("karamon")) return "karamon";
-    if (normalized.includes("halwot")) return "halwot";
+    if (normalized.includes("dertogada")) return "dertogada";
+    if (normalized.includes("ramatohara")) return "ramatohara";
+    if (normalized.includes("xantoxara")) return "xantoxara";
+    if (normalized.includes("yoratorad")) return "yoratorad";
+    if (normalized.includes("yotod")) return "yotod";
     return normalized
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "") || "book";
@@ -664,7 +667,7 @@ app.delete("/api/books/:id", requireAdmin, function (req, res) {
 const { streamQrZip } = require("./qr-zip");
 
 const PUBLIC_SITE_URL = String(
-    process.env.PUBLIC_SITE_URL || "https://www.sigwanuniverse.com"
+    process.env.PUBLIC_SITE_URL || "https://www.yismakeworku.com"
 ).replace(/\/+$/, "");
 const VERIFY_BASE = PUBLIC_SITE_URL + "/verify?code=";
 
@@ -734,11 +737,7 @@ app.post("/api/books/download-selected", requireAdmin, async function (req, res)
 
 /* ─── Start ─── */
 app.get("/about", function (_req, res) {
-    res.redirect(301, "/author/azaries-dessie");
-});
-
-app.get("/books/karamon", function (_req, res) {
-    res.redirect(301, "/books/karamon-pigeon-and-falcon");
+    res.redirect(301, "/author");
 });
 
 app.get("*", function (req, res) {
