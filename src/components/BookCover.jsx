@@ -133,10 +133,11 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
 
   return (
     <div
-      className={`relative select-none codex-shadow transition-transform duration-500 rounded-none overflow-hidden ${sizeStyles} ${className}`}
+      className={`relative select-none codex-shadow transition-transform duration-500 overflow-hidden ${sizeStyles} ${className}`}
       style={{
-        border: '1px solid rgba(245, 240, 230, 0.16)',
-        backgroundColor: '#0a0c0f'
+        border: '1px solid var(--border-hairline)',
+        backgroundColor: '#080f11',
+        boxShadow: '-10px 14px 28px rgba(0, 0, 0, 0.9), 0 0 20px -5px rgba(45, 212, 191, 0.15)'
       }}
     >
       {/* Background Cloth & Vellum Texture */}
@@ -150,22 +151,22 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
         className="absolute inset-2 z-10 pointer-events-none"
         style={{
           border: `1px solid ${codexThemes.accent}30`,
-          outline: `1px solid rgba(245, 240, 230, 0.06)`,
+          outline: `1px solid rgba(45, 212, 191, 0.12)`,
           outlineOffset: '2px'
         }}
       />
 
       {/* Traditional Ge'ez Corner Florets */}
-      <div className="absolute top-3 left-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+      <div className="absolute top-3 left-3 z-10 text-[10px] pointer-events-none opacity-70" style={{ color: codexThemes.accent }}>
         {codexThemes.symbol}
       </div>
-      <div className="absolute top-3 right-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+      <div className="absolute top-3 right-3 z-10 text-[10px] pointer-events-none opacity-70" style={{ color: codexThemes.accent }}>
         {codexThemes.symbol}
       </div>
-      <div className="absolute bottom-3 left-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+      <div className="absolute bottom-3 left-3 z-10 text-[10px] pointer-events-none opacity-70" style={{ color: codexThemes.accent }}>
         {codexThemes.symbol}
       </div>
-      <div className="absolute bottom-3 right-3 z-10 text-[10px] pointer-events-none opacity-60" style={{ color: codexThemes.accent }}>
+      <div className="absolute bottom-3 right-3 z-10 text-[10px] pointer-events-none opacity-70" style={{ color: codexThemes.accent }}>
         {codexThemes.symbol}
       </div>
 
@@ -176,16 +177,16 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
       <div className="relative z-10 h-full p-5 sm:p-6 flex flex-col justify-between text-center">
         {/* Top Header: Author Imprimatur */}
         <div className="pt-1">
-          <div className="text-[10px] sm:text-[11px] tracking-[0.24em] font-mono uppercase text-[var(--highland-gold)]">
+          <div className="text-[10px] sm:text-[11px] tracking-[0.22em] font-mono uppercase text-[var(--secondary)] font-semibold">
             YISMAKE WORKU
           </div>
-          <div className="font-serif-ethiopic text-xs sm:text-sm font-semibold text-[var(--text-vellum-soft)] tracking-wider mt-0.5">
+          <div className="font-serif text-xs sm:text-sm font-semibold text-[var(--on-surface)] tracking-wider mt-0.5">
             ይስማዕከ ወርቁ
           </div>
 
           {book.seriesOrder && (
-            <div className="mt-1.5 inline-block font-mono text-[9px] sm:text-[10px] tracking-widest text-[var(--text-stone)] uppercase border-b border-[var(--rule-line)] pb-0.5">
-              PART 0{book.seriesOrder} · SAGA
+            <div className="mt-1.5 inline-block font-mono text-[9px] sm:text-[10px] tracking-widest text-[var(--primary)] uppercase border-b border-[var(--border-hairline)] pb-0.5">
+              CANON 0{book.seriesOrder} · PENTOLOGY
             </div>
           )}
         </div>
@@ -194,33 +195,32 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
         <div className="my-auto py-3">
           {/* Sacred Amharic Monument Title */}
           <div
-            className="font-serif-ethiopic text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--text-vellum)] leading-tight drop-shadow"
+            className="font-serif text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--on-surface)] leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]"
             style={{
               letterSpacing: '0.02em',
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.9)'
             }}
           >
             {book.titleAm}
           </div>
 
           {/* Traditional Rubric Divider */}
-          <div className="flex items-center justify-center my-2 opacity-70">
-            <span className="h-[1px] w-6 bg-[var(--highland-gold)]" />
+          <div className="flex items-center justify-center my-2 opacity-80">
+            <span className="h-[1px] w-6 bg-[var(--primary)]" />
             <span className="mx-2 text-xs" style={{ color: codexThemes.rubric }}>❖</span>
-            <span className="h-[1px] w-6 bg-[var(--highland-gold)]" />
+            <span className="h-[1px] w-6 bg-[var(--primary)]" />
           </div>
 
           {/* Latin Title Transliteration */}
-          <div className="font-['Cinzel'] text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[var(--highland-gold)]">
+          <div className="font-serif text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase text-[var(--secondary)]">
             {book.titleEn}
           </div>
         </div>
 
         {/* Bottom Footer: Publication Stamp */}
-        <div className="pb-1 pt-2 border-t border-[var(--rule-line-subtle)]">
-          <div className="font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)] tracking-wider uppercase flex items-center justify-between">
+        <div className="pb-1 pt-2 border-t border-[var(--border-hairline)]">
+          <div className="font-mono text-[9px] sm:text-[10px] text-[var(--outline)] tracking-wider uppercase flex items-center justify-between">
             <span>{book.year} G.C.</span>
-            <span className="font-serif-ethiopic text-[var(--highland-gold)]">{book.yearEc} ዓ.ም.</span>
+            <span className="font-serif text-[var(--secondary)]">{book.yearEc} ዓ.ም.</span>
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
       <div
         className="absolute top-0 bottom-0 right-0 w-[2px] pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent)'
+          background: 'linear-gradient(to bottom, transparent, rgba(45, 212, 191, 0.35), transparent)'
         }}
       />
     </div>

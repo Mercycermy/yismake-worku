@@ -1,88 +1,156 @@
 /* ==========================================================================
-   YISMAKE WORKU (ይስማዕከ ወርቁ) — OFFICIAL LITERARY EXHIBITION DESIGN SYSTEM
-   "ብራና ወ-ጠፈር" (Brana & Orbit: The Tana Manuscript Observatory)
-   Pure Vanilla CSS Architecture — Robust Layout & Editorial Aesthetics
+   YISMAKE WORKU (ይስማዕከ ወርቁ) — OFFICIAL LITERARY EXHIBITION
+   DESIGN SYSTEM: "TEHADSO OBSIDIAN & CHASM EMERALD"
+   Speculative Ethiopian Antiquarianism & Deep-Chasm Subterranean Research
    ========================================================================== */
 
 :root {
   /* --------------------------------------------------------------------------
-     1. PALETTE: Monastic Parchment, Iron Gall Ink, Vermilion, Highland Gold
+     1. PALETTE: Obsidian Void, Chasm Emerald, Sacred Ochre, Archival Bone
      -------------------------------------------------------------------------- */
-  --ink-base: #0a0c0f;              /* Deep obsidian slate base */
-  --ink-surface: #10141a;           /* Secondary archival sheet */
-  --ink-plate: #151a22;             /* Elevated plate / folio */
-  --ink-plate-hover: #1b212c;       /* Plate hover state */
-  --ink-well: #07080a;              /* Recessed ink well */
+  /* Neutral Surface Palette (Obsidian & Void) */
+  --surface: #0d1517;
+  --surface-dim: #0d1517;
+  --surface-bright: #323b3d;
+  --surface-container-lowest: #080f11;
+  --surface-container-low: #151d1f;
+  --surface-container: #192123;
+  --surface-container-high: #232b2d;
+  --surface-container-highest: #2e3638;
+  --surface-variant: #2e3638;
 
-  /* Text & Contrast */
-  --text-vellum: #f5f0e6;           /* Aged manuscript vellum (primary reading) */
-  --text-vellum-soft: #ddd4c4;      /* Soft parchment body */
-  --text-stone: #9e9587;            /* Weathered stone dust (narrative notes) */
-  --text-muted: #6e675b;            /* Subdued archival metadata */
+  /* Contrast & Text */
+  --on-surface: #dce4e6;
+  --on-surface-variant: #bacac5;
+  --inverse-surface: #dce4e6;
+  --inverse-on-surface: #2a3234;
+  --outline: #859490;
+  --outline-variant: #3c4a46;
+  --surface-tint: #3cddc7;
 
-  /* Ethiopian Manuscript Inks */
-  --rubric-red: #8f2329;            /* Traditional Ethiopian red manuscript ink (ቀይ ቀለም) */
-  --rubric-bright: #c13b3c;         /* Illuminated red for rubrics & drop caps */
-  --rubric-glow: rgba(143, 35, 41, 0.22);
-  --rubric-border: rgba(193, 59, 60, 0.4);
+  /* Primary: Emerald Bioluminescence */
+  --primary: #57f1db;
+  --on-primary: #003731;
+  --primary-container: #2dd4bf;
+  --on-primary-container: #00574d;
+  --inverse-primary: #006b5f;
+  --primary-fixed: #62fae3;
+  --primary-fixed-dim: #3cddc7;
+  --on-primary-fixed: #00201c;
+  --on-primary-fixed-variant: #005047;
 
-  --highland-gold: #c29b38;         /* Oxidized Ethiopian highland gold leaf */
-  --highland-gold-bright: #dfb547;  /* Polished gold highlight */
-  --highland-gold-glow: rgba(194, 155, 56, 0.2);
-  --highland-gold-border: rgba(194, 155, 56, 0.35);
+  /* Secondary: Sacred Beeswax Candle & Ochre */
+  --secondary: #ffb95f;
+  --on-secondary: #472a00;
+  --secondary-container: #ee9800;
+  --on-secondary-container: #5b3800;
+  --secondary-fixed: #ffddb8;
+  --secondary-fixed-dim: #ffb95f;
+  --on-secondary-fixed: #2a1700;
+  --on-secondary-fixed-variant: #653e00;
 
-  --tana-deep: #142230;             /* Subterranean Lake Tana water */
-  --tana-water: #1b2e40;            /* Aquatic research base */
-  --tana-border: rgba(64, 120, 160, 0.3);
+  /* Tertiary: Deep Chasm Verdigris */
+  --tertiary: #a0e6e5;
+  --on-tertiary: #003737;
+  --tertiary-container: #84cac9;
+  --on-tertiary-container: #005656;
+  --tertiary-fixed: #a8efee;
+  --tertiary-fixed-dim: #8dd3d2;
+  --on-tertiary-fixed: #002020;
+  --on-tertiary-fixed-variant: #004f50;
 
-  /* Rules, Margins & Deckle Edges */
-  --rule-line: rgba(245, 240, 230, 0.12);
-  --rule-line-subtle: rgba(245, 240, 230, 0.06);
-  --rule-line-strong: rgba(245, 240, 230, 0.24);
+  /* Archival Parchment & Scribe Inks */
+  --archival-bright: #f4efe6;
+  --bone-parchment: #e8dfd1;
+  --scribe-carbon: #242b2c;
+
+  /* Annotation, Rubric & Taxonomy */
+  --rubric-crimson: #b91c1c;
+  --oxidized-copper: #047857;
+  --border-hairline: #1e3539;
+
+  /* Errors & Safety */
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+
+  /* Legacy & Semantic Bindings */
+  --ink-base: var(--surface);
+  --ink-surface: var(--surface-container-low);
+  --ink-plate: var(--surface-container);
+  --ink-plate-hover: var(--surface-container-high);
+  --ink-well: var(--surface-container-lowest);
+  --text-vellum: var(--on-surface);
+  --text-vellum-soft: var(--on-surface-variant);
+  --text-stone: var(--outline);
+  --text-muted: var(--outline-variant);
+
+  --highland-gold: var(--secondary);
+  --highland-gold-bright: var(--secondary-fixed);
+  --highland-gold-border: var(--outline-variant);
+  --highland-gold-glow: rgba(245, 158, 11, 0.18);
+
+  --rubric-red: var(--rubric-crimson);
+  --rubric-bright: #ef4444;
+  --rubric-border: rgba(185, 28, 28, 0.4);
+
+  --tana-deep: #0e1a1d;
+  --tana-water: #132427;
+
+  --rule-line: var(--border-hairline);
+  --rule-line-subtle: rgba(60, 74, 70, 0.4);
+  --rule-line-strong: rgba(45, 212, 191, 0.25);
+
+  /* Chiaroscuro Luminance Shadows */
+  --glow-emerald: 0 0 35px -8px rgba(45, 212, 191, 0.18);
+  --glow-candle: 0 0 24px -4px rgba(245, 158, 11, 0.20);
+  --glow-relic: 0 0 20px -2px rgba(45, 212, 191, 0.35);
 
   /* --------------------------------------------------------------------------
      2. TYPOGRAPHY STACKS
      -------------------------------------------------------------------------- */
+  --font-display: 'Playfair Display', 'Noto Serif Ethiopic', Georgia, serif;
   --font-serif-ethiopic: 'Noto Serif Ethiopic', 'Abyssinica SIL', serif;
-  --font-sans-ethiopic: 'Noto Sans Ethiopic', sans-serif;
-  --font-serif-latin: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
-  --font-display: 'Cinzel', 'Noto Serif Ethiopic', serif;
-  --font-body: 'Plus Jakarta Sans', 'Noto Sans Ethiopic', -apple-system, sans-serif;
+  --font-serif-latin: 'Playfair Display', 'Noto Serif', Georgia, serif;
+  --font-body: 'Noto Serif', 'Noto Serif Ethiopic', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Geometry */
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  /* Strict Zero Radius Rule */
+  --radius-sm: 0px;
+  --radius-md: 0px;
 }
 
 /* ----------------------------------------------------------------------------
-   BASE RESET & ARCHIVAL ATMOSPHERE
+   BASE RESET & SHARP ARCHITECTURAL MONUMENTALITY (0px Radius Strictly)
    ---------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  border-radius: 0 !important;
 }
 
 html {
   font-size: 16px;
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: var(--ink-base);
+  background-color: var(--surface);
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--ink-base);
-  color: var(--text-vellum);
+  background-color: var(--surface);
+  color: var(--on-surface);
   line-height: 1.72;
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: 
-    radial-gradient(ellipse at 50% 0%, rgba(20, 34, 48, 0.35) 0%, transparent 60%),
-    radial-gradient(circle at 90% 20%, rgba(143, 35, 41, 0.08) 0%, transparent 40%);
+    radial-gradient(ellipse at 50% 0%, rgba(31, 107, 107, 0.22) 0%, transparent 65%),
+    radial-gradient(circle at 90% 15%, rgba(245, 158, 11, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 10% 85%, rgba(45, 212, 191, 0.06) 0%, transparent 40%);
   background-attachment: fixed;
 }
 
@@ -716,18 +784,24 @@ body.lang-am h4 {
 }
 
 /* ----------------------------------------------------------------------------
-   ARCHIVAL PLATES & CODEX CONTAINERS
+   ARCHIVAL PLATES & CODEX CONTAINERS (Luminance Chiaroscuro & Monolithic Depth)
    ---------------------------------------------------------------------------- */
 .archival-plate {
-  background: var(--ink-surface);
-  border: 1px solid var(--rule-line);
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
   position: relative;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
 }
 
 .archival-plate:hover {
-  border-color: var(--highland-gold-border);
-  background: var(--ink-plate);
+  border-color: var(--primary-container);
+  background: var(--surface-container);
+  box-shadow: 0 0 35px -8px rgba(45, 212, 191, 0.14);
+}
+
+.archival-plate-candle:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 0 24px -4px rgba(245, 158, 11, 0.18);
 }
 
 .archival-plate-framed {
@@ -741,7 +815,7 @@ body.lang-am h4 {
   left: -6px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--highland-gold);
+  color: var(--secondary);
   line-height: 1;
   pointer-events: none;
 }
@@ -753,41 +827,203 @@ body.lang-am h4 {
   right: -6px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--rubric-bright);
+  color: var(--primary);
   line-height: 1;
   pointer-events: none;
 }
 
-/* Archival Specimen Tag */
+/* 45-degree Chamfer Corner Notches */
+.chamfer-45 {
+  clip-path: polygon(
+    0 7px,
+    7px 0,
+    100% 0,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0 100%
+  );
+}
+
+.chamfer-tag {
+  clip-path: polygon(
+    0 4px,
+    4px 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%
+  );
+}
+
+/* Catalog Tags & Rubrics (Strictly Unrounded with Spec Indicators) */
+.catalog-tag,
 .archival-tag {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   padding: 0.2rem 0.65rem;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: rgba(245, 240, 230, 0.04);
-  border: 1px solid var(--rule-line);
-  color: var(--text-stone);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
+  color: var(--on-surface-variant);
+  transition: all 0.2s ease;
+}
+
+.catalog-tag:hover {
+  border-color: var(--primary-container);
+  color: var(--primary);
+}
+
+.catalog-indicator-emerald {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: var(--primary-container);
+  box-shadow: 0 0 6px var(--primary-container);
+  flex-shrink: 0;
+}
+
+.catalog-indicator-crimson {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background-color: var(--rubric-crimson);
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px var(--rubric-crimson);
+  flex-shrink: 0;
 }
 
 .archival-tag-gold {
-  border-color: var(--highland-gold-border);
-  color: var(--highland-gold);
-  background: rgba(194, 155, 56, 0.08);
+  border-color: rgba(255, 185, 95, 0.35);
+  color: var(--secondary);
+  background: rgba(238, 152, 0, 0.08);
 }
 
 .archival-tag-rubric {
-  border-color: var(--rubric-border);
-  color: var(--rubric-bright);
-  background: rgba(143, 35, 41, 0.12);
+  border-color: rgba(185, 28, 28, 0.45);
+  color: #fca5a5;
+  background: rgba(185, 28, 28, 0.12);
+}
+
+.archival-tag-emerald {
+  border-color: rgba(45, 212, 191, 0.4);
+  color: var(--primary);
+  background: rgba(45, 212, 191, 0.08);
 }
 
 /* ----------------------------------------------------------------------------
-   BUTTONS: SHARP EDITORIAL ACTIONS (Zero Rounded Pills)
+   BUTTONS: SPEC-DEFINED ARCHITECTURAL CONDUITS
    ---------------------------------------------------------------------------- */
+
+/* Primary Relic Action: Solid #132427 ground, 1px border #2dd4bf, all-caps catalog-meta, emerald aura */
+.btn-relic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background-color: #132427;
+  border: 1px solid var(--primary-container);
+  box-shadow: 0 0 16px -4px rgba(45, 212, 191, 0.28);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-relic:hover {
+  background-color: #192e32;
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 0 28px -2px rgba(45, 212, 191, 0.48);
+  transform: translateY(-1px);
+}
+
+.btn-relic:active {
+  background-color: var(--secondary-container);
+  border-color: var(--secondary);
+  color: var(--on-secondary);
+  box-shadow: 0 0 24px 2px rgba(245, 158, 11, 0.5);
+}
+
+/* Marginal Reference Link: Pure text with hairline underline offset by 4px (#1f6b6b), shifting to #2dd4bf with instantaneous glyph reveal */
+.btn-marginal,
+.btn-link-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  border-bottom: 1px solid #1f6b6b;
+  padding-bottom: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent;
+}
+
+.btn-marginal .marginal-glyph,
+.btn-link-editorial .marginal-glyph {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+  color: var(--primary);
+}
+
+.btn-marginal:hover,
+.btn-link-editorial:hover {
+  color: var(--primary);
+  border-bottom-color: var(--primary-container);
+}
+
+.btn-marginal:hover .marginal-glyph,
+.btn-link-editorial:hover .marginal-glyph {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ge'ez Chapter Triggers: Rectangular basalt blocks framing an Ethiopic numeral (e.g. ፬) with sharp borders, changing fill from #0e1a1d to #1f6b6b on focus */
+.geez-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 0.5rem;
+  background-color: #0e1a1d;
+  border: 1px solid var(--border-hairline);
+  font-family: var(--font-serif-ethiopic);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.geez-trigger:hover,
+.geez-trigger:focus,
+.geez-trigger.active {
+  background-color: #1f6b6b;
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 0 16px -2px rgba(45, 212, 191, 0.45);
+}
+
+/* Legacy Button Aliases */
 .btn-folio {
   display: inline-flex;
   align-items: center;
@@ -795,21 +1031,25 @@ body.lang-am h4 {
   gap: 0.75rem;
   padding: 0.85rem 1.75rem;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  line-height: 18px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-base);
-  background-color: var(--text-vellum);
-  border: 1px solid var(--text-vellum);
+  color: #0d1517;
+  background-color: var(--primary-container);
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 16px -4px rgba(45, 212, 191, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .btn-folio:hover {
-  background-color: var(--highland-gold);
-  border-color: var(--highland-gold);
-  color: var(--ink-base);
+  background-color: var(--primary);
+  border-color: #ffffff;
+  color: #003731;
+  box-shadow: 0 0 26px -2px rgba(87, 241, 219, 0.55);
   transform: translateY(-1px);
 }
 
@@ -820,19 +1060,20 @@ body.lang-am h4 {
   gap: 0.75rem;
   padding: 0.85rem 1.75rem;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-vellum);
-  background-color: var(--rubric-red);
-  border: 1px solid var(--rubric-bright);
+  color: #ffffff;
+  background-color: var(--rubric-crimson);
+  border: 1px solid #dc2626;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .btn-rubric:hover {
-  background-color: var(--rubric-bright);
+  background-color: #dc2626;
+  box-shadow: 0 0 18px -2px rgba(185, 28, 28, 0.5);
   transform: translateY(-1px);
 }
 
@@ -843,41 +1084,188 @@ body.lang-am h4 {
   gap: 0.65rem;
   padding: 0.85rem 1.6rem;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-vellum-soft);
+  color: var(--on-surface-variant);
   background: transparent;
-  border: 1px solid var(--rule-line);
+  border: 1px solid var(--border-hairline);
   transition: all 0.25s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .btn-ghost-archival:hover {
-  border-color: var(--highland-gold);
-  color: var(--highland-gold);
-  background: rgba(194, 155, 56, 0.05);
+  border-color: var(--primary-container);
+  color: var(--primary);
+  background: rgba(45, 212, 191, 0.06);
+  box-shadow: 0 0 16px -4px rgba(45, 212, 191, 0.2);
 }
 
-.btn-link-editorial {
-  display: inline-flex;
+/* ----------------------------------------------------------------------------
+   INPUT FIELDS & SEARCH FOLIOS (Inverted Baseline with § Prefix)
+   ---------------------------------------------------------------------------- */
+.archival-input-wrap {
+  position: relative;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.775rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--highland-gold);
-  border-bottom: 1px solid var(--highland-gold-border);
-  padding-bottom: 2px;
-  transition: all 0.2s ease;
+  width: 100%;
 }
 
-.btn-link-editorial:hover {
-  color: var(--text-vellum);
-  border-color: var(--text-vellum);
-  gap: 0.8rem;
+.archival-input-taxonomic {
+  position: absolute;
+  left: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--primary);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.archival-input {
+  width: 100%;
+  background: #080f11;
+  border: none;
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0.65rem 1rem 0.65rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--on-surface);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.archival-input::placeholder {
+  color: var(--bone-parchment);
+  opacity: 0.4;
+  font-family: var(--font-mono);
+}
+
+.archival-input:focus {
+  border-bottom-color: var(--primary-container);
+  box-shadow: 0 2px 14px -2px rgba(45, 212, 191, 0.3);
+  background: #0d1517;
+}
+
+/* ----------------------------------------------------------------------------
+   ARCHIVAL LISTS & INDEX ROWS (Ge'ez Counters & Lateral Emerald Glow)
+   ---------------------------------------------------------------------------- */
+.archival-index-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #174d4e;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.archival-index-row::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--primary);
+  opacity: 0;
+  box-shadow: 0 0 12px var(--primary);
+  transition: all 0.25s ease;
+}
+
+.archival-index-row:hover {
+  padding-left: 0.5rem;
+  border-bottom-color: var(--primary-container);
+}
+
+.archival-index-row:hover::before {
+  opacity: 1;
+  left: -4px;
+}
+
+.archival-index-counter {
+  font-family: var(--font-serif-ethiopic);
+  font-size: 0.95rem;
+  color: var(--secondary);
+  margin-right: 0.75rem;
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------------------
+   CHECKBOXES & RADIOS
+   ---------------------------------------------------------------------------- */
+.archival-checkbox {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #1f6b6b;
+  background: var(--surface-container-lowest);
+  position: relative;
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+  outline: none;
+}
+
+.archival-checkbox:checked {
+  border-color: var(--primary-container);
+  background: #132427;
+}
+
+.archival-checkbox:checked::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.archival-radio {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #1f6b6b;
+  background: var(--surface-container-lowest);
+  transform: rotate(45deg);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+  outline: none;
+}
+
+.archival-radio:checked {
+  border-color: var(--secondary);
+  background: #1f1406;
+}
+
+.archival-radio:checked::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary);
+}
+
+/* ----------------------------------------------------------------------------
+   BILINGUAL CODEX HEADER LOCKS
+   ---------------------------------------------------------------------------- */
+.bilingual-codex-lock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.bilingual-geez-rubric {
+  font-family: var(--font-serif-ethiopic);
+  font-size: 0.75em;
+  color: var(--secondary);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
 
 /* ----------------------------------------------------------------------------
