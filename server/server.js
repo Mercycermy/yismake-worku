@@ -740,17 +740,32 @@ app.get("/about", function (_req, res) {
     res.redirect(301, "/author");
 });
 
+app.get("/favicon.ico", function (_req, res) {
+    const faviconPath = path.join(PROJECT_ROOT, "public", "favicon.ico");
+    if (fs.existsSync(faviconPath)) {
+        return res.sendFile(faviconPath);
+    }
+    return res.status(204).end();
+});
+
 app.get("*", function (req, res) {
     if (req.url.startsWith("/api/")) {
         return res.status(404).json({ error: "API route not found" });
     }
+    const indexPath = path.join(PROJECT_ROOT, "dist", "index.html");
+    if (!fs.existsSync(indexPath)) {
+        console.error("[SERVER CRITICAL] dist/index.html not found! Ensure 'npm run build' was executed during build step.");
+        return res.status(503).send("Website build in progress or dist/index.html is missing. Please verify the build command includes 'npm run build'.");
+    }
     try {
-        const template = fs.readFileSync(path.join(PROJECT_ROOT, "dist", "index.html"), "utf-8");
+        const template = fs.readFileSync(indexPath, "utf-8");
         const rendered = renderSeoHtml(template, req.path, readNews());
-        res.status(rendered.status).type("html").send(rendered.html);
+        const status = (rendered && typeof rendered.status === "number") ? rendered.status : 200;
+        const html = (rendered && rendered.html) ? rendered.html : (typeof rendered === "string" ? rendered : template);
+        res.status(status).type("html").send(html);
     } catch (e) {
         console.error("[SEO] Failed to render route HTML:", e.message);
-        res.status(500).send("Unable to load the website.");
+        res.sendFile(indexPath);
     }
 });
 

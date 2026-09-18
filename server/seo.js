@@ -169,29 +169,67 @@ const pages = {
   }
 };
 
-function renderSeoHtml(reqPath, htmlContent) {
-  const normalizedPath = reqPath !== "/" ? reqPath.replace(/\/+$/, "") : reqPath;
+function renderSeoHtml(arg1, arg2, news = []) {
+  // Support both (template, reqPath) and (reqPath, htmlContent)
+  let html = arg1;
+  let reqPath = arg2;
+
+  if (typeof arg1 === "string" && arg1.startsWith("/") && typeof arg2 === "string" && arg2.includes("<html")) {
+    reqPath = arg1;
+    html = arg2;
+  }
+
+  const normalizedPath = reqPath && reqPath !== "/" ? reqPath.replace(/\/+$/, "") : "/";
   const page = pages[normalizedPath] || pages["/"];
 
-  let result = htmlContent;
+  let result = html || "";
 
-  // Replace Title
-  result = result.replace(/<title>.*?<\/title>/i, `<title>${page.title}</title>`);
+  if (page) {
+    // Replace Title
+    if (page.title) {
+      result = result.replace(/<title>.*?<\/title>/i, `<title>${page.title}</title>`);
+      result = result.replace(
+        /<meta\s+property=["']og:title["']\s+content=["'].*?["']\s*\/?>/i,
+        `<meta property="og:title" content="${page.title}" />`
+      );
+      result = result.replace(
+        /<meta\s+name=["']twitter:title["']\s+content=["'].*?["']\s*\/?>/i,
+        `<meta name="twitter:title" content="${page.title}" />`
+      );
+    }
 
-  // Replace Meta Description
-  result = result.replace(
-    /<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta name="description" content="${page.description}" />`
-  );
+    // Replace Meta Description
+    if (page.description) {
+      result = result.replace(
+        /<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/i,
+        `<meta name="description" content="${page.description}" />`
+      );
+      result = result.replace(
+        /<meta\s+property=["']og:description["']\s+content=["'].*?["']\s*\/?>/i,
+        `<meta property="og:description" content="${page.description}" />`
+      );
+      result = result.replace(
+        /<meta\s+name=["']twitter:description["']\s+content=["'].*?["']\s*\/?>/i,
+        `<meta name="twitter:description" content="${page.description}" />`
+      );
+    }
 
-  // Replace Canonical Link
-  const canonical = `${SITE_URL}${normalizedPath === "/" ? "/" : normalizedPath}`;
-  result = result.replace(
-    /<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/i,
-    `<link rel="canonical" href="${canonical}" />`
-  );
+    // Replace Canonical Link
+    const canonical = `${SITE_URL}${normalizedPath === "/" ? "/" : normalizedPath}`;
+    result = result.replace(
+      /<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/i,
+      `<link rel="canonical" href="${canonical}" />`
+    );
+    result = result.replace(
+      /<meta\s+property=["']og:url["']\s+content=["'].*?["']\s*\/?>/i,
+      `<meta property="og:url" content="${canonical}" />`
+    );
+  }
 
-  return result;
+  return {
+    status: 200,
+    html: result
+  };
 }
 
 module.exports = {

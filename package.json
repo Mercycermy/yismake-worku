@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Mercycermy/Authorwebsit#readme",
   "dependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
     "adm-zip": "^0.5.17",
     "cors": "^2.8.5",
     "express": "^4.21.0",
@@ -29,11 +30,9 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-pdf": "^10.4.1",
-    "react-router-dom": "^7.14.2"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.1",
+    "react-router-dom": "^7.14.2",
     "vite": "^8.0.10"
   },
+  "devDependencies": {},
   "main": "vite.config.js"
 }
