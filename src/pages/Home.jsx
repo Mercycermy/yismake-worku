@@ -1,208 +1,352 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
-import AuthorHero from '../components/AuthorHero';
-import DertogadaUniverseMap from '../components/DertogadaUniverseMap';
-import BookCard from '../components/BookCard';
+import AuthorSignature from '../components/AuthorSignature';
 import BookCover from '../components/BookCover';
-import TimelineExhibition from '../components/TimelineExhibition';
-import QuoteGallery from '../components/QuoteGallery';
-import ModalInspectionFolio from '../components/ModalInspectionFolio';
-import { verifiedBooks, authorData } from '../data/yismakeData';
+import { verifiedBooks } from '../data/yismakeData';
 
 export default function Home() {
   const { lang } = useLanguage();
-  const [inspectionBook, setInspectionBook] = useState(null);
+  const bioRef = useRef(null);
 
-  // Curated prominent works (Dertogada, Ramatohara, Kebur Dengay, Zamra)
-  const curatedNovels = verifiedBooks.filter((b) => b.isFeatured || ['zamra'].includes(b.slug)).slice(0, 4);
+  const scrollToBio = () => {
+    bioRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada');
   const keburDengay = verifiedBooks.find((b) => b.slug === 'kebur-dengay');
+  const melosBook = verifiedBooks.find((b) => b.slug === 'melos');
+
+  const latestNews = [
+    {
+      id: 1,
+      date: '24 SEPTEMBER 2026',
+      titleEn: "The Lost Spell Shortlisted for the TA First Translation Prize in the United Kingdom",
+      titleAm: "«ክቡር ድንጋይ» (The Lost Spell) በእንግሊዝ ለታላቁ የ2022 TA First Translation Prize እጩ ሆነ",
+      image: '/images/the-lost-spell-award.jpg',
+      link: '/news#lost-spell-award'
+    },
+    {
+      id: 2,
+      date: '12 AUGUST 2026',
+      titleEn: "The Living Archive: Yismake Worku Surpasses 18,600+ Subscribers on Official Telegram",
+      titleAm: "በይፋዊ የቴሌግራም ቻናል ከ18,600 በላይ አንባቢዎች ጋር የተደረገ የቀጥታ ውይይት",
+      image: '/images/library-bg.jpg',
+      link: '/news#telegram-community'
+    },
+    {
+      id: 3,
+      date: '18 JULY 2026',
+      titleEn: "Academic Study Explores Monasticism and Techno-Utopia in Dertogada",
+      titleAm: "ስለ ዴርቶጋዳ የቀረበ ዓለም አቀፍ አካዳሚያዊ ጥናት በታይለር ኤንድ ፍራንሲስ ታተመ",
+      image: '/images/dertogada-art.jpg',
+      link: '/news#academic-study'
+    }
+  ];
 
   return (
-    <main className="bg-[#0d1517] text-[var(--on-surface)]">
+    <div className="bg-white text-[#222222] font-sans antialiased">
       {/* ----------------------------------------------------------------------
-          CHAPTER I: ARCHIVAL PROLOGUE & MONUMENTAL ENCOUNTER
+          1. INTRO SCREEN / DUAL PORTALS (Exact replica of jkrowling.com)
           ---------------------------------------------------------------------- */}
-      <AuthorHero />
+      <section className="pt-12 sm:pt-16 pb-16 bg-white">
+        <div className="site-container max-w-3xl mx-auto text-center">
+          {/* Main Heading */}
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[52px] font-bold text-[#111111] leading-[1.18] tracking-tight mb-5">
+            {lang === 'am' ? (
+              <>
+                እንኳን ወደ ይስማዕከ ወርቁ <br />
+                ይፋዊ ድረ-ገጽ በደህና መጡ።
+              </>
+            ) : (
+              <>
+                Welcome to Yismake Worku's <br />
+                official website.
+              </>
+            )}
+          </h1>
 
-      {/* ----------------------------------------------------------------------
-          CHAPTER II: THE CANONICAL STORYWORLD (DERTOGADA PENTOLOGY)
-          ---------------------------------------------------------------------- */}
-      <DertogadaUniverseMap />
+          {/* Subtitle */}
+          <p className="font-serif text-base sm:text-lg text-[#555555] leading-relaxed max-w-xl mx-auto mb-12">
+            {lang === 'am'
+              ? 'ስለ ደራሲውና የኢትዮጵያን የስነ-ጽሑፍ ታሪክ የቀየሩትን ድንቅ መጻሕፍቱን የተመለከቱ የቅርብ ጊዜ ዜናዎችንና መረጃዎችን እዚህ ያገኛሉ።'
+              : "Here you can find the latest news and information on him and the books that made him one of Ethiopia's best-known authors."}
+          </p>
 
-      {/* ----------------------------------------------------------------------
-          CHAPTER III: THE CODEX EXHIBITION (CURATED MASTERPIECES)
-          ---------------------------------------------------------------------- */}
-      <section className="py-20 sm:py-24 bg-[#080f11] border-b border-[var(--border-hairline)]">
-        <div className="site-container">
-          {/* Section Header: Bilingual Codex Lockup */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 pb-4 border-b border-[var(--border-hairline)]">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="font-serif text-sm font-semibold text-[var(--secondary)] tracking-wider">
-                  ክፍል ፫
-                </span>
-                <span className="font-mono text-xs text-[var(--outline)]">/</span>
-                <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
-                  THE CODEX EXHIBITION
-                </span>
+          {/* Dual Entrance Cards Container */}
+          <div className="space-y-6 sm:space-y-8 max-w-xl mx-auto">
+            {/* CARD 1: GROWN-UPS / MAIN SITE CARD (Dark Wood Desk Background) */}
+            <div className="jkr-portal-card-desk p-8 sm:p-12 text-center text-white flex flex-col items-center justify-center min-h-[280px]">
+              <div className="mb-4">
+                <AuthorSignature className="h-14 sm:h-16 w-auto text-white" light={true} />
               </div>
-              <h2 className="font-serif text-4xl sm:text-6xl text-[var(--on-surface)] font-black tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-                ቁልፍ የልቦለድ ድርሰቶች
-              </h2>
-              <div className="font-serif text-xs sm:text-sm text-[var(--secondary)] font-bold tracking-[0.2em] uppercase mt-2">
-                CURATED NOVELS & ANTHOLOGIES (15+ WORKS IN REPOSITORY)
-              </div>
-            </div>
 
-            <Link to="/books" className="btn-relic text-xs shrink-0 self-start md:self-auto">
-              <span>{lang === 'am' ? 'ሁሉንም 15+ መጻሕፍት ይመልከቱ' : 'COMPLETE CATALOGUE (15+)'}</span>
-              <span>→</span>
-            </Link>
-          </div>
+              <p className="text-sm sm:text-[15px] text-white/90 max-w-md mx-auto mb-6 leading-relaxed font-sans">
+                {lang === 'am'
+                  ? 'ስለ ይስማዕከ ወርቁና ስለ ስነ-ጽሑፍ ስራዎቹ ሁሉንም የቅርብ ጊዜ ዜናዎችና መረጃዎችን ለማግኘት በዚህ በኩል ይግቡ።'
+                  : 'This way for all the latest news and information about Yismake Worku and his writing.'}
+              </p>
 
-          {/* Curated 4-Book Exhibition Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-16">
-            {curatedNovels.map((book) => (
-              <BookCard
-                key={book.id}
-                book={book}
-                onInspect={(b) => setInspectionBook(b)}
-              />
-            ))}
-          </div>
-
-          {/* Featured Exhibition Broadside: Kebur Dengay / The Lost Spell (UK Award) */}
-          {keburDengay && (
-            <div className="archival-plate p-7 sm:p-12 bg-[#0e1a1d] border border-[var(--border-hairline)] shadow-[0_0_35px_-8px_rgba(45,212,191,0.14)]">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                <div className="lg:col-span-4 flex flex-col items-center justify-center">
-                  <Link to={`/books/${keburDengay.slug}`} className="block group">
-                    <BookCover book={keburDengay} size="large" />
-                  </Link>
-
-                  <button
-                    onClick={() => setInspectionBook(keburDengay)}
-                    className="mt-5 btn-relic text-xs py-2 px-5 w-full max-w-[288px] text-center"
-                  >
-                    <span>[INSPECT CODEX FOLIO 👁]</span>
-                  </button>
-                </div>
-
-                <div className="lg:col-span-8 space-y-4">
-                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase">
-                    <span className="catalog-tag">
-                      <span className="catalog-indicator-crimson" />
-                      TA FIRST TRANSLATION PRIZE SHORTLIST 2022 (UK)
-                    </span>
-                    <span className="catalog-tag">
-                      <span className="catalog-indicator-emerald" />
-                      HENNINGHAM FAMILY PRESS (LONDON)
-                    </span>
-                  </div>
-
-                  <h3 className="font-serif text-3xl sm:text-4xl font-black text-[var(--on-surface)] tracking-tight">
-                    ክቡር ድንጋይ <span className="font-serif text-xl sm:text-2xl text-[var(--secondary)] font-bold ml-2">(The Lost Spell)</span>
-                  </h3>
-
-                  <p className="font-serif text-base sm:text-lg text-[var(--on-surface-variant)] leading-relaxed">
-                    {lang === 'am'
-                      ? "በዶ/ር ቤተልሔም አትፊልድ (በርሚንግሃም ዩኒቨርሲቲ) ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፕሬስ የታተመው 'ክቡር ድንጋይ'፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ የቀረበ ዓለም አቀፍ ድንቅ ስራ ነው። አንድ የከተማው ባለጸጋ በጥንታዊ ድግምት ወደ ውሻነት ሲለወጥ፣ የህብረተሰቡን ግብዝነትና የፖለቲካውን ህመም ከመሬት ተነስቶ በጥልቅ ይመረምራል።"
-                      : "Translated into English by Dr. Bethlehem Attfield (PhD, University of Birmingham) and published in the UK by Henningham Family Press, 'The Lost Spell' (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize. When an arrogant Addis Ababa businessman accidentally transforms himself into a dog, he observes the stark realities of power, class hypocrisy, and street-level compassion from four paws."}
-                  </p>
-
-                  <div className="pt-4 flex flex-wrap items-center gap-4">
-                    <Link to={`/books/${keburDengay.slug}`} className="btn-relic text-xs">
-                      <span>{lang === 'am' ? 'ስለ መጽሐፉ ዝርዝር መረጃ' : 'VIEW NOVEL DOSSIER'}</span>
-                      <span>→</span>
-                    </Link>
-                    <a
-                      href="https://henninghamfamilypress.com/the-lost-spell/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-marginal text-xs"
-                    >
-                      <span>HENNINGHAM FAMILY PRESS (UK)</span>
-                      <span className="marginal-glyph">↗</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ----------------------------------------------------------------------
-          CHAPTER IV: THE AUTHOR'S CHRONICLE (HISTORIC MILESTONES)
-          ---------------------------------------------------------------------- */}
-      <TimelineExhibition />
-
-      {/* ----------------------------------------------------------------------
-          CHAPTER V: PHILOSOPHICAL SCRIPTS & APHORISMS
-          ---------------------------------------------------------------------- */}
-      <QuoteGallery />
-
-      {/* ----------------------------------------------------------------------
-          CHAPTER VI: THE READER'S DISPATCH & COMMUNITY
-          ---------------------------------------------------------------------- */}
-      <section className="py-20 sm:py-24 bg-[#0e1a1d] border-t border-[var(--border-hairline)]">
-        <div className="site-container">
-          <div className="max-w-4xl mx-auto archival-plate p-8 sm:p-14 bg-[#080f11] text-center border border-[var(--border-hairline)] shadow-[0_0_35px_-8px_rgba(45,212,191,0.12)]">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="font-serif text-sm font-semibold text-[var(--secondary)] tracking-wider">
-                ክፍል ፮
-              </span>
-              <span className="font-mono text-xs text-[var(--outline)]">/</span>
-              <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
-                THE WRITER'S DISPATCH
-              </span>
-            </div>
-
-            <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center bg-[#132427] border border-[var(--border-hairline)] text-[var(--secondary)] font-serif text-xl font-bold shadow-[0_0_12px_rgba(45,212,191,0.2)]">
-              <span>ይ</span>
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[var(--on-surface)] font-black tracking-tight">
-              ቀጥታ ከአንባቢ ጋር የሚደረግ ውይይት
-            </h2>
-
-            <div className="font-serif text-xs sm:text-sm text-[var(--secondary)] font-bold tracking-[0.2em] uppercase mt-2">
-              OFFICIAL COMMUNITY DIALOGUE & LITERARY DISPATCHES
-            </div>
-
-            <p className="mt-5 text-sm sm:text-base text-[var(--on-surface-variant)] max-w-xl mx-auto font-serif leading-relaxed">
-              {lang === 'am'
-                ? "በይፋዊው የቴሌግራም ቻናል (@yismakeworku) በኩል ከአስራ ስምንት ሺህ በላይ አባላት ባሉበት መድረክ ላይ በየዕለቱ የደራሲነት ማስታወሻዎችን፣ አዳዲስ ምልከታዎችን፣ የግጥም ስንኞችንና ስነ-ጽሑፋዊ ውይይቶችን ይከታተሉ።"
-                : "Join over 18,600 readers on the official Telegram channel (@yismakeworku) for behind-the-scenes writing craft notes, Amharic poetic dispatches, book excerpts, and direct literary dialogue."}
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
-              <a
-                href={authorData.telegram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-relic text-xs sm:text-sm"
+              <button
+                onClick={scrollToBio}
+                className="jkr-pill-btn"
               >
-                <span>{lang === 'am' ? 'የቴሌግራም ቻናሉን ይቀላቀሉ (18.6K+)' : 'JOIN TELEGRAM @YISMAKEWORKU (18.6K+)'}</span>
-                <span>↗</span>
-              </a>
+                {lang === 'am' ? 'እዚህ ይግቡ' : 'Enter here'}
+              </button>
+            </div>
 
-              <Link to="/contact" className="btn-marginal text-xs sm:text-sm">
-                <span>{lang === 'am' ? 'የሚዲያና የአካዳሚ መልዕክት' : 'ACADEMIC & MEDIA INQUIRY'}</span>
-                <span className="marginal-glyph">→</span>
+            {/* CARD 2: YOUNGER READERS / STORIES (Royal Purple Background) */}
+            <div className="jkr-portal-card-stories p-8 sm:p-12 text-center text-white flex flex-col items-center justify-center min-h-[280px]">
+              <div className="mb-4">
+                <div className="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-white flex items-center justify-center gap-2">
+                  <span>YISMAKE WORKU’S</span>
+                </div>
+                <div className="font-serif text-xl sm:text-2xl italic text-[#f4d06f] -mt-1">
+                  Stories &amp; Lore
+                </div>
+              </div>
+
+              <p className="text-sm sm:text-[15px] text-white/90 max-w-md mx-auto mb-6 leading-relaxed font-sans">
+                {lang === 'am'
+                  ? 'በጣና ሐይቅ ስር ስላለው የዴርቶጋዳ ሳይንሳዊ ዓለምና ተረኮች የበለጠ ለማወቅ ለሚፈልጉ ወጣት አንባቢዎች።'
+                  : "This way for younger readers, who want to find out more about Yismake Worku and his speculative stories."}
+              </p>
+
+              <Link
+                to="/universe"
+                className="jkr-pill-btn"
+              >
+                {lang === 'am' ? 'ይምጡና ይጎብኙ!' : 'Come on in!'}
               </Link>
             </div>
           </div>
+
+          {/* NOTIFICATION BOX (Below Cards) */}
+          <div className="mt-12 max-w-xl mx-auto p-4 sm:p-5 bg-white border border-[#e5e5e5] rounded-sm text-left shadow-sm flex items-start gap-3.5">
+            <span className="text-xl shrink-0 mt-0.5">🔔</span>
+            <p className="text-xs sm:text-[13px] text-[#444444] leading-relaxed m-0 font-sans">
+              {lang === 'am' ? (
+                <>
+                  በይስማዕከ ወርቁ ስም በመስመር ላይ የሚንቀሳቀሱ ሀሰተኛ ገጾችና ያልተፈቀዱ የህትመት ቅጂዎች እንዳሉ እናውቃለን። እባክዎ ለበለጠ መረጃ የእኛን{' '}
+                  <Link to="/enquiries" className="text-[#111111] underline font-bold hover:text-[#d4af37]">
+                    የጥያቄዎችና አድራሻ (Enquiries)
+                  </Link>{' '}
+                  ገጽ ይጎብኙ።
+                </>
+              ) : (
+                <>
+                  We are aware of imposter accounts online posing as Yismake Worku and his publishers. Please visit our{' '}
+                  <Link to="/enquiries" className="text-[#111111] underline font-bold hover:text-[#d4af37]">
+                    Enquiries
+                  </Link>{' '}
+                  page for more information.
+                </>
+              )}
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Inspection Folio Modal Component */}
-      <ModalInspectionFolio
-        book={inspectionBook}
-        isOpen={Boolean(inspectionBook)}
-        onClose={() => setInspectionBook(null)}
-      />
-    </main>
+      {/* ----------------------------------------------------------------------
+          2. BIO SECTION (Matching jkrowling.com home-intro-section--bio)
+          ---------------------------------------------------------------------- */}
+      <section ref={bioRef} className="py-16 sm:py-24 bg-white border-t border-[#f0f0f0]">
+        <div className="site-container max-w-3xl mx-auto text-center">
+          <h2 className="jkr-section-title">
+            {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Yismake Worku'}
+          </h2>
+
+          <div className="jkr-editorial-body mb-12">
+            <p>
+              {lang === 'am'
+                ? 'ይስማዕከ ወርቁ በዘመናዊው የኢትዮጵያ ስነ-ጽሁፍ ውስጥ ከፍተኛ ተወዳጅነት ያተረፈ ደራሲና የባህል ፈር-ቀዳጅ ሲሆን፣ በታላቁ የ«ዴርቶጋዳ» ተከታታይ የሳይንስ ልቦለዱ እንዲሁም በታዋቂው ማህበራዊ ምጸቱ «ክቡር ድንጋይ» (The Lost Spell) ይታወቃል።'
+                : 'Yismake Worku is an Ethiopian author, cultural icon, and literary pioneer best known for creating the Dertogada series and the internationally acclaimed satire The Lost Spell (Kebur Dengay).'}
+            </p>
+            <p>
+              {lang === 'am'
+                ? 'የደራሲው ይፋዊ ድረ-ገጽ ስለ መጻሕፍቱና አዳዲስ ፕሮጀክቶቹ ወቅታዊ ዜናዎችን፣ በራሱ አንደበት የቀረቡ ጥልቅ ማስታወሻዎችን፣ ስለ ጽሕፈት ጥበብ የተሰጡ ምክሮችንና ስለ ህይወት ጉዞው የተሟላ መረጃዎችን በአንድ ላይ ያቀርባል።'
+                : 'His official website brings together news and updates on his books and current projects, personal reflections in his own words, essays offering a glimpse into his writing life, and information about his life and literary career.'}
+            </p>
+          </div>
+
+          {/* Layered Polaroid Photo Stack (Replica of JKR Polaroid Stack) */}
+          <div className="jkr-polaroid-stack mb-4">
+            {/* Background Archival Photo 1 */}
+            <div className="jkr-polaroid-back-1">
+              <div className="w-full h-56 bg-gray-200 overflow-hidden">
+                <img
+                  src="/images/library-bg.jpg"
+                  alt="Archival notes"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Background Archival Photo 2 */}
+            <div className="jkr-polaroid-back-2">
+              <div className="w-full h-56 bg-gray-200 overflow-hidden">
+                <img
+                  src="/images/dertogada-art.jpg"
+                  alt="Dertogada Universe"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Front Color Polaroid */}
+            <div className="jkr-polaroid-front">
+              <div className="w-full h-64 bg-gray-900 overflow-hidden mb-3">
+                <img
+                  src="/images/yismake-portrait.jpg"
+                  alt="Yismake Worku"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="font-serif text-sm font-semibold text-[#333333]">
+                Yismake Worku
+              </div>
+              <div className="text-[11px] text-[#777777] font-sans">
+                Gojjam &amp; Addis Ababa, Ethiopia
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ----------------------------------------------------------------------
+          3. CANONICAL WORKS ROWS (Vertical rhythm matching JKR)
+          ---------------------------------------------------------------------- */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="site-container max-w-2xl mx-auto space-y-20">
+          {/* Row 1: The Dertogada Saga */}
+          <div className="text-center space-y-4">
+            <div className="flex justify-center mb-6">
+              <div className="w-48 sm:w-56 shadow-2xl hover:scale-105 transition-transform duration-300">
+                <BookCover book={dertogadaBook} size="normal" />
+              </div>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
+              {lang === 'am' ? 'ዴርቶጋዳ' : 'The Dertogada Saga'}
+            </h3>
+
+            <p className="text-base text-[#444444] leading-relaxed font-sans">
+              {lang === 'am'
+                ? 'የይስማዕከ ወርቁ የመጀመሪያ ልቦለድ የሆነው «ዴርቶጋዳ» በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት ፈጠረ። በጣና ሐይቅ ስር የተሰወረው ሚስጥራዊ የሳይንስ ተቋምና የናሳው የጠፈር መሃንዲስ ሻጊዝ እጅጉ ያደረጉት ትግል፤ ራማቶሓራ፣ ዣንቶዣራ፣ ዮራቶራድ እና ዮቶድ በተባሉ ተከታታይ ስራዎች ተጠናቋል።'
+                : 'Yismake Worku’s debut novel, Dertogada, published in 2009, began a groundbreaking 5-volume speculative saga. The series broke Ethiopian publishing records with over 200,000 copies sold in its debut year across 10 editions. Following NASA aerospace engineer Shagiz Ejigu and a clandestine laboratory beneath Lake Tana, the saga inspired an entire generation of African readers.'}
+            </p>
+          </div>
+
+          {/* Row 2: Robert Galbraith / The Lost Spell */}
+          <div className="text-center space-y-4 pt-6 border-t border-[#f0f0f0]">
+            <div className="flex justify-center mb-6">
+              <div className="w-48 sm:w-56 shadow-2xl hover:scale-105 transition-transform duration-300">
+                <BookCover book={keburDengay} size="normal" />
+              </div>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
+              {lang === 'am' ? 'ክቡር ድንጋይ (The Lost Spell)' : 'The Lost Spell'}
+            </h3>
+
+            <p className="text-base text-[#444444] leading-relaxed font-sans">
+              {lang === 'am'
+                ? 'በዶ/ር ቤተልሔም አትፊልድ (በርሚንግሃም ዩኒቨርሲቲ) ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው «ክቡር ድንጋይ» (The Lost Spell)፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ ቀርቧል። አንድ ባለጸጋ በድግምት ወደ ውሻነት ሲቀየር የህብረተሰቡን ግብዝነትና የፖለቲካውን ህመም ከመሬት ተነስቶ በጥልቅ ይመረምራል።'
+                : 'Translated into English by Dr. Bethlehem Attfield and published in the UK by Henningham Family Press, The Lost Spell (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize in the United Kingdom. When an arrogant Addis Ababa businessman accidentally transforms into a street dog, he observes the stark realities of power and class hypocrisy from four paws.'}
+            </p>
+          </div>
+
+          {/* Row 3: Other Works */}
+          <div className="text-center space-y-4 pt-6 border-t border-[#f0f0f0]">
+            <div className="flex justify-center mb-6">
+              <div className="w-48 sm:w-56 shadow-2xl hover:scale-105 transition-transform duration-300">
+                <BookCover book={melosBook} size="normal" />
+              </div>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
+              {lang === 'am' ? 'ሌሎች ድርሰቶች' : 'Other works'}
+            </h3>
+
+            <p className="text-base text-[#444444] leading-relaxed font-sans">
+              {lang === 'am'
+                ? 'ከዴርቶጋዳ በተጨማሪ ይስማዕከ ወርቁ የተለያዩ ራሳቸውን የቻሉ ልቦለዶችን አበርክቷል። ሜሎስ (ስነ-ልቦናዊ ልቦለድ)፣ ተልሚድ (መንፈሳዊ ፍልስፍና)፣ ዛምራ፣ የቀንድ አውጣ ኑሮ፣ የኦጋዴን ድመቶች፣ ተከርቼም እንዲሁም የመጀመሪያ የግጥም መድበሉ የወንድ ምጥ ይገኙበታል።'
+                : 'Alongside the Dertogada saga and The Lost Spell, Yismake Worku has written a rich range of standalone books exploring human morality, psychological suspense, and economic resilience. These include Melos, Telmid (The Disciple), Zamra, Tekerchem (Locked), and his debut poetry collection Yewond Mit.'}
+            </p>
+          </div>
+
+          {/* Row 4: Monastic Wisdom & Sovereignty */}
+          <div className="text-center space-y-4 pt-6 border-t border-[#f0f0f0]">
+            <div className="flex justify-center mb-6">
+              <div className="w-24 h-24 rounded-full bg-[#111111] text-[#d4af37] flex items-center justify-center font-serif text-3xl font-bold shadow-xl border-2 border-[#d4af37]">
+                <span>ይ</span>
+              </div>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
+              {lang === 'am' ? 'ገዳማዊ ጥበብና አገራዊ ሉዓላዊነት' : 'Monastic Wisdom & Sovereignty'}
+            </h3>
+
+            <p className="text-base text-[#444444] leading-relaxed font-sans">
+              {lang === 'am'
+                ? 'ይስማዕከ ወርቁ ጥንታዊውን የኢትዮጵያ የብራና ቅርስና የገዳማት ምስጢር ለዘመናዊው ትውልድ በሳይንስ ልቦለድ መነጽር እንዲታይ አድርጓል። የአእምሮና የቴክኖሎጂ ነጻነትን የሚያወድሱ ጽሑፎቹ በኢትዮጵያም ሆነ በአፍሪካ የወጣቱን ምናብ አንቅተዋል።'
+                : 'Yismake Worku has championed the resurgence of indigenous African intellectual capital. Through his writing and community dialogues, he advocates that ancient ecclesiastical scholarship and modern quantum engineering must converge to secure genuine technological self-determination.'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ----------------------------------------------------------------------
+          4. LATEST NEWS (Soft gray background #f4f4f4 matching jkrowling.com)
+          ---------------------------------------------------------------------- */}
+      <section id="news" className="py-16 sm:py-24 bg-[#f4f4f4] border-t border-[#e8e8e8]">
+        <div className="site-container max-w-4xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <h2 className="jkr-section-title">
+              {lang === 'am' ? 'የቅርብ ጊዜ ዜናዎች' : 'Latest News'}
+            </h2>
+            <p className="text-base text-[#666666] max-w-xl mx-auto font-sans">
+              {lang === 'am'
+                ? 'ስለ ይስማዕከ ወርቁ፣ መጻሕፍቱ፣ የትርጉም ሥራዎችና ይፋዊ ማስታወቂያዎች ወቅታዊ መረጃዎችን ያንብቡ።'
+                : 'Read the latest updates from Yismake Worku, including news about his books, writing projects, adaptations and official announcements.'}
+            </p>
+          </div>
+
+          {/* 3 News Articles Stacked on Mobile, Grid on Tablet/Desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {latestNews.map((article) => (
+              <article key={article.id} className="jkr-news-card">
+                <Link to={article.link} className="jkr-news-card__image">
+                  <img
+                    src={article.image}
+                    alt={article.titleEn}
+                    loading="lazy"
+                  />
+                </Link>
+
+                <p className="jkr-news-card__date">{article.date}</p>
+
+                <h3 className="jkr-news-card__title">
+                  <Link to={article.link}>
+                    {lang === 'am' ? article.titleAm : article.titleEn}
+                  </Link>
+                </h3>
+              </article>
+            ))}
+          </div>
+
+          {/* Centered View All Link */}
+          <div className="text-center">
+            <Link
+              to="/news"
+              className="jkr-pill-btn-dark"
+            >
+              {lang === 'am' ? 'ሁሉንም ይመልከቱ' : 'View all'}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

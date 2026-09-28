@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
-import BookCard from '../components/BookCard';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
 
 export default function BookDetail() {
@@ -15,17 +14,16 @@ export default function BookDetail() {
 
   if (!book) {
     return (
-      <main className="min-h-screen pt-36 pb-24 bg-[#0d1517] text-[var(--on-surface)] flex items-center justify-center">
-        <div className="text-center p-8 archival-plate max-w-md mx-auto bg-[#0e1a1d] border border-[var(--border-hairline)]">
-          <div className="font-mono text-xs text-[var(--secondary)] uppercase mb-3">
-            FOLIO NOT LOCATED
-          </div>
-          <h1 className="font-serif text-2xl font-bold mb-2">መጽሐፉ በማህደሩ ውስጥ አልተገኘም</h1>
-          <p className="font-serif text-sm text-[var(--on-surface-variant)] mb-6">
-            The requested volume was not found in the verified repository.
+      <main className="min-h-[70vh] pt-36 pb-24 bg-white text-[#222222] flex items-center justify-center font-sans">
+        <div className="text-center p-8 max-w-md mx-auto bg-gray-50 border border-gray-200 rounded">
+          <h1 className="font-serif text-2xl font-bold mb-2">
+            {lang === 'am' ? 'መጽሐፉ አልተገኘም' : 'Book Not Found'}
+          </h1>
+          <p className="text-sm text-gray-500 mb-6">
+            The requested volume was not found in the verified catalogue.
           </p>
-          <Link to="/books" className="btn-relic text-xs">
-            RETURN TO CATALOGUE →
+          <Link to="/books" className="jkr-pill-btn-dark !text-xs">
+            Return to Books →
           </Link>
         </div>
       </main>
@@ -38,48 +36,50 @@ export default function BookDetail() {
     .slice(0, 3);
 
   return (
-    <main className="pt-28 sm:pt-32 pb-24 bg-[#0d1517] text-[var(--on-surface)]">
-      {/* Archival Breadcrumbs */}
-      <div className="site-container pb-4 mb-8 border-b border-[var(--border-hairline)] font-mono text-[11px] text-[var(--outline)] flex items-center gap-2 uppercase tracking-widest">
-        <Link to="/" className="hover:text-[var(--primary)] transition-colors">
-          {lang === 'am' ? 'መነሻ' : 'INDEX'}
-        </Link>
-        <span>/</span>
-        <Link to="/books" className="hover:text-[var(--primary)] transition-colors">
-          {lang === 'am' ? 'መጻሕፍት' : 'CATALOGUE'}
-        </Link>
-        <span>/</span>
-        <span className="text-[var(--secondary)] font-bold">{book.titleEn}</span>
-      </div>
+    <div className="bg-white text-[#222222] font-sans py-12 sm:py-16">
+      <div className="site-container max-w-5xl mx-auto">
+        {/* Breadcrumb Trail */}
+        <div className="pb-4 mb-10 border-b border-gray-200 text-xs text-gray-500 flex items-center gap-2">
+          <Link to="/" className="hover:text-black">
+            {lang === 'am' ? 'መነሻ' : 'Home'}
+          </Link>
+          <span>/</span>
+          <Link to="/books" className="hover:text-black">
+            {lang === 'am' ? 'መጻሕፍት' : 'Books'}
+          </Link>
+          <span>/</span>
+          <span className="text-[#111111] font-semibold">{book.titleEn}</span>
+        </div>
 
-      {/* Book Editorial Broadside */}
-      <section className="site-container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Left Column: Physical Codex Showcase & Purchase/Reading Channels */}
+        {/* Book Editorial Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
+          {/* Left: Book Cover Presentation & Links */}
           <div className="lg:col-span-5 flex flex-col items-center">
-            <div className="sticky top-28 w-full max-w-sm flex flex-col items-center">
-              <BookCover book={book} size="hero" />
+            <div className="w-full max-w-sm flex flex-col items-center sticky top-28">
+              <div className="shadow-2xl hover:scale-102 transition-transform duration-300">
+                <BookCover book={book} size="large" />
+              </div>
 
-              {/* Inspect Full Folio Button */}
+              {/* Quick Inspect Button */}
               <button
                 onClick={() => setInspectionOpen(true)}
-                className="mt-6 btn-relic w-full text-center"
+                className="mt-6 w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-[#111111] font-semibold text-xs rounded-full transition-colors cursor-pointer text-center"
               >
-                <span>[INSPECT ARCHIVAL FOLIO 👁]</span>
+                👁 {lang === 'am' ? 'የመጽሐፉን ሙሉ ዝርዝር መርምር' : 'Inspect Book Dossier'}
               </button>
 
-              {/* Purchase & Archival Reading Channels */}
-              <div className="mt-4 w-full space-y-3 font-mono text-xs">
+              {/* Purchase Channels */}
+              <div className="mt-4 w-full space-y-2.5 text-xs">
                 {book.purchaseLinks?.map((link, idx) => (
                   <a
                     key={idx}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-folio w-full text-center"
+                    className="block w-full py-2.5 px-4 bg-white border border-gray-300 hover:border-black text-[#111111] font-semibold text-center rounded-full transition-all"
                   >
                     <span>{link.name}</span>
-                    <span>↗</span>
+                    <span className="ml-1 text-gray-400">↗</span>
                   </a>
                 ))}
 
@@ -87,116 +87,133 @@ export default function BookDetail() {
                   href="https://t.me/yismakeworku"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-ghost-archival w-full text-center"
+                  className="block w-full py-2.5 px-4 bg-[#111111] text-white font-semibold text-center rounded-full hover:bg-[#333333] transition-all"
                 >
-                  <span>{lang === 'am' ? 'በቴሌግራም ስለ መጽሐፉ ተወያይ' : 'DISCUSS ON TELEGRAM'}</span>
-                  <span>↗</span>
+                  <span>{lang === 'am' ? 'በቴሌግራም ስለ መጽሐፉ ተወያይ' : 'Discuss on Telegram'}</span>
+                  <span className="ml-1">↗</span>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Editorial Master Dossier */}
+          {/* Right: Editorial Description & Meta */}
           <div className="lg:col-span-7 space-y-6">
-            {/* Metadata Tags */}
-            <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase">
-              <span className="catalog-tag">
-                <span className="catalog-indicator-emerald" />
-                {book.year} G.C. · {book.yearEc} ዓ.ም.
-              </span>
-              {book.seriesOrder && (
-                <span className="catalog-tag">
-                  <span className="catalog-indicator-crimson" />
-                  {book.series} · VOL 0{book.seriesOrder}
-                </span>
-              )}
-              <span className="catalog-tag">
-                {book.genre?.split('/')[0]}
-              </span>
-              {book.pageCount && (
-                <span className="catalog-tag">
-                  {book.pageCount} PAGES
-                </span>
-              )}
-            </div>
-
-            {/* Monumental Titles */}
             <div>
-              <h1 className="font-serif text-4xl sm:text-6xl text-[var(--on-surface)] font-black tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-                {book.titleAm}
+              <div className="text-xs font-bold text-[#888888] uppercase tracking-widest mb-2">
+                {book.year} ({book.yearEc} ዓ.ም) • {book.series || 'STANDALONE WORK'}
+              </div>
+
+              <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#111111] leading-tight">
+                {lang === 'am' ? book.titleAm : book.titleEn}
               </h1>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-[var(--secondary)] tracking-[0.16em] uppercase mt-2">
-                {book.titleEn}
+
+              <div className="text-sm font-semibold text-[#c59b27] mt-1 font-serif">
+                {lang === 'am' ? book.genreAm : book.genre}
               </div>
             </div>
 
-            {/* Tagline Aphorism */}
-            <div className="border-l-2 border-[var(--primary-container)] pl-4 py-2 italic font-serif text-base sm:text-lg text-[var(--on-surface)] bg-[#132427]/40 border-y border-r border-[var(--border-hairline)]">
-              "{lang === 'am' ? book.tagline?.am : book.tagline?.en}"
+            {/* Tagline */}
+            <div className="p-5 bg-gray-50 border-l-4 border-[#111111] rounded-sm font-serif text-base sm:text-lg italic text-[#333333]">
+              “{lang === 'am' ? book.tagline?.am : book.tagline?.en}”
             </div>
 
-            {/* Comprehensive Synopsis */}
-            <div className="space-y-4 font-serif text-base sm:text-lg text-[var(--on-surface-variant)] leading-relaxed pt-2">
+            {/* Full Synopsis */}
+            <div className="space-y-4 text-base sm:text-lg text-[#333333] leading-relaxed font-serif">
               <p>{lang === 'am' ? book.description?.am : book.description?.en}</p>
             </div>
 
-            {/* Verified Themes */}
-            <div className="pt-6 border-t border-[var(--border-hairline)]">
-              <div className="font-mono text-xs text-[var(--secondary)] uppercase tracking-widest mb-3">
-                {lang === 'am' ? 'ማዕከላዊ ጭብጦች' : 'CORE SPECULATIVE & PHILOSOPHICAL THEMES'}
+            {/* Publication Details Table */}
+            <div className="pt-6 border-t border-gray-200">
+              <h2 className="font-serif text-xl font-bold text-[#111111] mb-4">
+                {lang === 'am' ? 'የህትመት ዝርዝር መረጃ' : 'Publication Details'}
+              </h2>
+
+              <div className="grid grid-cols-2 gap-4 text-xs font-sans">
+                <div className="p-3 bg-gray-50 border border-gray-200 rounded">
+                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Publisher</span>
+                  <span className="text-[#111111] font-semibold text-sm">
+                    {lang === 'am' ? book.publisherAm : book.publisher}
+                  </span>
+                </div>
+
+                <div className="p-3 bg-gray-50 border border-gray-200 rounded">
+                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Page Count</span>
+                  <span className="text-[#111111] font-semibold text-sm">{book.pageCount} Pages</span>
+                </div>
+
+                <div className="p-3 bg-gray-50 border border-gray-200 rounded">
+                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Language</span>
+                  <span className="text-[#111111] font-semibold text-sm">
+                    {lang === 'am' ? book.languageAm : book.language}
+                  </span>
+                </div>
+
+                <div className="p-3 bg-gray-50 border border-gray-200 rounded">
+                  <span className="text-gray-400 block text-[10px] uppercase font-bold">Translator</span>
+                  <span className="text-[#111111] font-semibold text-sm">
+                    {book.translator ? (lang === 'am' ? book.translatorAm : book.translator) : 'N/A'}
+                  </span>
+                </div>
               </div>
+            </div>
+
+            {/* Literary Themes */}
+            <div className="pt-6 border-t border-gray-200">
+              <h2 className="font-serif text-xl font-bold text-[#111111] mb-3">
+                {lang === 'am' ? 'ቁልፍ ጭብጦች' : 'Key Themes & Motifs'}
+              </h2>
               <div className="flex flex-wrap gap-2">
                 {(lang === 'am' ? book.themesAm : book.themes)?.map((theme, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 text-xs font-serif bg-[#0e1a1d] border border-[var(--border-hairline)] text-[var(--on-surface-variant)] hover:border-[var(--primary-container)] transition-colors"
+                    className="px-3.5 py-1.5 bg-gray-100 text-[#333333] text-xs font-semibold rounded-full"
                   >
                     {theme}
                   </span>
                 ))}
               </div>
             </div>
-
-            {/* Translation Accolade if applicable */}
-            {book.translator && (
-              <div className="p-4 bg-[#0e1a1d] border border-[var(--primary-container)] font-mono text-xs space-y-1 shadow-[0_0_20px_-4px_rgba(45,212,191,0.2)]">
-                <div className="text-[var(--primary)] font-bold uppercase">
-                  OFFICIAL ENGLISH EDITION & SCHOLARLY HONORS
-                </div>
-                <div className="text-[var(--on-surface)] font-serif text-sm">
-                  Translated by {book.translator} · Published by Henningham Family Press (UK)
-                </div>
-                <div className="text-[#fca5a5] text-[11px] pt-1">
-                  ★ Shortlisted for the TA First Translation Prize 2022 (United Kingdom)
-                </div>
-              </div>
-            )}
           </div>
         </div>
-      </section>
 
-      {/* Related Volumes Section */}
-      {relatedBooks.length > 0 && (
-        <section className="site-container mt-20 pt-16 border-t border-[var(--border-hairline)]">
-          <div className="flex items-center justify-between mb-8 pb-3 border-b border-[var(--border-hairline)] font-mono text-xs text-[var(--outline)] uppercase tracking-widest">
-            <span className="text-[var(--secondary)] font-bold">RELATED ARCHIVAL FOLIOS</span>
-            <span>CHRONICLES IN CANON</span>
-          </div>
+        {/* Related Books */}
+        {relatedBooks.length > 0 && (
+          <div className="pt-16 border-t border-gray-200">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] mb-8 text-center">
+              {lang === 'am' ? 'ተዛማጅ መጻሕፍት' : 'Other Works by Yismake Worku'}
+            </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedBooks.map((relBook) => (
-              <BookCard key={relBook.id} book={relBook} />
-            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              {relatedBooks.map((rel) => (
+                <div
+                  key={rel.id}
+                  className="bg-[#fafafa] border border-gray-200 p-6 rounded-sm text-center flex flex-col items-center justify-between"
+                >
+                  <div className="mb-4">
+                    <BookCover book={rel} size="small" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-lg font-bold text-[#111111] mb-1">
+                      {lang === 'am' ? rel.titleAm : rel.titleEn}
+                    </h3>
+                    <p className="text-xs text-gray-500 mb-4">{rel.year}</p>
+                    <Link
+                      to={`/books/${rel.slug}`}
+                      className="jkr-pill-btn-dark !py-1.5 !px-4 !text-xs"
+                    >
+                      {lang === 'am' ? 'ዝርዝር →' : 'View Book →'}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
+        )}
+      </div>
+
+      {inspectionOpen && (
+        <ModalInspectionFolio book={book} onClose={() => setInspectionOpen(false)} />
       )}
-
-      {/* Full-Screen Modal Inspection Folio */}
-      <ModalInspectionFolio
-        book={book}
-        isOpen={inspectionOpen}
-        onClose={() => setInspectionOpen(false)}
-      />
-    </main>
+    </div>
   );
 }

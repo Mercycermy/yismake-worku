@@ -1,204 +1,125 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
+import AuthorSignature from './AuthorSignature';
 
 export default function Footer() {
   const { lang } = useLanguage();
 
+  const footerLinks = [
+    { to: '/enquiries#terms', en: 'Terms of Use', am: 'የአጠቃቀም ደንቦች' },
+    { to: '/enquiries#privacy', en: 'General Privacy Policy', am: 'የግላዊነት ፖሊሲ' },
+    { to: '/enquiries', en: 'Enquiries & Rights', am: 'ጥያቄዎችና መብቶች' },
+    { to: '/sources', en: 'Official Links', am: 'ማጣቀሻዎችና አገናኞች' },
+    { to: '/enquiries#media-kit', en: 'Media Kit', am: 'የሚዲያ ማህደር' },
+    { to: '/enquiries#faqs', en: 'FAQs', am: 'ተደጋጋሚ ጥያቄዎች' },
+    { to: '/enquiries#verification', en: 'Legal & Book Verification', am: 'የህግና የመጽሐፍ ትክክለኛነት' }
+  ];
+
   return (
-    <footer className="relative bg-[#080f11] border-t border-[var(--border-hairline)] pt-20 pb-16 text-[var(--on-surface-variant)]">
-      <div className="site-container">
-        {/* Top Colophon Imprimatur */}
-        <div className="pb-14 border-b border-[var(--border-hairline)] flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-xs font-mono text-[var(--secondary)] tracking-[0.25em] uppercase font-bold">
-                {lang === 'am' ? 'የደራሲው ማህተመ-ቃል' : 'COLOPHON & IMPRIMATUR'}
-              </span>
-              <span className="text-[var(--primary)] text-xs">❖</span>
-              <span className="font-mono text-[10px] text-[var(--outline)] tracking-widest">
-                LAKE TANA BASIN · 11°56′N 37°18′E
-              </span>
-            </div>
+    <footer
+      id="colophon"
+      className="relative site-footer text-[#dcd1c4] pt-16 pb-14 overflow-hidden border-t-2 border-[#3d2a1b]"
+      style={{
+        backgroundImage: "url('/images/footer-bg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      {/* Dark Ambient Vignette Overlay */}
+      <div className="absolute inset-0 bg-[#0d0906]/85 backdrop-blur-[2px] pointer-events-none" />
 
-            <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--on-surface)] tracking-tight">
-              ይስማዕከ ወርቁ
-            </div>
+      <div className="site-container relative z-10">
+        {/* Footer Navigation Menu */}
+        <div className="flex justify-center mb-10 pb-6 border-b border-[#4d3725]/60">
+          <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 list-none p-0 m-0 text-xs sm:text-sm font-serif">
+            {footerLinks.map((item) => (
+              <li key={item.to}>
+                <Link
+                  to={item.to}
+                  className="text-[#dcd1c4] hover:text-[#d4af37] transition-colors tracking-wide underline-offset-4 hover:underline"
+                >
+                  {lang === 'am' ? item.am : item.en}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-            <p className="mt-4 max-w-xl text-sm sm:text-base font-serif text-[var(--on-surface)] leading-relaxed italic border-l-2 border-[var(--primary-container)] pl-4 py-1 bg-[#0e1a1d]">
-              {lang === 'am'
-                ? "«አርበኛ ማለት 'አርነት በእኛ' ማለት ነው። አርበኝነት ታሪክ ብቻ ሳይሆን፣ የአእምሮአችንንና የዕውቀታችንን ነጻነት በየዕለቱ የመጠበቅ አደራ ነው።»"
-                : "“A patriot truly means 'liberty through us' — it is not merely a memory, but the daily defense of our intellectual inheritance and sovereign mind.”"}
+        {/* Social Media Channels */}
+        <div className="flex justify-center items-center gap-6 mb-10 text-lg">
+          <a
+            href="https://t.me/yismakeworku"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full bg-[#1e140d] border border-[#523824] hover:border-[#d4af37] text-[#d4af37] hover:scale-110 flex items-center justify-center transition-all shadow-md"
+            title="Official Telegram Channel (18.6K+ subscribers)"
+            aria-label="Telegram"
+          >
+            <span>✈️</span>
+          </a>
+
+          <a
+            href="https://www.goodreads.com/book/show/16133457-dertogada"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full bg-[#1e140d] border border-[#523824] hover:border-[#d4af37] text-[#d4af37] hover:scale-110 flex items-center justify-center transition-all shadow-md font-serif font-bold text-xs"
+            title="Goodreads Author Profile"
+            aria-label="Goodreads"
+          >
+            <span>g</span>
+          </a>
+
+          <a
+            href="https://www.youtube.com/results?search_query=Yismake+Worku"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full bg-[#1e140d] border border-[#523824] hover:border-[#d4af37] text-[#d4af37] hover:scale-110 flex items-center justify-center transition-all shadow-md"
+            title="Interviews & Television Features"
+            aria-label="YouTube"
+          >
+            <span>▶</span>
+          </a>
+
+          <a
+            href="https://henninghamfamilypress.com/the-lost-spell/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-full bg-[#1e140d] border border-[#523824] hover:border-[#d4af37] text-[#d4af37] hover:scale-110 flex items-center justify-center transition-all shadow-md font-serif text-xs font-semibold"
+            title="Henningham Family Press (UK Publisher)"
+            aria-label="Publisher"
+          >
+            <span>UK</span>
+          </a>
+        </div>
+
+        {/* Illuminated Author Signature */}
+        <div className="flex flex-col items-center justify-center mb-10">
+          <AuthorSignature className="h-16 sm:h-20 w-auto text-[#d4af37]" light={true} />
+        </div>
+
+        {/* Copyright & Legal Notices (Patterned directly after jkrowling.com) */}
+        <div className="max-w-3xl mx-auto text-center font-serif text-xs text-[#a09080] space-y-3 leading-relaxed">
+          <p className="font-bold text-[#dcd1c4] tracking-widest uppercase">
+            &copy; {new Date().getFullYear()} YISMAKE WORKU. ALL RIGHTS RESERVED.
+          </p>
+
+          <p className="text-[#e5a840] font-sans text-[11px] bg-[#1a120b]/80 border border-[#4d3725] p-2.5 rounded-sm">
+            {lang === 'am'
+              ? 'ማሳሰቢያ፡ በይስማዕከ ወርቁ ስም የተከፈቱ ሀሰተኛ የማህበራዊ ሚዲያ ገጾችና ያልተፈቀዱ የፒዲኤፍ (PDF) ስርጭቶች እንዳሉ እናውቃለን። ትክክለኛና ህጋዊ መጻሕፍትን ለማግኘት እባክዎ የእኛን የጥያቄዎችና አድራሻ (Enquiries) ገጽ ይጎብኙ።'
+              : 'We are aware of imposter accounts online and counterfeit bootleg printings posing as Yismake Worku and his publishers. Please visit our Enquiries page for verified information on authentic editions and official channels.'}
+          </p>
+
+          <div className="text-[11px] text-[#8e7e70] space-y-1.5 pt-2">
+            <p>
+              Dertogada, Ramatohara, Xantoxara, Yoratorad, Yotod, and associated character names and storyworlds &copy; Yismake Worku.
             </p>
-          </div>
-
-          <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
-            <span className="font-mono text-xs text-[var(--secondary)] tracking-widest uppercase">
-              OFFICIAL TELEGRAM DISPATCH
-            </span>
-            <a
-              href="https://t.me/yismakeworku"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-relic text-xs py-2 px-4"
-            >
-              <span>@YISMAKEWORKU · 18.6K+ READERS</span>
-              <span>↗</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Archival Index Columns (4 Columns with Ge'ez Locks & Hairline Rules) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-[var(--border-hairline)] text-xs font-mono">
-          {/* Column 1: Books */}
-          <div>
-            <div className="text-[var(--secondary)] font-bold tracking-[0.18em] uppercase mb-4 flex items-center gap-1.5 pb-1 border-b border-[var(--border-hairline)]">
-              <span className="font-serif">፩</span>
-              <span>·</span>
-              <span>01 / {lang === 'am' ? 'መጻሕፍት' : 'CANON'}</span>
-            </div>
-            <ul className="space-y-2.5 text-[var(--outline)] list-none">
-              <li>
-                <Link to="/books/dertogada" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'ዴርቶጋዳ (2009)' : 'Dertogada (2009)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/books/ramatohara" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'ራማቶሓራ (2010)' : 'Ramatohara (2010)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/books/xantoxara" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'ዣንቶዣራ (2011)' : 'Xantoxara (2011)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/books/kebur-dengay" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'ክቡር ድንጋይ (2013)' : 'Kebur Dengay / Lost Spell'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/books" className="text-[var(--primary)] hover:text-white transition-colors inline-block mt-1 font-bold">
-                  → {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት' : 'View Full 15+ Works'}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 2: Storyworld */}
-          <div>
-            <div className="text-[var(--secondary)] font-bold tracking-[0.18em] uppercase mb-4 flex items-center gap-1.5 pb-1 border-b border-[var(--border-hairline)]">
-              <span className="font-serif">፪</span>
-              <span>·</span>
-              <span>02 / {lang === 'am' ? 'የልቦለድ ዓለም' : 'WORLD'}</span>
-            </div>
-            <ul className="space-y-2.5 text-[var(--outline)] list-none">
-              <li>
-                <Link to="/universe" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'የዴርቶጋዳ 5 ተከታታይ' : 'The 5-Part Pentology'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/universe#lake-tana" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'የጣና ሐይቅ ምስጢር' : 'Lake Tana Subterranean'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/universe" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'ሻጊዝ እጅጉ እና ሲፓራ' : 'Shagiz Ejigu & Zipporah'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/author" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'የደራሲው የህይወት ታሪክ' : 'Author Biography'}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Academic Archive */}
-          <div>
-            <div className="text-[var(--secondary)] font-bold tracking-[0.18em] uppercase mb-4 flex items-center gap-1.5 pb-1 border-b border-[var(--border-hairline)]">
-              <span className="font-serif">፫</span>
-              <span>·</span>
-              <span>03 / {lang === 'am' ? 'ምርምርና ጥናት' : 'RESEARCH'}</span>
-            </div>
-            <ul className="space-y-2.5 text-[var(--outline)] list-none">
-              <li>
-                <Link to="/sources" className="hover:text-[var(--primary)] transition-colors block">
-                  Taylor & Francis Study
-                </Link>
-              </li>
-              <li>
-                <Link to="/sources" className="hover:text-[var(--primary)] transition-colors block">
-                  TA First Translation Prize (UK)
-                </Link>
-              </li>
-              <li>
-                <Link to="/sources" className="hover:text-[var(--primary)] transition-colors block">
-                  Henningham Family Press
-                </Link>
-              </li>
-              <li>
-                <Link to="/archive" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'የቴሌቪዥን ቃለ-መጠይቆች' : 'Broadcast & Media Archive'}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Communication */}
-          <div>
-            <div className="text-[var(--secondary)] font-bold tracking-[0.18em] uppercase mb-4 flex items-center gap-1.5 pb-1 border-b border-[var(--border-hairline)]">
-              <span className="font-serif">፬</span>
-              <span>·</span>
-              <span>04 / {lang === 'am' ? 'ግንኙነት' : 'DISPATCH'}</span>
-            </div>
-            <ul className="space-y-2.5 text-[var(--outline)] list-none">
-              <li>
-                <a
-                  href="https://t.me/yismakeworku"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[var(--primary)] transition-colors block"
-                >
-                  Telegram: @yismakeworku
-                </a>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-[var(--primary)] transition-colors block">
-                  {lang === 'am' ? 'የሚዲያና የአካዳሚ ጥያቄ' : 'Academic / Media Inquiries'}
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://www.goodreads.com/book/show/16133457-dertogada"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[var(--primary)] transition-colors block"
-                >
-                  Goodreads Reader Archive ↗
-                </a>
-              </li>
-              <li>
-                <span className="text-[var(--outline-variant)] block mt-1">
-                  Debre Markos University · Ethiopia
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom Colophon Note */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[var(--outline)]">
-          <div>
-            <span>© {new Date().getFullYear()} YISMAKE WORKU (ይስማዕከ ወርቁ) · ALL RIGHTS RESERVED</span>
-          </div>
-          <div className="flex items-center gap-4 text-[10px] tracking-widest uppercase">
-            <span>TYPESET IN PLAYFAIR DISPLAY & NOTO SERIF ETHIOPIC</span>
-            <span>•</span>
-            <span className="text-[var(--primary)] font-bold">TEHADSO OBSIDIAN ARCHIVE</span>
+            <p>
+              “The Lost Spell” (English translation of Kebur Dengay) translation &copy; Dr. Bethlehem Attfield; published under exclusive UK license by Henningham Family Press, London.
+            </p>
+            <p>
+              DERTOGADA UNIVERSE is a registered literary trademark of Yismake Worku.
+            </p>
           </div>
         </div>
       </div>

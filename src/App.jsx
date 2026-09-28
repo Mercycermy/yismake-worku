@@ -9,9 +9,11 @@ import Universe from './pages/Universe';
 import Books from './pages/Books';
 import BookDetail from './pages/BookDetail';
 import About from './pages/About';
-import Archive from './pages/Archive';
+import News from './pages/News';
+import InHisOwnWords from './pages/InHisOwnWords';
+import OnWriting from './pages/OnWriting';
+import Enquiries from './pages/Enquiries';
 import Sources from './pages/Sources';
-import Contact from './pages/Contact';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -36,15 +38,18 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/universe" element={<Universe />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/archive" element={<News />} />
+          <Route path="/in-his-own-words" element={<InHisOwnWords />} />
+          <Route path="/on-writing" element={<OnWriting />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/:slug" element={<BookDetail />} />
           <Route path="/author" element={<About />} />
-          <Route path="/about" element={<Navigate to="/author" replace />} />
-          <Route path="/archive" element={<Archive />} />
-          <Route path="/insights" element={<Navigate to="/archive" replace />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/universe" element={<Universe />} />
+          <Route path="/enquiries" element={<Enquiries />} />
+          <Route path="/contact" element={<Enquiries />} />
           <Route path="/sources" element={<Sources />} />
-          <Route path="/contact" element={<Contact />} />
           {/* Catch-all fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
