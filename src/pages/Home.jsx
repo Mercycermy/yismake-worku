@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
-import AuthorSignature from '../components/AuthorSignature';
 import BookCover from '../components/BookCover';
 import { verifiedBooks } from '../data/yismakeData';
 
@@ -46,13 +45,23 @@ export default function Home() {
 
   return (
     <div className="bg-white text-[#222222] font-sans antialiased">
-      {/* ----------------------------------------------------------------------
-          1. INTRO SCREEN / DUAL PORTALS (Exact replica of jkrowling.com)
-          ---------------------------------------------------------------------- */}
-      <section className="pt-12 sm:pt-16 pb-16 bg-white">
-        <div className="site-container max-w-3xl mx-auto text-center">
-          {/* Main Heading */}
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[52px] font-bold text-[#111111] leading-[1.18] tracking-tight mb-5">
+      {/* ==================================================================
+          1. HERO — Full-width desk background with dual portal cards
+          ================================================================== */}
+      <section
+        className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: "url('/images/writers-desk.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/40" />
+
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-8 py-16 text-center">
+          {/* Hero Title */}
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[56px] font-bold text-white leading-[1.15] tracking-tight mb-4 drop-shadow-lg">
             {lang === 'am' ? (
               <>
                 እንኳን ወደ ይስማዕከ ወርቁ <br />
@@ -66,22 +75,26 @@ export default function Home() {
             )}
           </h1>
 
-          {/* Subtitle */}
-          <p className="font-serif text-base sm:text-lg text-[#555555] leading-relaxed max-w-xl mx-auto mb-12">
+          <p className="font-serif text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mx-auto mb-14 drop-shadow-md">
             {lang === 'am'
               ? 'ስለ ደራሲውና የኢትዮጵያን የስነ-ጽሑፍ ታሪክ የቀየሩትን ድንቅ መጻሕፍቱን የተመለከቱ የቅርብ ጊዜ ዜናዎችንና መረጃዎችን እዚህ ያገኛሉ።'
               : "Here you can find the latest news and information on him and the books that made him one of Ethiopia's best-known authors."}
           </p>
 
-          {/* Dual Entrance Cards Container */}
-          <div className="space-y-6 sm:space-y-8 max-w-xl mx-auto">
-            {/* CARD 1: GROWN-UPS / MAIN SITE CARD (Dark Wood Desk Background) */}
-            <div className="jkr-portal-card-desk p-8 sm:p-12 text-center text-white flex flex-col items-center justify-center min-h-[280px]">
+          {/* Dual Columns — Directly over desk background (Exact JKR Insp) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 max-w-4xl mx-auto items-center">
+            {/* COLUMN 1: GROWN-UPS / OFFICIAL SITE */}
+            <div className="flex flex-col items-center justify-center text-center p-4">
               <div className="mb-4">
-                <AuthorSignature className="h-14 sm:h-16 w-auto text-white" light={true} />
+                <div className="font-serif text-3xl sm:text-4xl font-bold tracking-[0.16em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
+                  YISMAKE WORKU
+                </div>
+                <div className="font-serif text-xs tracking-[0.3em] text-[#e5c06e] uppercase mt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                  {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Official Author Website'}
+                </div>
               </div>
 
-              <p className="text-sm sm:text-[15px] text-white/90 max-w-md mx-auto mb-6 leading-relaxed font-sans">
+              <p className="text-sm sm:text-base text-white/95 max-w-xs mx-auto mb-6 leading-relaxed font-sans drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
                 {lang === 'am'
                   ? 'ስለ ይስማዕከ ወርቁና ስለ ስነ-ጽሑፍ ስራዎቹ ሁሉንም የቅርብ ጊዜ ዜናዎችና መረጃዎችን ለማግኘት በዚህ በኩል ይግቡ።'
                   : 'This way for all the latest news and information about Yismake Worku and his writing.'}
@@ -89,24 +102,24 @@ export default function Home() {
 
               <button
                 onClick={scrollToBio}
-                className="jkr-pill-btn"
+                className="jkr-pill-btn shadow-xl hover:shadow-2xl cursor-pointer"
               >
                 {lang === 'am' ? 'እዚህ ይግቡ' : 'Enter here'}
               </button>
             </div>
 
-            {/* CARD 2: YOUNGER READERS / STORIES (Royal Purple Background) */}
-            <div className="jkr-portal-card-stories p-8 sm:p-12 text-center text-white flex flex-col items-center justify-center min-h-[280px]">
+            {/* COLUMN 2: YOUNGER READERS / STORIES */}
+            <div className="flex flex-col items-center justify-center text-center p-4">
               <div className="mb-4">
-                <div className="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-white flex items-center justify-center gap-2">
-                  <span>YISMAKE WORKU’S</span>
+                <div className="font-serif text-2xl sm:text-3xl font-bold tracking-wider text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
+                  YISMAKE WORKU'S
                 </div>
-                <div className="font-serif text-xl sm:text-2xl italic text-[#f4d06f] -mt-1">
-                  Stories &amp; Lore
+                <div className="font-serif text-xl sm:text-2xl italic text-[#f4d06f] -mt-1 drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+                  STORIES
                 </div>
               </div>
 
-              <p className="text-sm sm:text-[15px] text-white/90 max-w-md mx-auto mb-6 leading-relaxed font-sans">
+              <p className="text-sm sm:text-base text-white/95 max-w-xs mx-auto mb-6 leading-relaxed font-sans drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
                 {lang === 'am'
                   ? 'በጣና ሐይቅ ስር ስላለው የዴርቶጋዳ ሳይንሳዊ ዓለምና ተረኮች የበለጠ ለማወቅ ለሚፈልጉ ወጣት አንባቢዎች።'
                   : "This way for younger readers, who want to find out more about Yismake Worku and his speculative stories."}
@@ -114,29 +127,29 @@ export default function Home() {
 
               <Link
                 to="/universe"
-                className="jkr-pill-btn"
+                className="jkr-pill-btn shadow-xl hover:shadow-2xl"
               >
                 {lang === 'am' ? 'ይምጡና ይጎብኙ!' : 'Come on in!'}
               </Link>
             </div>
           </div>
 
-          {/* NOTIFICATION BOX (Below Cards) */}
-          <div className="mt-12 max-w-xl mx-auto p-4 sm:p-5 bg-white border border-[#e5e5e5] rounded-sm text-left shadow-sm flex items-start gap-3.5">
-            <span className="text-xl shrink-0 mt-0.5">🔔</span>
-            <p className="text-xs sm:text-[13px] text-[#444444] leading-relaxed m-0 font-sans">
+          {/* Imposter Notification Bar (Exact JKR inspo from screenshot) */}
+          <div className="w-full max-w-2xl mx-auto mt-14 bg-white/95 backdrop-blur-sm border border-black/10 rounded-full py-3 px-6 shadow-xl flex items-center gap-3 text-left">
+            <div className="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center shrink-0 text-xs font-bold text-gray-700">!</div>
+            <p className="text-xs sm:text-[13px] text-[#222222] leading-snug font-sans">
               {lang === 'am' ? (
                 <>
-                  በይስማዕከ ወርቁ ስም በመስመር ላይ የሚንቀሳቀሱ ሀሰተኛ ገጾችና ያልተፈቀዱ የህትመት ቅጂዎች እንዳሉ እናውቃለን። እባክዎ ለበለጠ መረጃ የእኛን{' '}
-                  <Link to="/enquiries" className="text-[#111111] underline font-bold hover:text-[#d4af37]">
-                    የጥያቄዎችና አድራሻ (Enquiries)
+                  ስለ ሀሰተኛ ገጾችና ያልተፈቀዱ ቅጂዎች ጥንቃቄ ያድርጉ። ለበለጠ መረጃ የ{' '}
+                  <Link to="/enquiries" className="underline font-semibold text-black hover:text-[#c59b27]">
+                    ጥያቄዎችና አድራሻ
                   </Link>{' '}
-                  ገጽ ይጎብኙ።
+                  ገጻችንን ይጎብኙ።
                 </>
               ) : (
                 <>
-                  We are aware of imposter accounts online posing as Yismake Worku and his publishers. Please visit our{' '}
-                  <Link to="/enquiries" className="text-[#111111] underline font-bold hover:text-[#d4af37]">
+                  We are aware of imposter accounts online posing as Yismake Worku. Please visit our{' '}
+                  <Link to="/enquiries" className="underline font-semibold text-black hover:text-[#c59b27]">
                     Enquiries
                   </Link>{' '}
                   page for more information.
@@ -147,10 +160,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ----------------------------------------------------------------------
-          2. BIO SECTION (Matching jkrowling.com home-intro-section--bio)
-          ---------------------------------------------------------------------- */}
-      <section ref={bioRef} className="py-16 sm:py-24 bg-white border-t border-[#f0f0f0]">
+      {/* ==================================================================
+          2. BIO SECTION
+          ================================================================== */}
+      <section ref={bioRef} className="py-16 sm:py-24 bg-white">
         <div className="site-container max-w-3xl mx-auto text-center">
           <h2 className="jkr-section-title">
             {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Yismake Worku'}
@@ -169,9 +182,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Layered Polaroid Photo Stack (Replica of JKR Polaroid Stack) */}
+          {/* Polaroid Photo Stack */}
           <div className="jkr-polaroid-stack mb-4">
-            {/* Background Archival Photo 1 */}
             <div className="jkr-polaroid-back-1">
               <div className="w-full h-56 bg-gray-200 overflow-hidden">
                 <img
@@ -182,7 +194,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Background Archival Photo 2 */}
             <div className="jkr-polaroid-back-2">
               <div className="w-full h-56 bg-gray-200 overflow-hidden">
                 <img
@@ -193,7 +204,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Front Color Polaroid */}
             <div className="jkr-polaroid-front">
               <div className="w-full h-64 bg-gray-900 overflow-hidden mb-3">
                 <img
@@ -213,9 +223,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ----------------------------------------------------------------------
-          3. CANONICAL WORKS ROWS (Vertical rhythm matching JKR)
-          ---------------------------------------------------------------------- */}
+      {/* ==================================================================
+          3. CANONICAL WORKS
+          ================================================================== */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="site-container max-w-2xl mx-auto space-y-20">
           {/* Row 1: The Dertogada Saga */}
@@ -232,12 +242,12 @@ export default function Home() {
 
             <p className="text-base text-[#444444] leading-relaxed font-sans">
               {lang === 'am'
-                ? 'የይስማዕከ ወርቁ የመጀመሪያ ልቦለድ የሆነው «ዴርቶጋዳ» በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት ፈጠረ። በጣና ሐይቅ ስር የተሰወረው ሚስጥራዊ የሳይንስ ተቋምና የናሳው የጠፈር መሃንዲስ ሻጊዝ እጅጉ ያደረጉት ትግል፤ ራማቶሓራ፣ ዣንቶዣራ፣ ዮራቶራድ እና ዮቶድ በተባሉ ተከታታይ ስራዎች ተጠናቋል።'
-                : 'Yismake Worku’s debut novel, Dertogada, published in 2009, began a groundbreaking 5-volume speculative saga. The series broke Ethiopian publishing records with over 200,000 copies sold in its debut year across 10 editions. Following NASA aerospace engineer Shagiz Ejigu and a clandestine laboratory beneath Lake Tana, the saga inspired an entire generation of African readers.'}
+                ? 'የይስማዕከ ወርቁ የመጀመሪያ ልቦለድ የሆነው «ዴርቶጋዳ» በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት ፈጠረ።'
+                : "Yismake Worku's debut novel, Dertogada, published in 2009, began a groundbreaking 5-volume speculative saga. The series broke Ethiopian publishing records with over 200,000 copies sold in its debut year across 10 editions."}
             </p>
           </div>
 
-          {/* Row 2: Robert Galbraith / The Lost Spell */}
+          {/* Row 2: The Lost Spell */}
           <div className="text-center space-y-4 pt-6 border-t border-[#f0f0f0]">
             <div className="flex justify-center mb-6">
               <div className="w-48 sm:w-56 shadow-2xl hover:scale-105 transition-transform duration-300">
@@ -251,8 +261,8 @@ export default function Home() {
 
             <p className="text-base text-[#444444] leading-relaxed font-sans">
               {lang === 'am'
-                ? 'በዶ/ር ቤተልሔም አትፊልድ (በርሚንግሃም ዩኒቨርሲቲ) ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው «ክቡር ድንጋይ» (The Lost Spell)፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ ቀርቧል። አንድ ባለጸጋ በድግምት ወደ ውሻነት ሲቀየር የህብረተሰቡን ግብዝነትና የፖለቲካውን ህመም ከመሬት ተነስቶ በጥልቅ ይመረምራል።'
-                : 'Translated into English by Dr. Bethlehem Attfield and published in the UK by Henningham Family Press, The Lost Spell (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize in the United Kingdom. When an arrogant Addis Ababa businessman accidentally transforms into a street dog, he observes the stark realities of power and class hypocrisy from four paws.'}
+                ? 'በዶ/ር ቤተልሔም አትፊልድ ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው «ክቡር ድንጋይ» (The Lost Spell)፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ ቀርቧል።'
+                : 'Translated into English by Dr. Bethlehem Attfield and published in the UK by Henningham Family Press, The Lost Spell (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize in the United Kingdom.'}
             </p>
           </div>
 
@@ -270,38 +280,18 @@ export default function Home() {
 
             <p className="text-base text-[#444444] leading-relaxed font-sans">
               {lang === 'am'
-                ? 'ከዴርቶጋዳ በተጨማሪ ይስማዕከ ወርቁ የተለያዩ ራሳቸውን የቻሉ ልቦለዶችን አበርክቷል። ሜሎስ (ስነ-ልቦናዊ ልቦለድ)፣ ተልሚድ (መንፈሳዊ ፍልስፍና)፣ ዛምራ፣ የቀንድ አውጣ ኑሮ፣ የኦጋዴን ድመቶች፣ ተከርቼም እንዲሁም የመጀመሪያ የግጥም መድበሉ የወንድ ምጥ ይገኙበታል።'
-                : 'Alongside the Dertogada saga and The Lost Spell, Yismake Worku has written a rich range of standalone books exploring human morality, psychological suspense, and economic resilience. These include Melos, Telmid (The Disciple), Zamra, Tekerchem (Locked), and his debut poetry collection Yewond Mit.'}
-            </p>
-          </div>
-
-          {/* Row 4: Monastic Wisdom & Sovereignty */}
-          <div className="text-center space-y-4 pt-6 border-t border-[#f0f0f0]">
-            <div className="flex justify-center mb-6">
-              <div className="w-24 h-24 rounded-full bg-[#111111] text-[#d4af37] flex items-center justify-center font-serif text-3xl font-bold shadow-xl border-2 border-[#d4af37]">
-                <span>ይ</span>
-              </div>
-            </div>
-
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111]">
-              {lang === 'am' ? 'ገዳማዊ ጥበብና አገራዊ ሉዓላዊነት' : 'Monastic Wisdom & Sovereignty'}
-            </h3>
-
-            <p className="text-base text-[#444444] leading-relaxed font-sans">
-              {lang === 'am'
-                ? 'ይስማዕከ ወርቁ ጥንታዊውን የኢትዮጵያ የብራና ቅርስና የገዳማት ምስጢር ለዘመናዊው ትውልድ በሳይንስ ልቦለድ መነጽር እንዲታይ አድርጓል። የአእምሮና የቴክኖሎጂ ነጻነትን የሚያወድሱ ጽሑፎቹ በኢትዮጵያም ሆነ በአፍሪካ የወጣቱን ምናብ አንቅተዋል።'
-                : 'Yismake Worku has championed the resurgence of indigenous African intellectual capital. Through his writing and community dialogues, he advocates that ancient ecclesiastical scholarship and modern quantum engineering must converge to secure genuine technological self-determination.'}
+                ? 'ከዴርቶጋዳ በተጨማሪ ይስማዕከ ወርቁ የተለያዩ ራሳቸውን የቻሉ ልቦለዶችን አበርክቷል። ሜሎስ፣ ተልሚድ፣ ዛምራ፣ የቀንድ አውጣ ኑሮ፣ የኦጋዴን ድመቶች፣ ተከርቼም እንዲሁም የመጀመሪያ የግጥም መድበሉ የወንድ ምጥ ይገኙበታል።'
+                : 'Alongside the Dertogada saga and The Lost Spell, Yismake Worku has written a rich range of standalone books exploring human morality, psychological suspense, and economic resilience.'}
             </p>
           </div>
         </div>
       </section>
 
-      {/* ----------------------------------------------------------------------
-          4. LATEST NEWS (Soft gray background #f4f4f4 matching jkrowling.com)
-          ---------------------------------------------------------------------- */}
+      {/* ==================================================================
+          4. LATEST NEWS
+          ================================================================== */}
       <section id="news" className="py-16 sm:py-24 bg-[#f4f4f4] border-t border-[#e8e8e8]">
         <div className="site-container max-w-4xl mx-auto">
-          {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="jkr-section-title">
               {lang === 'am' ? 'የቅርብ ጊዜ ዜናዎች' : 'Latest News'}
@@ -313,7 +303,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 3 News Articles Stacked on Mobile, Grid on Tablet/Desktop */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {latestNews.map((article) => (
               <article key={article.id} className="jkr-news-card">
@@ -336,7 +325,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Centered View All Link */}
           <div className="text-center">
             <Link
               to="/news"

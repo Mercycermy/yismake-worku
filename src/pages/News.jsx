@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import { publicInterviewsAndArchive } from '../data/yismakeData';
+import PageBanner from '../components/PageBanner';
 
 export default function News() {
   const { lang } = useLanguage();
@@ -85,13 +86,11 @@ export default function News() {
       : articles.filter((a) => a.category === activeCategory);
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-4xl mx-auto">
-        {/* Page Title */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'ዜናዎች' : 'News'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'ዜናዎች' : 'News'} />
+      <div className="site-container max-w-4xl mx-auto py-14 sm:py-20">
+        {/* Page Subtitle */}
+        <div className="text-center mb-14">
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'ስለ ይስማዕከ ወርቁ፣ መጻሕፍቱ፣ ሽልማቶችና ይፋዊ ማስታወቂያዎች ወቅታዊ ዘገባዎች።'

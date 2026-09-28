@@ -4,6 +4,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
+import PageBanner from '../components/PageBanner';
 
 export default function Books() {
   const { lang } = useLanguage();
@@ -52,14 +53,54 @@ export default function Books() {
     });
   }, [searchQuery, selectedCategory]);
 
+  const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada') || verifiedBooks[0];
+
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-6xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'መጻሕፍት' : 'Books'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'መጻሕፍት' : 'Books'} />
+
+      {/* Featured Masterpiece Section (Exact JKR inspo from screenshot) */}
+      <section className="bg-[#edf0f3] py-14 sm:py-20 border-b border-gray-300">
+        <div className="site-container max-w-3xl mx-auto text-center px-4">
+          <div className="flex justify-center mb-8">
+            <Link to="/books/dertogada" className="transform hover:scale-103 transition-transform duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.22)] rounded-sm inline-block">
+              <BookCover book={dertogadaBook} size="large" />
+            </Link>
+          </div>
+
+          <div className="text-xs font-bold text-[#777777] tracking-[0.25em] uppercase mb-2">
+            {lang === 'am' ? 'የመጀመሪያው ተከታታይ ቅጽ' : 'DERTOGADA'}
+          </div>
+
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#111111] mb-2 tracking-tight">
+            {lang === 'am' ? 'የይስማዕከ ወርቁ ዴርቶጋዳ' : "Yismake Worku's Dertogada"}
+          </h2>
+
+          <div className="font-serif text-sm italic text-[#666666] mb-5">
+            {lang === 'am' ? 'ሜጋ አሳታሚ / ኩራዝ / ዓለም አቀፍ እትሞች' : 'Mega Publishers; Kuraz Publishing; International Editions'}
+          </div>
+
+          <p className="font-serif text-base sm:text-lg text-[#444444] leading-relaxed max-w-2xl mx-auto mb-8">
+            {lang === 'am'
+              ? 'በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠረው የአገሪቱ የመጀመሪያው የሳይንስና የስለላ ልቦለድ።'
+              : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 200,000 copies sold in its debut year alone.'}
+          </p>
+
+          <Link
+            to="/books/dertogada"
+            className="jkr-pill-btn-dark inline-block shadow-md hover:shadow-lg"
+          >
+            {lang === 'am' ? 'ስለ ዴርቶጋዳ ሙሉ መረጃ →' : 'Explore Dertogada →'}
+          </Link>
+        </div>
+      </section>
+
+      <div className="site-container max-w-6xl mx-auto py-14 sm:py-20">
+        {/* Catalog Section Header */}
+        <div className="text-center mb-12">
+          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] mb-3">
+            {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት ካታሎግ' : 'Complete Published Works'}
+          </h3>
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'ከአገሪቱ የመጀመሪያው የሳይንስ ልቦለድ «ዴርቶጋዳ» እስከ እንግሊዝ አገር እጩው «ክቡር ድንጋይ»፤ የይስማዕከ ወርቁ 15+ የታተሙ ስራዎች።'

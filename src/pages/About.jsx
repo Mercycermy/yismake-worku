@@ -2,19 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import { authorData, authorTimeline } from '../data/yismakeData';
-import AuthorSignature from '../components/AuthorSignature';
+import PageBanner from '../components/PageBanner';
 
 export default function About() {
   const { lang } = useLanguage();
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-4xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'ስለ ደራሲ ይስማዕከ ወርቁ' : 'About Yismake Worku'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'ስለ ደራሲ ይስማዕከ ወርቁ' : 'About'} />
+      <div className="site-container max-w-4xl mx-auto py-14 sm:py-20">
+        {/* Page Subtitle */}
+        <div className="text-center mb-14">
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'የኢትዮጵያ ሳይንስ ልቦለድ ፈር-ቀዳጅ፣ የደብረ ማርቆስ ዩኒቨርሲቲ መምህርና የ«ዴርቶጋዳ» ደራሲ የህይወት ጉዞ።'
@@ -134,14 +132,13 @@ export default function About() {
           </div>
         </div>
 
-        {/* Bottom Signature & Call to Action */}
+        {/* Bottom Call to Action */}
         <div className="mt-20 pt-12 border-t border-gray-200 text-center">
-          <AuthorSignature className="h-14 w-auto text-[#111111] mx-auto mb-5" light={false} />
           <Link
             to="/books"
-            className="jkr-pill-btn-dark"
+            className="jkr-pill-btn-dark inline-block shadow-md hover:shadow-lg"
           >
-            {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት ካታሎግ ይመልከቱ' : 'Explore The Books →'}
+            {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት ካታሎግ ይመልከቱ →' : 'Explore The Books →'}
           </Link>
         </div>
       </div>

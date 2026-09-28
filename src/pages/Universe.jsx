@@ -4,6 +4,7 @@ import { useLanguage } from '../components/LanguageContext';
 import DertogadaUniverseMap from '../components/DertogadaUniverseMap';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
+import PageBanner from '../components/PageBanner';
 
 export default function Universe() {
   const { lang } = useLanguage();
@@ -13,8 +14,9 @@ export default function Universe() {
     .sort((a, b) => a.seriesOrder - b.seriesOrder);
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-5xl mx-auto">
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'የዴርቶጋዳ ዓለም' : 'The Dertogada Universe'} />
+      <div className="site-container max-w-5xl mx-auto py-14 sm:py-20">
         {/* Portal Hero Header (Royal Purple Accented like JKR Stories) */}
         <div className="bg-gradient-to-r from-[#491763] to-[#2f0c42] text-white p-8 sm:p-14 rounded-sm shadow-xl text-center mb-16">
           <div className="font-serif text-sm font-bold tracking-[0.2em] text-[#f4d06f] uppercase mb-2">

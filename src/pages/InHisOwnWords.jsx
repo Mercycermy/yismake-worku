@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../components/LanguageContext';
 import { verifiedQuotes } from '../data/yismakeData';
+import PageBanner from '../components/PageBanner';
 
 export default function InHisOwnWords() {
   const { lang } = useLanguage();
@@ -48,13 +49,11 @@ export default function InHisOwnWords() {
   ];
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-3xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'በራሱ አንደበት' : 'In His Own Words'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'በራሱ አንደበት' : 'In His Own Words'} />
+      <div className="site-container max-w-3xl mx-auto py-14 sm:py-20">
+        {/* Page Subtitle */}
+        <div className="text-center mb-14">
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'ደራሲ ይስማዕከ ወርቁ ስለ ህይወቱ፣ ስለ ስነ-ጽሑፍ ጉዞውና ስለ ፈተናዎች በራሱ ብዕር ያሰፈራቸው ጥልቅ ማስታወሻዎች።'

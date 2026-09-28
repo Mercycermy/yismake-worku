@@ -65,7 +65,7 @@ export default function BookDetail() {
                 onClick={() => setInspectionOpen(true)}
                 className="mt-6 w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-[#111111] font-semibold text-xs rounded-full transition-colors cursor-pointer text-center"
               >
-                👁 {lang === 'am' ? 'የመጽሐፉን ሙሉ ዝርዝር መርምር' : 'Inspect Book Dossier'}
+                {lang === 'am' ? 'የመጽሐፉን ሙሉ ዝርዝር መርምር' : 'Inspect Book Dossier'}
               </button>
 
               {/* Purchase Channels */}

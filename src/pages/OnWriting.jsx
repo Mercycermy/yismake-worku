@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
+import PageBanner from '../components/PageBanner';
 
 export default function OnWriting() {
   const { lang } = useLanguage();
@@ -12,7 +13,7 @@ export default function OnWriting() {
       titleEn: 'Write From Your Own Roots, Not Borrowed Soil',
       titleAm: 'በራስህ አፈር ላይ ጀምር',
       descEn:
-        'Do not try to make your story sound like an American or European thriller. Look at your own monasteries, your mountain passes, your grandmothers’ proverbs. Authentic specificity is the only door to universal appeal.',
+        "Do not try to make your story sound like an American or European thriller. Look at your own monasteries, your mountain passes, your grandmothers' proverbs. Authentic specificity is the only door to universal appeal.",
       descAm:
         'የአሜሪካ ወይም የአውሮፓ ልቦለዶችን ለመምሰል አትሞክር። የራስህን ገዳማት፣ ተራሮች፣ የገበሬውን ወግና የአያቶችህን ቅኔ ተመልከት። የራስህን ተጨባጭ እውነት በቅንነት ስትገልጽ ዓለም ያደምጥሃል።'
     },
@@ -27,7 +28,7 @@ export default function OnWriting() {
     },
     {
       num: '03',
-      titleEn: 'Respect Your Reader’s Intelligence',
+      titleEn: "Respect Your Reader's Intelligence",
       titleAm: 'የአንባቢህን አእምሮ አታሳንሰው',
       descEn:
         'Never spoon-feed the plot. Leave room for the reader to deduce, question, and connect the dots. The greatest satisfaction of reading is when the reader feels like a co-discoverer of the secret.',
@@ -39,7 +40,7 @@ export default function OnWriting() {
       titleEn: 'Language is Music: Master Its Cadence',
       titleAm: 'ቋንቋ ዜማ ነው፤ ምቱን ጠብቅ',
       descEn:
-        'Read your dialogue aloud. Amharic has rich rhythmic cadences inherited from centuries of church chant (Zema) and public rhetoric. If a sentence stumbles when spoken, it will stumble in the reader’s mind.',
+        "Read your dialogue aloud. Amharic has rich rhythmic cadences inherited from centuries of church chant (Zema) and public rhetoric. If a sentence stumbles when spoken, it will stumble in the reader's mind.",
       descAm:
         'የጻፍከውን ንግግር ጮክ ብለህ አንብበው። አማርኛ ከዜማና ከቅኔ ባህላችን የተወረሰ ጥልቅ ሙዚቃ አለው። በአንደበትህ ሲነበብ የሚደናቀፍ አረፍተ ነገር፣ በአንባቢውም ህሊና ውስጥ ይደናቀፋል።'
     },
@@ -55,19 +56,19 @@ export default function OnWriting() {
   ];
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-3xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'ስለ አጻጻፍ ጥበብ' : 'On Writing'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'ስለ አጻጻፍ ጥበብ' : 'On Writing'} />
+
+      <div className="site-container max-w-3xl mx-auto py-14 sm:py-20">
+        {/* Subtitle */}
+        <div className="text-center mb-14">
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'ደራሲ ይስማዕከ ወርቁ ልቦለዶቹን እንዴት እንደሚቀርጽ፣ የፈጠራ ልማዶቹንና ለወጣት ጸሐፊዎች ያዘጋጀው ምክር።'
               : 'Insights into the creative process, routine, drafting of Dertogada, and guidance for aspiring authors.'}
           </p>
         </div>
+
 
         {/* Tab Navigation */}
         <div className="flex justify-center mb-12 border-b border-gray-200">

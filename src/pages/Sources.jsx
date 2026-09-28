@@ -1,131 +1,110 @@
 import React from 'react';
 import { useLanguage } from '../components/LanguageContext';
 import { academicSources } from '../data/yismakeData';
+import PageBanner from '../components/PageBanner';
 
 export default function Sources() {
   const { lang } = useLanguage();
 
   return (
-    <main className="pt-28 sm:pt-32 pb-24 bg-[#0d1517] text-[var(--on-surface)]">
-      {/* Sources Header */}
-      <section className="pb-16 border-b border-[var(--border-hairline)]">
-        <div className="site-container">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="font-serif text-sm font-semibold text-[var(--secondary)] tracking-wider">
-              ክፍል ፭
-            </span>
-            <span className="font-mono text-xs text-[var(--outline)]">/</span>
-            <span className="font-mono text-xs text-[var(--primary)] uppercase tracking-widest">
-              FACTUAL VERIFICATION & SCHOLASTIC CITATIONS
-            </span>
-          </div>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'የመረጃ ምንጮች' : 'Sources & Bibliography'} />
 
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[var(--on-surface)] font-black tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-            የማጣቀሻና የመረጃ ምንጮች
-          </h1>
-
-          <div className="font-serif text-xs sm:text-sm text-[var(--secondary)] font-bold tracking-[0.2em] uppercase mt-2">
-            ACADEMIC BIBLIOGRAPHY & INDEPENDENT VERIFICATION RECORD
-          </div>
-
-          <p className="mt-4 max-w-3xl font-serif text-sm sm:text-base text-[var(--on-surface-variant)] leading-relaxed">
+      <div className="site-container max-w-4xl mx-auto py-14 sm:py-20">
+        {/* Page Subtitle */}
+        <div className="text-center mb-14">
+          <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
-              ? "በዚህ ድረ-ገጽ ላይ የቀረቡት መረጃዎች፣ የህትመት ዘመናት፣ የሽያጭ መረጃዎችና የህይወት ታሪኮች የተሰባሰቡባቸው ተአማኒ የአካዳሚ፣ የአሳታሚና የሚዲያ ምንጮች ዝርዝር።"
-              : "Rigorous scholarly transparency: Every factual milestone, publication date, translator credential, and biographical record on this site is cross-referenced with verified academic and literary sources."}
+              ? 'በዚህ ድረ-ገጽ ላይ የቀረቡት መረጃዎች፣ የህትመት ዘመናት፣ የሽያጭ መረጃዎችና የህይወት ታሪኮች የተሰባሰቡባቸው ተአማኒ የአካዳሚ፣ የአሳታሚና የሚዲያ ምንጮች ዝርዝር።'
+              : 'Rigorous scholarly transparency: Every factual milestone, publication date, translator credential, and biographical record on this site is cross-referenced with verified academic and literary sources.'}
           </p>
         </div>
-      </section>
 
-      {/* Methodology & Sources List */}
-      <section className="site-container py-16">
-        <div className="max-w-4xl mx-auto space-y-10">
-          {/* Methodology Card */}
-          <div className="archival-plate p-6 sm:p-8 bg-[#0e1a1d] border-l-4 border-l-[var(--primary-container)] border border-[var(--border-hairline)] shadow-[0_0_30px_-8px_rgba(45,212,191,0.12)]">
-            <h2 className="font-serif text-base sm:text-lg font-bold text-[var(--secondary)] uppercase tracking-wider mb-2">
-              {lang === 'am' ? 'የመረጃ ማረጋገጫ መርህ' : 'EDITORIAL & ARCHIVAL STANDARDS'}
-            </h2>
-            <p className="font-serif text-sm sm:text-base text-[var(--on-surface-variant)] leading-relaxed">
-              {lang === 'am'
-                ? "በዚህ ድረ-ገጽ ላይ ያልተረጋገጡ ወይም የተፈበረኩ ወሬዎች ፈጽሞ አልተካተቱም። የተጠቀሱት 15+ መጻሕፍት፣ በታይለር ኤንድ ፍራንሲስ የታተመው አካዳሚያዊ ጥናት፣ በእንግሊዝ አገር ለሽልማት የቀረበው የትርጉም ስራ እና የደራሲው ቃለ-መጠይቆች በገለልተኛ አካላት ተረጋግጠው የቀረቡ ናቸው።"
-                : "No fabricated quotes, speculative gossip, or unverified claims are featured on this digital archive. Bibliographic data, sales figures, and biographical details are cross-referenced across peer-reviewed African literary studies (Taylor & Francis), Addis Ababa University theses, official publisher catalogs, and direct broadcast interviews."}
-            </p>
-          </div>
-
-          {/* Source Citations List */}
-          <div className="space-y-6">
-            {academicSources.map((source, idx) => (
-              <article
-                key={idx}
-                className="archival-plate p-6 sm:p-7 bg-[#0e1a1d] border border-[var(--border-hairline)] font-mono text-xs hover:border-[var(--primary-container)] transition-colors shadow-[0_0_20px_-8px_rgba(0,0,0,0.8)]"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-hairline)] text-[10px] text-[var(--outline)] uppercase">
-                  <span className="catalog-tag">
-                    <span className="catalog-indicator-emerald" />
-                    {source.type}
-                  </span>
-                  {source.year && (
-                    <span className="text-[var(--primary)] font-bold">PUBLISHED: {source.year}</span>
-                  )}
-                </div>
-
-                <h3 className="font-serif text-base sm:text-lg font-bold text-[var(--on-surface)] leading-snug">
-                  {source.title}
-                </h3>
-
-                {source.authors && (
-                  <div className="text-[var(--secondary)] text-xs mt-1">
-                    Authors / Scholars: {source.authors}
-                  </div>
-                )}
-
-                {source.publication && (
-                  <div className="text-[var(--on-surface-variant)] text-xs mt-0.5">
-                    Publication: {source.publication}
-                  </div>
-                )}
-
-                {source.translator && (
-                  <div className="text-[#fca5a5] text-xs mt-0.5">
-                    Translator: {source.translator}
-                  </div>
-                )}
-
-                {source.recognition && (
-                  <div className="text-[var(--primary)] text-xs mt-1 font-bold">
-                    ★ {source.recognition}
-                  </div>
-                )}
-
-                {source.publisher && (
-                  <div className="text-[var(--outline)] text-xs mt-0.5">
-                    Publisher / Entity: {source.publisher}
-                  </div>
-                )}
-
-                {source.subscribers && (
-                  <div className="text-[var(--outline)] text-xs mt-0.5">
-                    Audience: {source.subscribers}
-                  </div>
-                )}
-
-                {source.url && (
-                  <div className="mt-4 pt-3 border-t border-[var(--border-hairline)] flex justify-end">
-                    <a
-                      href={source.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-marginal text-[11px]"
-                    >
-                      <span>ACCESS PRIMARY SOURCE</span>
-                      <span className="marginal-glyph">↗</span>
-                    </a>
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
+        {/* Editorial Standards Card */}
+        <div className="p-6 sm:p-8 bg-[#fafafa] border-l-4 border-[#111111] border border-gray-200 rounded-sm mb-12 shadow-sm">
+          <h2 className="font-serif text-lg font-bold text-[#111111] uppercase tracking-wider mb-2">
+            {lang === 'am' ? 'የመረጃ ማረጋገጫ መርህ' : 'Editorial & Archival Standards'}
+          </h2>
+          <p className="font-serif text-sm sm:text-base text-[#444444] leading-relaxed">
+            {lang === 'am'
+              ? 'በዚህ ድረ-ገጽ ላይ ያልተረጋገጡ ወይም የተፈበረኩ ወሬዎች ፈጽሞ አልተካተቱም። የተጠቀሱት 15+ መጻሕፍት፣ በታይለር ኤንድ ፍራንሲስ የታተመው አካዳሚያዊ ጥናት፣ በእንግሊዝ አገር ለሽልማት የቀረበው የትርጉም ስራ እና የደራሲው ቃለ-መጠይቆች በገለልተኛ አካላት ተረጋግጠው የቀረቡ ናቸው።'
+              : 'No fabricated quotes, speculative gossip, or unverified claims are featured on this digital archive. Bibliographic data, sales figures, and biographical details are cross-referenced across peer-reviewed African literary studies (Taylor & Francis), Addis Ababa University theses, official publisher catalogs, and direct broadcast interviews.'}
+          </p>
         </div>
-      </section>
-    </main>
+
+        {/* Source Citations List */}
+        <div className="space-y-6">
+          {academicSources.map((source, idx) => (
+            <article
+              key={idx}
+              className="p-6 sm:p-8 bg-white border border-gray-200 hover:border-gray-400 rounded-sm shadow-sm transition-all"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-gray-100 text-xs text-gray-500 uppercase tracking-wider">
+                <span className="bg-gray-100 text-[#111111] px-3 py-1 rounded-full font-bold text-[10px]">
+                  {source.type}
+                </span>
+                {source.year && (
+                  <span className="font-bold text-[#888888]">PUBLISHED: {source.year}</span>
+                )}
+              </div>
+
+              <h3 className="font-serif text-xl font-bold text-[#111111] leading-snug mb-2">
+                {source.title}
+              </h3>
+
+              {source.authors && (
+                <div className="text-xs text-[#555555] mb-1 font-serif">
+                  <span className="font-semibold text-[#111111]">Authors / Scholars:</span> {source.authors}
+                </div>
+              )}
+
+              {source.publication && (
+                <div className="text-xs text-[#555555] mb-1 font-serif">
+                  <span className="font-semibold text-[#111111]">Publication:</span> {source.publication}
+                </div>
+              )}
+
+              {source.translator && (
+                <div className="text-xs text-[#8b3a3a] mb-1 font-serif">
+                  <span className="font-semibold text-[#111111]">Translator:</span> {source.translator}
+                </div>
+              )}
+
+              {source.recognition && (
+                <div className="text-xs text-[#c59b27] font-bold mt-2 font-serif">
+                  ★ {source.recognition}
+                </div>
+              )}
+
+              {source.publisher && (
+                <div className="text-xs text-[#777777] mt-1 font-serif">
+                  <span className="font-semibold text-[#111111]">Publisher / Entity:</span> {source.publisher}
+                </div>
+              )}
+
+              {source.subscribers && (
+                <div className="text-xs text-[#777777] mt-1 font-serif">
+                  <span className="font-semibold text-[#111111]">Audience:</span> {source.subscribers}
+                </div>
+              )}
+
+              {source.url && (
+                <div className="mt-5 pt-4 border-t border-gray-100 flex justify-end">
+                  <a
+                    href={source.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="jkr-pill-btn-dark !text-xs !py-1.5 !px-5 inline-flex items-center gap-1.5"
+                  >
+                    <span>{lang === 'am' ? 'ዋናውን ምንጭ ይመልከቱ' : 'Access Primary Source'}</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

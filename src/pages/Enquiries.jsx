@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../components/LanguageContext';
+import PageBanner from '../components/PageBanner';
 
 export default function Enquiries() {
   const { lang } = useLanguage();
@@ -60,13 +61,11 @@ export default function Enquiries() {
   };
 
   return (
-    <div className="bg-white text-[#222222] font-sans py-14 sm:py-20">
-      <div className="site-container max-w-3xl mx-auto">
-        {/* Page Header */}
-        <div className="text-center mb-14 pb-8 border-b border-gray-200">
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-[#111111] mb-4">
-            {lang === 'am' ? 'ጥያቄዎችና አድራሻ' : 'Enquiries'}
-          </h1>
+    <div className="bg-white text-[#222222] font-sans antialiased">
+      <PageBanner title={lang === 'am' ? 'ጥያቄዎችና አድራሻ' : 'Enquiries'} />
+      <div className="site-container max-w-3xl mx-auto py-14 sm:py-20">
+        {/* Page Subtitle */}
+        <div className="text-center mb-14">
           <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
             {lang === 'am'
               ? 'ለሚዲያ ጥያቄዎች፣ የትርጉም እና የማሳተም መብቶች፣ እንዲሁም የመጻሕፍት ትክክለኛነት ማረጋገጫ ይፋዊ መመሪያ።'
@@ -75,9 +74,11 @@ export default function Enquiries() {
         </div>
 
         {/* Imposter & Counterfeit Notice (Exact JKR Enquiries Notice box) */}
-        <div id="verification" className="bg-[#fff9eb] border border-[#e5c06e] p-6 sm:p-8 rounded-sm mb-14 shadow-sm">
+        <div id="verification" className="bg-[#fffdf7] border border-[#e5c06e] p-6 sm:p-8 rounded-sm mb-14 shadow-sm">
           <div className="flex items-start gap-4">
-            <span className="text-2xl text-[#b8860b] shrink-0 mt-0.5">⚠️</span>
+            <div className="w-7 h-7 rounded-full border border-[#b8860b] flex items-center justify-center shrink-0 font-serif font-bold text-[#b8860b] text-sm mt-0.5">
+              !
+            </div>
             <div className="space-y-3">
               <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#111111]">
                 {lang === 'am'
@@ -101,7 +102,6 @@ export default function Enquiries() {
         {/* Book Authenticity Verification Tool */}
         <div className="bg-[#fafafa] border border-gray-200 p-6 sm:p-8 rounded-sm mb-14">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-xl">🔍</span>
             <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#111111]">
               {lang === 'am' ? 'የመጽሐፍ ትክክለኛነት ማረጋገጫ' : 'Book Edition Authentication Tool'}
             </h2>
@@ -186,7 +186,11 @@ export default function Enquiries() {
 
           {submitted ? (
             <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-sm text-center">
-              <span className="text-3xl text-emerald-600 block mb-2">✓</span>
+              <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
               <h3 className="font-serif text-lg font-bold text-emerald-950 mb-2">
                 {lang === 'am' ? 'መልእክትዎ በተሳካ ሁኔታ ተልኳል!' : 'Thank you for your enquiry.'}
               </h3>
