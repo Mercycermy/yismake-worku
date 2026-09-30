@@ -20,13 +20,13 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location]);
 
-  // Primary Navigation according to user requirements: Home, Books, About, News, Contact
+  // Primary Navigation: Home, Books, About, News, Contact
   const navItems = [
     { to: '/', en: 'Home', am: 'መነሻ' },
     { to: '/books', en: 'Books', am: 'መጻሕፍት' },
     { to: '/about', en: 'About', am: 'ስለ ደራሲው' },
     { to: '/news', en: 'News', am: 'ዜናዎች' },
-    { to: '/contact', en: 'Contact', am: 'አድራሻና ግንኙነት' },
+    { to: '/contact', en: 'Contact', am: 'አድራሻ' },
   ];
 
   const isActive = (path) => {
@@ -36,126 +36,187 @@ export default function Navbar() {
 
   return (
     <>
-      {/* TOP AUDIENCE & DIRECT ADMIN BAR */}
-      <div className="bg-[#141414] text-[#a0a0a0] py-2 px-4 text-xs font-sans select-none z-50 relative border-b border-white/5">
-        <div className="site-container flex items-center justify-between">
-          <div className="flex items-center gap-2 text-[11px] sm:text-xs">
-            <Link to="/" className="text-white font-semibold hover:text-white">
+      {/* SLIM TOP BAR */}
+      <div
+        style={{
+          background: '#1a1714',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          fontSize: '11px',
+          color: '#9e9888',
+          fontFamily: 'var(--font-sans)',
+          position: 'relative',
+          zIndex: 50,
+        }}
+      >
+        <div className="site-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Link to="/" style={{ color: '#e8e0d4', fontWeight: 700, fontSize: '11px' }}>
               {lang === 'am' ? 'ለአዋቂ አንባቢዎች' : 'Grown-Ups'}
             </Link>
-            <span className="text-[#555555] mx-1">|</span>
-            <Link
-              to="/universe"
-              className="text-[#999999] hover:text-white transition-colors"
-            >
+            <span style={{ color: '#3d3a35' }}>·</span>
+            <Link to="/universe" style={{ color: '#9e9888', fontSize: '11px' }}>
               {lang === 'am' ? 'ዴርቶጋዳ ዓለም' : 'Younger Readers'}
             </Link>
-            <span className="text-[#555555] mx-1">|</span>
-            {/* Direct Flow with Admin Indicator in Top Bar */}
+            <span style={{ color: '#3d3a35' }}>·</span>
             <Link
               to="/admin"
-              className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+              style={{
+                color: '#c9a84c',
+                fontWeight: 700,
+                fontSize: '11px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+              }}
               title="Editorial & Admin Portal"
             >
-              <span>🔐</span>
-              <span>{lang === 'am' ? 'የአስተዳደር መግቢያ' : 'Admin Portal'}</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>{lang === 'am' ? 'አድሚን' : 'Admin'}</span>
             </Link>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleLang}
-              className="flex items-center gap-1 px-2.5 py-0.5 bg-[#222222] border border-[#333333] hover:border-[#666666] text-[#cccccc] hover:text-white transition-colors rounded-sm cursor-pointer text-[11px]"
-              title="Toggle Language"
-            >
-              <span className={lang === 'en' ? 'text-white font-bold' : ''}>EN</span>
-              <span className="text-[#555555]">/</span>
-              <span className={`font-serif ${lang === 'am' ? 'text-white font-bold' : ''}`}>አማ</span>
-            </button>
-          </div>
+          <button
+            onClick={toggleLang}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: '3px 10px',
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              color: '#c4bfb5',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '11px',
+              fontFamily: 'var(--font-sans)',
+              transition: 'all 0.2s',
+            }}
+            title="Toggle Language"
+          >
+            <span style={{ fontWeight: lang === 'en' ? 800 : 400, color: lang === 'en' ? '#fff' : '#9e9888' }}>EN</span>
+            <span style={{ color: '#3d3a35', margin: '0 1px' }}>/</span>
+            <span style={{
+              fontFamily: 'var(--font-serif)',
+              fontWeight: lang === 'am' ? 800 : 400,
+              color: lang === 'am' ? '#fff' : '#9e9888'
+            }}>አማ</span>
+          </button>
         </div>
       </div>
 
       {/* MAIN HEADER */}
       <header
-        className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md py-2.5 border-b border-[#e5e5e5] shadow-sm'
-            : 'bg-white py-3.5 border-b border-[#efefef]'
-        }`}
+        style={{
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 40,
+          transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
+          background: isScrolled ? 'rgba(253,252,250,0.97)' : '#fdfcfa',
+          backdropFilter: isScrolled ? 'blur(16px)' : 'none',
+          padding: isScrolled ? '10px 0' : '16px 0',
+          borderBottom: isScrolled ? '1px solid #e8e4de' : '1px solid #f0ece6',
+          boxShadow: isScrolled ? '0 2px 16px rgba(0,0,0,0.04)' : 'none',
+        }}
       >
         <div className="site-container">
-          <div className="flex items-center justify-between">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             {/* Logo / Author Signature */}
             <Link
               to="/"
-              className="font-serif text-xl sm:text-2xl font-bold text-[#111111] tracking-wider no-underline hover:opacity-90 flex items-center gap-2"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: isScrolled ? '1.25rem' : '1.5rem',
+                fontWeight: 800,
+                color: '#1a1714',
+                letterSpacing: '0.12em',
+                textDecoration: 'none',
+                transition: 'all 0.3s',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
             >
               <span>{lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}</span>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-7 xl:gap-8">
+            <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="hidden lg:flex">
               {navItems.map((item) => {
                 const active = isActive(item.to);
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`font-serif text-[15px] tracking-wide transition-all relative py-1 no-underline ${
-                      active
-                        ? 'text-[#111111] font-bold border-b-2 border-[#111111]'
-                        : 'text-[#666666] hover:text-[#111111]'
-                    }`}
+                    style={{
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: '0.8125rem',
+                      fontWeight: active ? 700 : 500,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: active ? '#1a1714' : '#8a857d',
+                      textDecoration: 'none',
+                      position: 'relative',
+                      padding: '4px 0',
+                      transition: 'color 0.25s',
+                      borderBottom: active ? '2px solid #c9a84c' : '2px solid transparent',
+                    }}
                   >
                     {lang === 'am' ? item.am : item.en}
                   </Link>
                 );
               })}
-
-              {/* DIRECT FLOW WITH ADMIN BUTTON */}
-              <Link
-                to="/admin"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all no-underline shadow-sm ${
-                  location.pathname.startsWith('/admin')
-                    ? 'bg-amber-400 text-black border-2 border-black'
-                    : 'bg-[#111111] hover:bg-black text-amber-300 hover:text-amber-200'
-                }`}
-                title="Direct flow to administration panel"
-              >
-                <span>🔐</span>
-                <span>{lang === 'am' ? 'አድሚን (Admin Flow)' : 'Admin Flow'}</span>
-              </Link>
             </nav>
 
             {/* Mobile: Hamburger Button */}
-            <div className="lg:hidden flex items-center gap-2">
-              <Link
-                to="/admin"
-                className="px-2.5 py-1 bg-[#111111] text-amber-300 text-[11px] font-bold rounded-full mr-1"
-              >
-                🔐 Admin
-              </Link>
+            <div className="lg:hidden" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-[#111111] hover:bg-gray-100 rounded transition-colors cursor-pointer"
+                style={{
+                  padding: '8px',
+                  color: '#1a1714',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: '6px',
+                  transition: 'background 0.2s',
+                }}
                 aria-label="Toggle Navigation Menu"
               >
-                <div className="w-5 h-4 flex flex-col justify-between">
+                <div style={{ width: '22px', height: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <span
-                    className={`h-0.5 w-full bg-[#111111] transition-all ${
-                      mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
-                    }`}
+                    style={{
+                      height: '2px',
+                      width: '100%',
+                      background: '#1a1714',
+                      transition: 'all 0.3s',
+                      borderRadius: '2px',
+                      transform: mobileMenuOpen ? 'rotate(45deg) translateY(7px)' : 'none',
+                    }}
                   />
                   <span
-                    className={`h-0.5 w-full bg-[#111111] transition-all ${
-                      mobileMenuOpen ? 'opacity-0' : ''
-                    }`}
+                    style={{
+                      height: '2px',
+                      width: '100%',
+                      background: '#1a1714',
+                      transition: 'all 0.3s',
+                      borderRadius: '2px',
+                      opacity: mobileMenuOpen ? 0 : 1,
+                    }}
                   />
                   <span
-                    className={`h-0.5 w-full bg-[#111111] transition-all ${
-                      mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
-                    }`}
+                    style={{
+                      height: '2px',
+                      width: '100%',
+                      background: '#1a1714',
+                      transition: 'all 0.3s',
+                      borderRadius: '2px',
+                      transform: mobileMenuOpen ? 'rotate(-45deg) translateY(-7px)' : 'none',
+                    }}
                   />
                 </div>
               </button>
@@ -165,22 +226,40 @@ export default function Navbar() {
 
         {/* Mobile Slide-down Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-2 px-6 pt-4 pb-6 bg-white border-b-2 border-[#111111] shadow-xl animate-fade-in">
-            <nav className="flex flex-col space-y-2.5">
+          <div
+            className="lg:hidden animate-fade-in"
+            style={{
+              marginTop: '8px',
+              padding: '16px 24px 24px',
+              background: '#fdfcfa',
+              borderBottom: '2px solid #c9a84c',
+              boxShadow: '0 12px 32px rgba(0,0,0,0.08)',
+            }}
+          >
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               {navItems.map((item) => {
                 const active = isActive(item.to);
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`font-serif text-lg py-2 border-b border-gray-100 flex items-center justify-between no-underline ${
-                      active
-                        ? 'text-[#111111] font-bold pl-2 border-l-2 border-l-[#111111]'
-                        : 'text-[#444444]'
-                    }`}
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontSize: '1.125rem',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      textDecoration: 'none',
+                      fontWeight: active ? 700 : 400,
+                      color: active ? '#1a1714' : '#5a564e',
+                      background: active ? '#f5f3ef' : 'transparent',
+                      transition: 'all 0.2s',
+                    }}
                   >
                     <span>{lang === 'am' ? item.am : item.en}</span>
-                    <span className="text-gray-400 text-xs">→</span>
+                    <span style={{ color: '#c4bfb5', fontSize: '0.75rem' }}>→</span>
                   </Link>
                 );
               })}
@@ -188,11 +267,26 @@ export default function Navbar() {
               {/* Admin Flow in Mobile Menu */}
               <Link
                 to="/admin"
-                className="mt-3 py-2.5 px-4 bg-[#111111] text-amber-300 font-bold rounded-lg flex items-center justify-between text-sm shadow-md"
+                style={{
+                  marginTop: '8px',
+                  padding: '12px 16px',
+                  background: '#1a1714',
+                  color: '#c9a84c',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: '0.875rem',
+                  textDecoration: 'none',
+                }}
               >
-                <div className="flex items-center gap-2">
-                  <span>🔐</span>
-                  <span>{lang === 'am' ? 'የአስተዳደር ገጽ (Admin Flow)' : 'Direct Admin Flow'}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <span>{lang === 'am' ? 'አድሚን' : 'Admin Portal'}</span>
                 </div>
                 <span>→</span>
               </Link>

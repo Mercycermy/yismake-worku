@@ -1,36 +1,48 @@
+/* --- Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 
 /* ==========================================================================
    YISMAKE WORKU (ይስማዕከ ወርቁ) — OFFICIAL AUTHOR WEBSITE
-   Aesthetic Architecture: J.K. Rowling (jkrowling.com) Design System
-   Pristine Editorial White Canvas, Classical Serif Typography & Dark Wood Colophon
+   Premium Editorial Design System · Classical Typography · Gold Accents
    ========================================================================== */
 
 :root {
-  /* Editorial Palette */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f7f7f7;
-  --bg-tertiary: #f0f0f0;
+  /* ── Editorial Palette ── */
+  --bg-primary: #fdfcfa;
+  --bg-secondary: #f5f3ef;
+  --bg-tertiary: #edeae4;
   --bg-dark: #120d09;
+  --bg-cream: #faf8f4;
 
-  /* Typography Colors */
-  --text-primary: #1a1a1a;
-  --text-secondary: #555555;
-  --text-muted: #888888;
-  --text-gold: #c59b27;
+  /* ── Typography Colors ── */
+  --text-primary: #1a1714;
+  --text-secondary: #5a564e;
+  --text-muted: #8a857d;
+  --text-gold: #b8860b;
   --text-crimson: #9e1f24;
 
-  /* Accent Tones */
-  --gold: #d4af37;
-  --gold-hover: #b89428;
+  /* ── Accent Tones ── */
+  --gold: #c9a84c;
+  --gold-hover: #b8960e;
+  --gold-light: #f0e4c4;
   --purple-stories: #491763;
   --purple-stories-hover: #3b1250;
   --wood-dark: #22140c;
 
-  /* Fonts */
+  /* ── Dark Theme / Archival Variables (used by BookCard, BookCover, Modals) ── */
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --primary: #c9a84c;
+  --primary-container: rgba(201, 168, 76, 0.35);
+  --secondary: #c9a84c;
+  --on-surface: #f0ebe3;
+  --on-surface-variant: #a8a29e;
+  --outline: #6b6560;
+
+  /* ── Fonts ── */
   --font-serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif Ethiopic', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 *, *::before, *::after {
@@ -61,13 +73,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 700;
   color: var(--text-primary);
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 img {
@@ -76,10 +88,10 @@ img {
   display: block;
 }
 
-/* Site Layout Container */
+/* ── Site Layout Container ── */
 .site-container {
   width: 100%;
-  max-width: 1140px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -88,96 +100,164 @@ img {
 
 @media (min-width: 768px) {
   .site-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 }
 
-/* ----------------------------------------------------------------------------
-   J.K. ROWLING SIGNATURE PILL BUTTONS (.card__btn & .enter__site--btn)
-   ---------------------------------------------------------------------------- */
+/* ==========================================================================
+   PREMIUM PILL BUTTONS
+   ========================================================================== */
 .jkr-pill-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ffffff;
-  color: #111111 !important;
+  color: #1a1714 !important;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 2.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  padding: 0.8rem 2rem;
   border-radius: 9999px !important;
   text-transform: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  gap: 0.5rem;
 }
 
 .jkr-pill-btn:hover {
-  background-color: #f5f5f5;
+  background-color: #fdfcfa;
   color: #000000 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .jkr-pill-btn-dark {
-  display: inline-block;
-  background-color: #111111;
-  color: #ffffff !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1714;
+  color: #faf8f4 !important;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 2.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  padding: 0.8rem 2rem;
   border-radius: 9999px !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  border: 1px solid #111111;
+  border: 1.5px solid #1a1714;
+  text-decoration: none;
+  gap: 0.5rem;
 }
 
 .jkr-pill-btn-dark:hover {
-  background-color: #333333;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background-color: #2d2a26;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* ----------------------------------------------------------------------------
-   JKR PORTAL ENTRANCE CARDS
-   ---------------------------------------------------------------------------- */
-.jkr-portal-card-desk {
-  position: relative;
-  background-image: linear-gradient(rgba(18, 13, 9, 0.75), rgba(18, 13, 9, 0.75)), url('/images/writers-desk.jpg');
-  background-size: cover;
-  background-position: center;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Gold accent button variant */
+.jkr-pill-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c9a84c 0%, #d4b65e 100%);
+  color: #1a1714 !important;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  padding: 0.8rem 2rem;
+  border-radius: 9999px !important;
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.25), 0 4px 16px rgba(201, 168, 76, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1.5px solid rgba(201, 168, 76, 0.4);
+  text-decoration: none;
+  gap: 0.5rem;
 }
 
-.jkr-portal-card-desk:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+.jkr-pill-btn-gold:hover {
+  background: linear-gradient(135deg, #d4b65e 0%, #e0c76e 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.35), 0 8px 30px rgba(201, 168, 76, 0.2);
 }
 
-.jkr-portal-card-stories {
-  position: relative;
-  background: linear-gradient(135deg, #431259 0%, #300c40 100%);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(67, 18, 89, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* ==========================================================================
+   EDITORIAL SECTIONS
+   ========================================================================== */
+.jkr-editorial-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-.jkr-portal-card-stories:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(67, 18, 89, 0.35);
+.jkr-section-title {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1a1714;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
 }
 
-/* ----------------------------------------------------------------------------
-   JKR LAYERED POLAROID PHOTO STACK
-   ---------------------------------------------------------------------------- */
+@media (min-width: 768px) {
+  .jkr-section-title {
+    font-size: 2.75rem;
+  }
+}
+
+.jkr-section-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.jkr-editorial-body {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: #3d3a35;
+  text-align: center;
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jkr-editorial-body p {
+  margin-bottom: 1.25rem;
+}
+
+/* Gold decorative divider */
+.jkr-gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 2rem auto;
+  max-width: 12rem;
+}
+.jkr-gold-divider::before,
+.jkr-gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+/* ==========================================================================
+   LAYERED POLAROID PHOTO STACK
+   ========================================================================== */
 .jkr-polaroid-stack {
   position: relative;
   display: inline-block;
@@ -191,12 +271,12 @@ img {
   inset: 0;
   background: #fdfdfd;
   padding: 12px 12px 36px 12px;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  transform: rotate(-6deg) scale(0.95);
+  border: 1px solid #e8e4de;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: rotate(-5deg) scale(0.96);
   z-index: 1;
-  filter: grayscale(100%) contrast(1.1);
-  opacity: 0.85;
+  filter: grayscale(60%) contrast(1.05);
+  opacity: 0.75;
 }
 
 .jkr-polaroid-back-2 {
@@ -204,99 +284,68 @@ img {
   inset: 0;
   background: #fdfdfd;
   padding: 12px 12px 36px 12px;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  transform: rotate(5deg) scale(0.97);
+  border: 1px solid #e8e4de;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: rotate(4deg) scale(0.98);
   z-index: 2;
-  filter: sepia(30%) contrast(1.05);
-  opacity: 0.9;
+  filter: sepia(20%) contrast(1.02);
+  opacity: 0.85;
 }
 
 .jkr-polaroid-front {
   position: relative;
   background: #ffffff;
   padding: 12px 12px 42px 12px;
-  border: 1px solid #e2e2e2;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.16);
+  border: 1px solid #e2ddd5;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
   transform: rotate(-1deg);
   z-index: 3;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .jkr-polaroid-front:hover {
   transform: rotate(0deg) scale(1.02);
 }
 
-/* ----------------------------------------------------------------------------
-   EDITORIAL SECTION RHYTHM
-   ---------------------------------------------------------------------------- */
-.jkr-editorial-section {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.jkr-section-title {
-  font-family: var(--font-serif);
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: #111111;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .jkr-section-title {
-    font-size: 2.75rem;
-  }
-}
-
-.jkr-editorial-body {
-  font-size: 1.0625rem;
-  line-height: 1.8;
-  color: #333333;
-  text-align: center;
-  max-width: 48rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.jkr-editorial-body p {
-  margin-bottom: 1.25rem;
-}
-
-/* ----------------------------------------------------------------------------
+/* ==========================================================================
    NEWS CARDS GRID
-   ---------------------------------------------------------------------------- */
+   ========================================================================== */
 .jkr-news-card {
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.jkr-news-card:hover {
+  transform: translateY(-4px);
 }
 
 .jkr-news-card__image {
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background-color: #e5e5e5;
-  margin-bottom: 1rem;
+  background-color: #edeae4;
+  margin-bottom: 1.25rem;
+  border-radius: 4px;
 }
 
 .jkr-news-card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .jkr-news-card:hover .jkr-news-card__image img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
 .jkr-news-card__date {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #888888;
-  letter-spacing: 0.1em;
+  color: var(--gold);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
@@ -305,27 +354,26 @@ img {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 700;
-  color: #111111;
+  color: #1a1714;
   line-height: 1.35;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .jkr-news-card:hover .jkr-news-card__title {
   color: var(--text-gold);
-  text-decoration: underline;
 }
 
-/* ----------------------------------------------------------------------------
-   FOOTER (COLOPHON) ON WOOD TEXTURE
-   ---------------------------------------------------------------------------- */
+/* ==========================================================================
+   FOOTER COLOPHON
+   ========================================================================== */
 .jkr-wood-footer {
   position: relative;
   background-image: url('/images/footer-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: #ffffff;
-  padding-top: 4.5rem;
+  color: #e8e0d4;
+  padding-top: 5rem;
   padding-bottom: 4rem;
 }
 
@@ -333,25 +381,100 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(18, 12, 8, 0.82);
+  background: rgba(18, 12, 8, 0.88);
   pointer-events: none;
 }
 
 .jkr-wood-footer a {
-  color: #ffffff;
-  transition: color 0.2s ease;
+  color: #e8e0d4;
+  transition: color 0.25s ease;
 }
 
 .jkr-wood-footer a:hover {
   color: var(--gold);
 }
 
-/* Animations */
+/* ==========================================================================
+   CODEX BOOK SPINE (3D effect for BookCover component)
+   ========================================================================== */
+.codex-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 14px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.15) 40%,
+    rgba(255, 255, 255, 0.04) 70%,
+    transparent 100%
+  );
+  z-index: 20;
+  pointer-events: none;
+}
+
+.codex-shadow {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.codex-shadow:hover {
+  transform: translateY(-6px) rotateY(-2deg);
+  box-shadow: -12px 18px 35px rgba(0, 0, 0, 0.5), 0 0 25px -5px rgba(201, 168, 76, 0.15) !important;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(201, 168, 76, 0); }
+}
+
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ==========================================================================
+   SCROLLBAR STYLING
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: #c4bfb5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9e9888;
+}
+
+/* ==========================================================================
+   SELECTION STYLING
+   ========================================================================== */
+::selection {
+  background-color: rgba(201, 168, 76, 0.2);
+  color: #1a1714;
 }

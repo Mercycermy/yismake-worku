@@ -58,84 +58,147 @@ export default function Books() {
   const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada') || verifiedBooks[0];
 
   return (
-    <div className="bg-white text-[#222222] font-sans antialiased">
+    <div style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
       <PageBanner title={lang === 'am' ? 'መጻሕፍት' : 'Books'} />
 
-      {/* Featured Masterpiece Section */}
-      <section className="bg-[#edf0f3] py-14 sm:py-20 border-b border-gray-300">
-        <div className="site-container max-w-3xl mx-auto text-center px-4">
-          <div className="flex justify-center mb-8">
+      {/* Featured Masterpiece */}
+      <section style={{
+        background: 'var(--bg-secondary)',
+        padding: '4rem 0 5rem',
+        borderBottom: '1px solid #edeae4',
+      }}>
+        <div className="site-container" style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
             <Link
               to="/books/dertogada"
-              className="transform hover:scale-103 transition-transform duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.22)] rounded-sm inline-block"
+              style={{
+                display: 'inline-block',
+                transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.18)',
+                borderRadius: '2px',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03) translateY(-4px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
               <BookCover book={dertogadaBook} size="large" />
             </Link>
           </div>
 
-          <div className="text-xs font-bold text-[#777777] tracking-[0.25em] uppercase mb-2">
+          <div style={{
+            fontSize: '0.6875rem',
+            fontWeight: 700,
+            color: '#c9a84c',
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase',
+            marginBottom: '0.5rem',
+          }}>
             {lang === 'am' ? 'የመጀመሪያው ተከታታይ ቅጽ' : 'DERTOGADA'}
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#111111] mb-2 tracking-tight">
+          <h2 style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+            fontWeight: 700,
+            color: '#1a1714',
+            marginBottom: '0.5rem',
+            letterSpacing: '-0.01em',
+          }}>
             {lang === 'am' ? 'የይስማዕከ ወርቁ ዴርቶጋዳ' : "Yismake Worku's Dertogada"}
           </h2>
 
-          <div className="font-serif text-sm italic text-[#666666] mb-5">
+          <div style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '0.8125rem',
+            fontStyle: 'italic',
+            color: '#8a857d',
+            marginBottom: '1.25rem',
+          }}>
             {lang === 'am'
               ? 'ሜጋ አሳታሚ / ኩራዝ / ዓለም አቀፍ እትሞች'
               : 'Mega Publishers; Kuraz Publishing; International Editions'}
           </div>
 
-          <p className="font-serif text-base sm:text-lg text-[#444444] leading-relaxed max-w-2xl mx-auto mb-8">
+          <p style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '1rem',
+            color: '#5a564e',
+            lineHeight: 1.75,
+            maxWidth: '560px',
+            margin: '0 auto 1.5rem',
+          }}>
             {lang === 'am'
               ? 'በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠረው የአገሪቱ የመጀመሪያው የሳይንስና የስለላ ልቦለድ።'
               : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 200,000 copies sold in its debut year alone.'}
           </p>
 
-          <div className="flex items-center justify-center gap-4 flex-wrap">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => setPurchaseBook(dertogadaBook)}
-              className="jkr-pill-btn-dark inline-flex items-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
+              className="jkr-pill-btn-dark"
+              style={{ fontSize: '0.8125rem' }}
             >
-              <span>🛒</span>
-              <span>{lang === 'am' ? 'አሁን ይግዙ (Buy Now)' : 'Buy Now'}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
             </button>
-
-            <Link
-              to="/books/dertogada"
-              className="jkr-pill-btn inline-block shadow-md hover:shadow-lg"
-            >
-              {lang === 'am' ? 'ተጨማሪ ያንብቡ (Read More) →' : 'Read More →'}
+            <Link to="/books/dertogada" className="jkr-pill-btn" style={{ fontSize: '0.8125rem' }}>
+              {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
             </Link>
           </div>
         </div>
       </section>
 
-      <div className="site-container max-w-6xl mx-auto py-14 sm:py-20">
-        {/* Catalog Section Header */}
-        <div className="text-center mb-12">
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#111111] mb-3">
+      {/* Catalog */}
+      <div className="site-container" style={{ maxWidth: '1100px', margin: '0 auto', padding: '4rem 1.5rem 5rem' }}>
+        {/* Section Header */}
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <div className="jkr-gold-divider" style={{ marginBottom: '1.5rem' }}>
+            <span style={{ fontSize: '0.875rem', color: '#c9a84c' }}>❖</span>
+          </div>
+          <h3 style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+            fontWeight: 700,
+            color: '#1a1714',
+            marginBottom: '0.5rem',
+          }}>
             {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት ካታሎግ' : 'Complete Published Works'}
           </h3>
-          <p className="text-base text-[#666666] max-w-xl mx-auto font-serif">
+          <p style={{
+            fontSize: '0.9375rem',
+            color: '#8a857d',
+            maxWidth: '520px',
+            margin: '0 auto',
+            fontFamily: 'var(--font-serif)',
+          }}>
             {lang === 'am'
-              ? 'ከአገሪቱ የመጀመሪያው የሳይንስ ልቦለድ «ዴርቶጋዳ» እስከ እንግሊዝ አገር እጩው «ክቡር ድንጋይ»፤ የይስማዕከ ወርቁ 15+ የታተሙ ስራዎች።'
-              : 'From the pioneering speculative universe of Dertogada to the UK-shortlisted satire The Lost Spell; explore the 15+ published works of Yismake Worku.'}
+              ? 'ከአገሪቱ የመጀመሪያው የሳይንስ ልቦለድ «ዴርቶጋዳ» እስከ እንግሊዝ አገር እጩው «ክቡር ድንጋይ»'
+              : 'From the pioneering Dertogada to the UK-shortlisted The Lost Spell'}
           </p>
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wider transition-all cursor-pointer ${
-                selectedCategory === cat.id
-                  ? 'bg-[#111111] text-white shadow-sm'
-                  : 'bg-[#f4f4f4] text-[#555555] hover:bg-gray-200'
-              }`}
+              style={{
+                padding: '0.5rem 1.25rem',
+                borderRadius: '999px',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                fontFamily: 'var(--font-sans)',
+                letterSpacing: '0.04em',
+                cursor: 'pointer',
+                border: 'none',
+                transition: 'all 0.25s',
+                background: selectedCategory === cat.id ? '#1a1714' : '#f5f3ef',
+                color: selectedCategory === cat.id ? '#faf8f4' : '#5a564e',
+                boxShadow: selectedCategory === cat.id ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
+              }}
             >
               {lang === 'am' ? cat.am : cat.en}
             </button>
@@ -143,23 +206,42 @@ export default function Books() {
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-16">
-          <div className="relative">
+        <div style={{ maxWidth: '420px', margin: '0 auto 3rem' }}>
+          <div style={{ position: 'relative' }}>
             <input
               type="text"
-              placeholder={
-                lang === 'am'
-                  ? 'በርዕስ፣ በዘውግ ወይም በጭብጥ ፈልግ...'
-                  : 'Search books by title, genre, theme...'
-              }
+              placeholder={lang === 'am' ? 'በርዕስ፣ በዘውግ ወይም በጭብጥ ፈልግ...' : 'Search books by title, genre, theme...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#fafafa] border border-gray-300 focus:border-[#111111] px-4 py-2.5 rounded-full text-sm text-[#111111] placeholder-gray-400 outline-none"
+              style={{
+                width: '100%',
+                background: '#fdfcfa',
+                border: '1.5px solid #e8e4de',
+                padding: '0.65rem 1.25rem',
+                borderRadius: '999px',
+                fontSize: '0.875rem',
+                color: '#1a1714',
+                outline: 'none',
+                fontFamily: 'var(--font-sans)',
+                transition: 'border-color 0.25s',
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#c9a84c'}
+              onBlur={(e) => e.target.style.borderColor = '#e8e4de'}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-black cursor-pointer"
+                style={{
+                  position: 'absolute',
+                  right: '16px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  fontSize: '0.75rem',
+                  color: '#8a857d',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
               >
                 ✕
               </button>
@@ -168,73 +250,191 @@ export default function Books() {
         </div>
 
         {/* Books Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '2rem' }}>
           {filteredBooks.map((book) => (
             <article
               key={book.id}
-              className="bg-white border border-gray-200 hover:border-gray-400 p-6 sm:p-8 rounded-sm shadow-sm transition-all duration-300 flex flex-col justify-between group"
+              style={{
+                background: '#ffffff',
+                border: '1px solid #edeae4',
+                borderRadius: '8px',
+                padding: '0',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+              }}
+              className="group"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px)';
+                e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.08)';
+                e.currentTarget.style.borderColor = '#c9a84c';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.03)';
+                e.currentTarget.style.borderColor = '#edeae4';
+              }}
             >
-              <div>
-                {/* Book Cover Container */}
-                <div className="flex justify-center mb-6 py-2">
-                  <Link
-                    to={`/books/${book.slug}`}
-                    className="transform group-hover:-translate-y-2 transition-transform duration-300 shadow-[0_12px_24px_rgba(0,0,0,0.12)] inline-block"
-                  >
-                    <BookCover book={book} size="normal" />
-                  </Link>
-                </div>
+              {/* Cover area */}
+              <div style={{
+                background: 'linear-gradient(135deg, #f5f3ef 0%, #edeae4 100%)',
+                padding: '1.75rem 1.25rem',
+                display: 'flex',
+                justifyContent: 'center',
+              }}>
+                <Link
+                  to={`/books/${book.slug}`}
+                  style={{ display: 'inline-block', transition: 'transform 0.4s' }}
+                  className="group-hover:-translate-y-2"
+                >
+                  <BookCover book={book} size="normal" />
+                </Link>
+              </div>
 
+              <div style={{ padding: '1.25rem 1.5rem 0' }}>
                 {/* Metadata */}
-                <div className="flex items-center justify-between text-xs text-[#888888] font-bold uppercase tracking-wider mb-2">
-                  <span>
-                    {book.year} ({book.yearEc} ዓ.ም)
-                  </span>
-                  {book.seriesOrder && <span>BOOK {book.seriesOrder}</span>}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: '0.6875rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#8a857d',
+                  marginBottom: '0.4rem',
+                }}>
+                  <span>{book.year} ({book.yearEc} ዓ.ም)</span>
+                  {book.seriesOrder && <span style={{ color: '#c9a84c' }}>BOOK {book.seriesOrder}</span>}
                 </div>
 
-                <h2 className="font-serif text-2xl font-bold text-[#111111] group-hover:text-[#c59b27] transition-colors mb-2">
-                  <Link to={`/books/${book.slug}`}>
+                <h2 style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '1.25rem',
+                  fontWeight: 700,
+                  color: '#1a1714',
+                  marginBottom: '0.25rem',
+                  transition: 'color 0.25s',
+                }} className="group-hover:text-[#b8860b]">
+                  <Link to={`/books/${book.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     {lang === 'am' ? book.titleAm : book.titleEn}
                   </Link>
                 </h2>
 
-                <p className="text-xs text-[#666666] uppercase tracking-wider font-semibold mb-3">
+                <p style={{
+                  fontSize: '0.6875rem',
+                  color: '#8a857d',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  fontWeight: 600,
+                  marginBottom: '0.5rem',
+                }}>
                   {lang === 'am' ? book.genreAm : book.genre}
                 </p>
 
-                <p className="text-sm text-[#555555] leading-relaxed line-clamp-3 mb-4 font-sans">
+                <p style={{
+                  fontSize: '0.8125rem',
+                  color: '#5a564e',
+                  lineHeight: 1.6,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}>
                   {lang === 'am' ? book.description?.am : book.description?.en}
                 </p>
               </div>
 
-              {/* Actions: Buy Now & Read More */}
-              <div className="pt-4 border-t border-gray-100 flex flex-col gap-2.5">
-                <div className="flex items-center justify-between gap-2">
+              {/* Actions */}
+              <div style={{ padding: '1rem 1.5rem 1.25rem', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
                   <button
                     onClick={() => setPurchaseBook(book)}
-                    className="flex-1 py-2 px-3 bg-[#111111] hover:bg-black text-white text-xs font-bold rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                    style={{
+                      flex: 1,
+                      padding: '0.55rem 0.75rem',
+                      background: '#1a1714',
+                      color: '#faf8f4',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      fontFamily: 'var(--font-sans)',
+                      borderRadius: '6px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '5px',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#c9a84c'; e.currentTarget.style.color = '#1a1714'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#1a1714'; e.currentTarget.style.color = '#faf8f4'; }}
                   >
-                    <span>🛒</span>
-                    <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span>{lang === 'am' ? 'ይግዙ' : 'Buy Now'}</span>
                   </button>
-
                   <Link
                     to={`/books/${book.slug}`}
-                    className="flex-1 py-2 px-3 bg-white border border-gray-300 hover:border-black text-[#111111] text-xs font-bold rounded-full transition-all text-center"
+                    style={{
+                      flex: 1,
+                      padding: '0.55rem 0.75rem',
+                      background: 'transparent',
+                      color: '#1a1714',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      fontFamily: 'var(--font-sans)',
+                      borderRadius: '6px',
+                      border: '1.5px solid #e8e4de',
+                      textDecoration: 'none',
+                      textAlign: 'center',
+                      transition: 'all 0.25s',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#c9a84c'; e.currentTarget.style.color = '#b8860b'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e8e4de'; e.currentTarget.style.color = '#1a1714'; }}
                   >
-                    {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+                    {lang === 'am' ? 'ተጨማሪ →' : 'Read More →'}
                   </Link>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-[#777777] pt-1">
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: '0.625rem',
+                  paddingTop: '0.625rem',
+                  marginTop: '0.625rem',
+                  borderTop: '1px solid #f0ece6',
+                  color: '#8a857d',
+                }}>
                   <button
                     onClick={() => setInspectionBook(book)}
-                    className="hover:text-black cursor-pointer font-medium"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#8a857d',
+                      fontSize: '0.625rem',
+                      fontFamily: 'var(--font-sans)',
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      fontWeight: 600,
+                      padding: 0,
+                      transition: 'color 0.2s',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#c9a84c'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#8a857d'}
                   >
-                    👁 {lang === 'am' ? 'ፈትሽ (Inspect)' : 'Quick Inspect'}
+                    ⊕ {lang === 'am' ? 'ፈትሽ' : 'Quick Inspect'}
                   </button>
-                  <span className="font-mono text-[10px]">VERIFIED ED.</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                    VERIFIED
+                  </span>
                 </div>
               </div>
             </article>
@@ -243,12 +443,18 @@ export default function Books() {
 
         {/* Empty State */}
         {filteredBooks.length === 0 && (
-          <div className="text-center py-20 bg-gray-50 border border-gray-200 rounded-sm p-8">
-            <span className="text-4xl text-gray-400 block mb-3">📖</span>
-            <h3 className="font-serif text-xl font-bold text-gray-700 mb-2">
+          <div style={{
+            textAlign: 'center',
+            padding: '4rem 2rem',
+            background: 'var(--bg-secondary)',
+            border: '1px solid #edeae4',
+            borderRadius: '8px',
+          }}>
+            <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '0.75rem', opacity: 0.5 }}>📖</span>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#5a564e', marginBottom: '0.5rem' }}>
               {lang === 'am' ? 'ምንም መጽሐፍ አልተገኘም' : 'No Books Found'}
             </h3>
-            <p className="text-sm text-gray-500">
+            <p style={{ fontSize: '0.875rem', color: '#8a857d' }}>
               {lang === 'am'
                 ? 'እባክዎ የተለየ የፍለጋ ቃል ያስገቡ ወይም ማጣሪያውን ይቀይሩ።'
                 : 'Try adjusting your search query or selecting a different category filter.'}
