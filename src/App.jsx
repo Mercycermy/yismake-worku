@@ -12,7 +12,10 @@ import About from './pages/About';
 import News from './pages/News';
 import InHisOwnWords from './pages/InHisOwnWords';
 import OnWriting from './pages/OnWriting';
-import Enquiries from './pages/Enquiries';
+import Contact from './pages/Contact';
+import Admin from './pages/Admin';
+import Verify from './pages/Verify';
+import SampleReader from './pages/SampleReader';
 import Sources from './pages/Sources';
 
 function ScrollToTop() {
@@ -38,18 +41,28 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/archive" element={<News />} />
-          <Route path="/in-his-own-words" element={<InHisOwnWords />} />
-          <Route path="/on-writing" element={<OnWriting />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/:slug" element={<BookDetail />} />
-          <Route path="/author" element={<About />} />
           <Route path="/about" element={<About />} />
+          <Route path="/author" element={<About />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/archive" element={<News />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/enquiries" element={<Contact />} />
+          
+          {/* Admin Flow */}
+          <Route path="/admin" element={<Admin />} />
+          
+          {/* Verification & Reader Services */}
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/read-sample/:slug" element={<SampleReader />} />
+          
+          {/* Specialized Features */}
+          <Route path="/in-his-own-words" element={<InHisOwnWords />} />
+          <Route path="/on-writing" element={<OnWriting />} />
           <Route path="/universe" element={<Universe />} />
-          <Route path="/enquiries" element={<Enquiries />} />
-          <Route path="/contact" element={<Enquiries />} />
           <Route path="/sources" element={<Sources />} />
+          
           {/* Catch-all fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

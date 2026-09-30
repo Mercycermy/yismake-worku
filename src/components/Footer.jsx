@@ -6,13 +6,13 @@ export default function Footer() {
   const { lang } = useLanguage();
 
   const footerLinks = [
-    { to: '/enquiries#terms', en: 'Terms of Use', am: 'የአጠቃቀም ደንቦች' },
-    { to: '/enquiries#privacy', en: 'General Privacy Policy', am: 'የግላዊነት ፖሊሲ' },
-    { to: '/enquiries', en: 'Enquiries & Rights', am: 'ጥያቄዎችና መብቶች' },
-    { to: '/sources', en: 'Official Links', am: 'ማጣቀሻዎችና አገናኞች' },
-    { to: '/enquiries#media-kit', en: 'Media Kit', am: 'የሚዲያ ማህደር' },
-    { to: '/enquiries#faqs', en: 'FAQs', am: 'ተደጋጋሚ ጥያቄዎች' },
-    { to: '/enquiries#verification', en: 'Legal & Book Verification', am: 'የህግና የመጽሐፍ ትክክለኛነት' }
+    { to: '/', en: 'Home', am: 'መነሻ' },
+    { to: '/books', en: 'Books', am: 'መጻሕፍት' },
+    { to: '/about', en: 'About', am: 'ስለ ደራሲው' },
+    { to: '/news', en: 'News', am: 'ዜናዎች' },
+    { to: '/contact', en: 'Contact & Rights', am: 'አድራሻና ግንኙነት' },
+    { to: '/verify', en: 'Verify Book', am: 'የመጽሐፍ ማረጋገጫ' },
+    { to: '/admin', en: '🔐 Admin Flow', am: '🔐 የአስተዳደር መግቢያ' }
   ];
 
   return (

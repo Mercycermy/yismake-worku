@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import BookCover from '../components/BookCover';
+import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import { verifiedBooks } from '../data/yismakeData';
 
 export default function Home() {
   const { lang } = useLanguage();
   const bioRef = useRef(null);
+  const [purchaseBook, setPurchaseBook] = useState(null);
 
   const scrollToBio = () => {
     bioRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -245,6 +247,22 @@ export default function Home() {
                 ? 'የይስማዕከ ወርቁ የመጀመሪያ ልቦለድ የሆነው «ዴርቶጋዳ» በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት ፈጠረ።'
                 : "Yismake Worku's debut novel, Dertogada, published in 2009, began a groundbreaking 5-volume speculative saga. The series broke Ethiopian publishing records with over 200,000 copies sold in its debut year across 10 editions."}
             </p>
+
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setPurchaseBook(dertogadaBook)}
+                className="jkr-pill-btn-dark !py-2 !px-5 !text-xs cursor-pointer inline-flex items-center gap-1.5"
+              >
+                <span>🛒</span>
+                <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
+              </button>
+              <Link
+                to="/books/dertogada"
+                className="jkr-pill-btn !py-2 !px-5 !text-xs inline-block"
+              >
+                {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+              </Link>
+            </div>
           </div>
 
           {/* Row 2: The Lost Spell */}
@@ -264,6 +282,22 @@ export default function Home() {
                 ? 'በዶ/ር ቤተልሔም አትፊልድ ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው «ክቡር ድንጋይ» (The Lost Spell)፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ ቀርቧል።'
                 : 'Translated into English by Dr. Bethlehem Attfield and published in the UK by Henningham Family Press, The Lost Spell (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize in the United Kingdom.'}
             </p>
+
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setPurchaseBook(keburDengay)}
+                className="jkr-pill-btn-dark !py-2 !px-5 !text-xs cursor-pointer inline-flex items-center gap-1.5"
+              >
+                <span>🛒</span>
+                <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
+              </button>
+              <Link
+                to="/books/kebur-dengay"
+                className="jkr-pill-btn !py-2 !px-5 !text-xs inline-block"
+              >
+                {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+              </Link>
+            </div>
           </div>
 
           {/* Row 3: Other Works */}
@@ -283,6 +317,22 @@ export default function Home() {
                 ? 'ከዴርቶጋዳ በተጨማሪ ይስማዕከ ወርቁ የተለያዩ ራሳቸውን የቻሉ ልቦለዶችን አበርክቷል። ሜሎስ፣ ተልሚድ፣ ዛምራ፣ የቀንድ አውጣ ኑሮ፣ የኦጋዴን ድመቶች፣ ተከርቼም እንዲሁም የመጀመሪያ የግጥም መድበሉ የወንድ ምጥ ይገኙበታል።'
                 : 'Alongside the Dertogada saga and The Lost Spell, Yismake Worku has written a rich range of standalone books exploring human morality, psychological suspense, and economic resilience.'}
             </p>
+
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setPurchaseBook(melosBook)}
+                className="jkr-pill-btn-dark !py-2 !px-5 !text-xs cursor-pointer inline-flex items-center gap-1.5"
+              >
+                <span>🛒</span>
+                <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
+              </button>
+              <Link
+                to={melosBook ? `/books/${melosBook.slug}` : '/books'}
+                className="jkr-pill-btn !py-2 !px-5 !text-xs inline-block"
+              >
+                {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -335,6 +385,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Quick Purchase Modal */}
+      {purchaseBook && (
+        <QuickPurchaseModal
+          book={purchaseBook}
+          isOpen={Boolean(purchaseBook)}
+          onClose={() => setPurchaseBook(null)}
+        />
+      )}
     </div>
   );
 }

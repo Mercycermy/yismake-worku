@@ -4,6 +4,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
+import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import PageBanner from '../components/PageBanner';
 
 export default function Books() {
@@ -11,6 +12,7 @@ export default function Books() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [inspectionBook, setInspectionBook] = useState(null);
+  const [purchaseBook, setPurchaseBook] = useState(null);
 
   const categories = [
     { id: 'ALL', en: 'All Works', am: 'ሁሉም ስራዎች' },
@@ -59,11 +61,14 @@ export default function Books() {
     <div className="bg-white text-[#222222] font-sans antialiased">
       <PageBanner title={lang === 'am' ? 'መጻሕፍት' : 'Books'} />
 
-      {/* Featured Masterpiece Section (Exact JKR inspo from screenshot) */}
+      {/* Featured Masterpiece Section */}
       <section className="bg-[#edf0f3] py-14 sm:py-20 border-b border-gray-300">
         <div className="site-container max-w-3xl mx-auto text-center px-4">
           <div className="flex justify-center mb-8">
-            <Link to="/books/dertogada" className="transform hover:scale-103 transition-transform duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.22)] rounded-sm inline-block">
+            <Link
+              to="/books/dertogada"
+              className="transform hover:scale-103 transition-transform duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.22)] rounded-sm inline-block"
+            >
               <BookCover book={dertogadaBook} size="large" />
             </Link>
           </div>
@@ -77,7 +82,9 @@ export default function Books() {
           </h2>
 
           <div className="font-serif text-sm italic text-[#666666] mb-5">
-            {lang === 'am' ? 'ሜጋ አሳታሚ / ኩራዝ / ዓለም አቀፍ እትሞች' : 'Mega Publishers; Kuraz Publishing; International Editions'}
+            {lang === 'am'
+              ? 'ሜጋ አሳታሚ / ኩራዝ / ዓለም አቀፍ እትሞች'
+              : 'Mega Publishers; Kuraz Publishing; International Editions'}
           </div>
 
           <p className="font-serif text-base sm:text-lg text-[#444444] leading-relaxed max-w-2xl mx-auto mb-8">
@@ -86,12 +93,22 @@ export default function Books() {
               : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 200,000 copies sold in its debut year alone.'}
           </p>
 
-          <Link
-            to="/books/dertogada"
-            className="jkr-pill-btn-dark inline-block shadow-md hover:shadow-lg"
-          >
-            {lang === 'am' ? 'ስለ ዴርቶጋዳ ሙሉ መረጃ →' : 'Explore Dertogada →'}
-          </Link>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <button
+              onClick={() => setPurchaseBook(dertogadaBook)}
+              className="jkr-pill-btn-dark inline-flex items-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <span>🛒</span>
+              <span>{lang === 'am' ? 'አሁን ይግዙ (Buy Now)' : 'Buy Now'}</span>
+            </button>
+
+            <Link
+              to="/books/dertogada"
+              className="jkr-pill-btn inline-block shadow-md hover:shadow-lg"
+            >
+              {lang === 'am' ? 'ተጨማሪ ያንብቡ (Read More) →' : 'Read More →'}
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -130,7 +147,11 @@ export default function Books() {
           <div className="relative">
             <input
               type="text"
-              placeholder={lang === 'am' ? 'በርዕስ፣ በዘውግ ወይም በጭብጥ ፈልግ...' : 'Search books by title, genre, theme...'}
+              placeholder={
+                lang === 'am'
+                  ? 'በርዕስ፣ በዘውግ ወይም በጭብጥ ፈልግ...'
+                  : 'Search books by title, genre, theme...'
+              }
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-[#fafafa] border border-gray-300 focus:border-[#111111] px-4 py-2.5 rounded-full text-sm text-[#111111] placeholder-gray-400 outline-none"
@@ -156,17 +177,20 @@ export default function Books() {
               <div>
                 {/* Book Cover Container */}
                 <div className="flex justify-center mb-6 py-2">
-                  <div className="transform group-hover:-translate-y-2 transition-transform duration-300 shadow-[0_12px_24px_rgba(0,0,0,0.12)]">
+                  <Link
+                    to={`/books/${book.slug}`}
+                    className="transform group-hover:-translate-y-2 transition-transform duration-300 shadow-[0_12px_24px_rgba(0,0,0,0.12)] inline-block"
+                  >
                     <BookCover book={book} size="normal" />
-                  </div>
+                  </Link>
                 </div>
 
                 {/* Metadata */}
                 <div className="flex items-center justify-between text-xs text-[#888888] font-bold uppercase tracking-wider mb-2">
-                  <span>{book.year} ({book.yearEc} ዓ.ም)</span>
-                  {book.seriesOrder && (
-                    <span>BOOK {book.seriesOrder}</span>
-                  )}
+                  <span>
+                    {book.year} ({book.yearEc} ዓ.ም)
+                  </span>
+                  {book.seriesOrder && <span>BOOK {book.seriesOrder}</span>}
                 </div>
 
                 <h2 className="font-serif text-2xl font-bold text-[#111111] group-hover:text-[#c59b27] transition-colors mb-2">
@@ -184,21 +208,34 @@ export default function Books() {
                 </p>
               </div>
 
-              {/* Actions */}
-              <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                <button
-                  onClick={() => setInspectionBook(book)}
-                  className="text-xs font-semibold text-[#555555] hover:text-black cursor-pointer"
-                >
-                  👁 {lang === 'am' ? 'ፈትሽ (Inspect)' : 'Quick Inspect'}
-                </button>
+              {/* Actions: Buy Now & Read More */}
+              <div className="pt-4 border-t border-gray-100 flex flex-col gap-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <button
+                    onClick={() => setPurchaseBook(book)}
+                    className="flex-1 py-2 px-3 bg-[#111111] hover:bg-black text-white text-xs font-bold rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                  >
+                    <span>🛒</span>
+                    <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
+                  </button>
 
-                <Link
-                  to={`/books/${book.slug}`}
-                  className="jkr-pill-btn-dark !py-1.5 !px-4 !text-xs"
-                >
-                  {lang === 'am' ? 'ዝርዝር →' : 'View Novel →'}
-                </Link>
+                  <Link
+                    to={`/books/${book.slug}`}
+                    className="flex-1 py-2 px-3 bg-white border border-gray-300 hover:border-black text-[#111111] text-xs font-bold rounded-full transition-all text-center"
+                  >
+                    {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+                  </Link>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] text-[#777777] pt-1">
+                  <button
+                    onClick={() => setInspectionBook(book)}
+                    className="hover:text-black cursor-pointer font-medium"
+                  >
+                    👁 {lang === 'am' ? 'ፈትሽ (Inspect)' : 'Quick Inspect'}
+                  </button>
+                  <span className="font-mono text-[10px]">VERIFIED ED.</span>
+                </div>
               </div>
             </article>
           ))}
@@ -222,7 +259,20 @@ export default function Books() {
 
       {/* Modal Inspection Folio */}
       {inspectionBook && (
-        <ModalInspectionFolio book={inspectionBook} onClose={() => setInspectionBook(null)} />
+        <ModalInspectionFolio
+          book={inspectionBook}
+          isOpen={Boolean(inspectionBook)}
+          onClose={() => setInspectionBook(null)}
+        />
+      )}
+
+      {/* Quick Purchase Modal */}
+      {purchaseBook && (
+        <QuickPurchaseModal
+          book={purchaseBook}
+          isOpen={Boolean(purchaseBook)}
+          onClose={() => setPurchaseBook(null)}
+        />
       )}
     </div>
   );

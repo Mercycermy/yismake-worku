@@ -35,5 +35,18 @@
         "likes": 2,
         "replies": [],
         "createdAt": "2026-08-10T14:20:12.110Z"
+    },
+    {
+        "id": "ccd7f67c-88b8-41de-8b49-14c263fdfda0",
+        "bookSlug": "dertogada",
+        "bookTitle": "Dertogada",
+        "username": "Tester",
+        "comment": "Extremely captivating masterpiece!",
+        "rating": 5,
+        "source": "web",
+        "bookCode": "",
+        "likes": 0,
+        "replies": [],
+        "createdAt": "2026-09-30T21:56:00.912Z"
     }
 ]

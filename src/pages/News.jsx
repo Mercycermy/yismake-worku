@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import { publicInterviewsAndArchive } from '../data/yismakeData';
@@ -8,6 +8,31 @@ export default function News() {
   const { lang } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [serverArticles, setServerArticles] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/news')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((item) => ({
+            id: item.id,
+            date: item.date || 'LATEST',
+            category: (item.category || 'NEWS').toUpperCase(),
+            categoryAm: item.category || 'ዜና',
+            titleEn: item.title,
+            titleAm: item.title,
+            image: item.image || '/images/writers-desk.jpg',
+            summaryEn: item.excerpt || (item.body ? item.body.slice(0, 160) + '...' : ''),
+            summaryAm: item.excerpt || (item.body ? item.body.slice(0, 160) + '...' : ''),
+            fullTextEn: [item.body || item.excerpt],
+            fullTextAm: [item.body || item.excerpt]
+          }));
+          setServerArticles(formatted);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const articles = [
     {
@@ -80,10 +105,12 @@ export default function News() {
     }
   ];
 
+  const allArticles = [...serverArticles, ...articles];
+
   const filteredArticles =
     activeCategory === 'ALL'
-      ? articles
-      : articles.filter((a) => a.category === activeCategory);
+      ? allArticles
+      : allArticles.filter((a) => a.category === activeCategory);
 
   return (
     <div className="bg-white text-[#222222] font-sans antialiased">

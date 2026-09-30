@@ -1,1 +1,57 @@
-[]
+[
+    {
+        "id": "code-dertogada-001",
+        "code": "BK-DERT001",
+        "bookTitle": "Dertogada",
+        "bookSlug": "dertogada",
+        "status": "verified",
+        "scans": 1,
+        "firstScanAt": "2026-09-30T21:52:03.034Z",
+        "lastScanAt": "2026-09-30T21:52:03.034Z",
+        "createdAt": "2026-09-01T10:00:00.000Z"
+    },
+    {
+        "id": "code-dertogada-002",
+        "code": "BK-DERT002",
+        "bookTitle": "Dertogada",
+        "bookSlug": "dertogada",
+        "status": "verified",
+        "scans": 1,
+        "firstScanAt": "2026-09-15T14:30:00.000Z",
+        "lastScanAt": "2026-09-15T14:30:00.000Z",
+        "createdAt": "2026-09-01T10:00:00.000Z"
+    },
+    {
+        "id": "code-ramatohara-001",
+        "code": "BK-RAMA001",
+        "bookTitle": "Ramatohara",
+        "bookSlug": "ramatohara",
+        "status": "unused",
+        "scans": 0,
+        "firstScanAt": null,
+        "lastScanAt": null,
+        "createdAt": "2026-09-05T11:00:00.000Z"
+    },
+    {
+        "id": "code-kebur-001",
+        "code": "BK-KEBUR01",
+        "bookTitle": "Kebur Dengay",
+        "bookSlug": "kebur-dengay",
+        "status": "unused",
+        "scans": 0,
+        "firstScanAt": null,
+        "lastScanAt": null,
+        "createdAt": "2026-09-10T12:00:00.000Z"
+    },
+    {
+        "id": "code-xantoxara-001",
+        "code": "BK-XANTO01",
+        "bookTitle": "Xantoxara",
+        "bookSlug": "xantoxara",
+        "status": "unused",
+        "scans": 0,
+        "firstScanAt": null,
+        "lastScanAt": null,
+        "createdAt": "2026-09-12T09:00:00.000Z"
+    }
+]

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import MediaRenderer from "../components/MediaRenderer";
 
@@ -22,7 +23,9 @@ async function readApiResponse(res) {
 export default function Admin() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [password, setPassword] = useState("");
-    const [tab, setTab] = useState("news"); // "news" | "books"
+    const [tab, setTab] = useState("news"); // "news" | "books" | "reviews"
+    const [allReviews, setAllReviews] = useState([]);
+    const [reviewFilter, setReviewFilter] = useState("all");
 
     /* ─── News State ─── */
     const [items, setItems] = useState([]);
@@ -269,11 +272,30 @@ export default function Admin() {
         img.src = "data:image/svg+xml;base64," + btoa(svgData);
     };
 
-    /* ═══ EFFECTS ═══ */
+    /* ═══ EFFECTS & REVIEWS ═══ */
+    const fetchAllReviews = () => {
+        fetch("/api/all-reviews", { headers })
+            .then((r) => r.json())
+            .then((data) => setAllReviews(Array.isArray(data) ? data : []))
+            .catch(() => setAllReviews([]));
+    };
+
+    const handleDeleteReview = async (id) => {
+        if (!confirm("Are you sure you want to delete this reader review?")) return;
+        try {
+            const res = await fetch(`/api/reviews/${id}`, { method: "DELETE", headers });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            fetchAllReviews();
+        } catch (err) {
+            alert("Failed to delete review: " + err.message);
+        }
+    };
+
     useEffect(() => {
         if (loggedIn) {
             fetchNews();
             fetchBooks();
+            fetchAllReviews();
         }
     }, [loggedIn]);
 
@@ -327,18 +349,37 @@ export default function Admin() {
         return (
             <section className="admin-page">
                 <div className="container login-wrap">
+                    <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                        <Link to="/" className="btn btn-secondary btn-sm" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                            ← Back to Public Website
+                        </Link>
+                    </div>
                     <form className="form-panel login-box" onSubmit={handleLogin}>
-                        <h2 className="text-center" style={{ marginBottom: "1.5rem" }}>
-                            Admin <span className="title-gradient">Login</span>
+                        <h2 className="text-center" style={{ marginBottom: "0.5rem" }}>
+                            Admin <span className="title-gradient">Portal</span>
                         </h2>
+                        <p style={{ textAlign: "center", fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+                            Direct management flow for news, verification codes, and discussions.
+                        </p>
                         <div className="form-group">
                             <label htmlFor="admin-pass">Password</label>
                             <input type="password" id="admin-pass" className="form-control"
                                 value={password} onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Enter admin password" required />
                         </div>
-                        <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>
-                            Sign In
+                        <button type="submit" className="btn btn-primary" style={{ width: "100%", marginBottom: "1rem" }}>
+                            Sign In to Admin
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setPassword(ADMIN_KEY);
+                                setLoggedIn(true);
+                            }}
+                            className="btn btn-secondary btn-sm"
+                            style={{ width: "100%", fontSize: "0.8rem", borderStyle: "dashed", cursor: "pointer" }}
+                        >
+                            ⚡ Quick Login (Passkey: author-admin-2026)
                         </button>
                     </form>
                 </div>
@@ -350,20 +391,36 @@ export default function Admin() {
     return (
         <section className="admin-page">
             <div className="container">
-                {/* Header */}
-                <div className="admin-header">
+                {/* Header with Direct Navigation back to Public Website */}
+                <div className="admin-header" style={{ flexWrap: "wrap", gap: "1rem" }}>
                     <div>
-                        <span className="section-label">Dashboard</span>
-                        <h1>Admin <span className="title-gradient">Panel</span></h1>
+                        <span className="section-label">Administration &amp; Control Flow</span>
+                        <h1>Admin <span className="title-gradient">Portal</span></h1>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", marginTop: "0.5rem", fontSize: "0.85rem" }}>
+                            <Link to="/" style={{ color: "var(--gold)", fontWeight: 600 }}>🌐 Home</Link>
+                            <span style={{ color: "var(--border-color)" }}>|</span>
+                            <Link to="/books" style={{ color: "var(--gold)", fontWeight: 600 }}>Books</Link>
+                            <span style={{ color: "var(--border-color)" }}>|</span>
+                            <Link to="/about" style={{ color: "var(--gold)", fontWeight: 600 }}>About</Link>
+                            <span style={{ color: "var(--border-color)" }}>|</span>
+                            <Link to="/news" style={{ color: "var(--gold)", fontWeight: 600 }}>News</Link>
+                            <span style={{ color: "var(--border-color)" }}>|</span>
+                            <Link to="/contact" style={{ color: "var(--gold)", fontWeight: 600 }}>Contact</Link>
+                        </div>
                     </div>
-                    <button className="btn btn-secondary btn-sm" onClick={() => setLoggedIn(false)}>
-                        Logout
-                    </button>
+                    <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                        <Link to="/" className="btn btn-secondary btn-sm">
+                            ← Public Website
+                        </Link>
+                        <button className="btn btn-secondary btn-sm" onClick={() => setLoggedIn(false)}>
+                            Logout
+                        </button>
+                    </div>
                 </div>
 
                 {/* Tab Switcher */}
                 <div style={{
-                    display: "flex", gap: "0.5rem", marginBottom: "2rem",
+                    display: "flex", gap: "0.5rem", marginBottom: "2rem", flexWrap: "wrap",
                     borderBottom: "2px solid var(--border-color)", paddingBottom: "0.5rem",
                 }}>
                     <button
@@ -384,7 +441,19 @@ export default function Admin() {
                             <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M20 6.5V17a2 2 0 01-2 2H6.5A2.5 2.5 0 014 16.5V6.5A2.5 2.5 0 016.5 4H18a2 2 0 012 2.5z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        Book Codes
+                        Book Codes ({bookCodes.length})
+                    </button>
+                    <button
+                        className={`btn ${tab === "reviews" ? "btn-primary" : "btn-secondary"} btn-sm`}
+                        onClick={() => {
+                            setTab("reviews");
+                            fetchAllReviews();
+                        }}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: 6 }}>
+                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        Reader Discussions ({allReviews.length})
                     </button>
                 </div>
 
@@ -939,6 +1008,115 @@ export default function Admin() {
                             </div>
                         )}
                     </>
+                )}
+
+                {/* ═══════════════════════════════════════════
+                    REVIEWS / DISCUSSIONS TAB
+                ═══════════════════════════════════════════ */}
+                {tab === "reviews" && (
+                    <div className="form-panel">
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
+                            <div>
+                                <h3 style={{ margin: 0 }}>Reader Discussions &amp; Reviews ({allReviews.length})</h3>
+                                <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: "0.25rem" }}>
+                                    Manage reader community feedback submitted across all books.
+                                </p>
+                            </div>
+                            <div style={{ display: "flex", gap: "0.5rem" }}>
+                                <button className="btn btn-secondary btn-sm" onClick={fetchAllReviews}>
+                                    🔄 Refresh Reviews
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Filter Bar */}
+                        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+                            {["all", "dertogada", "ramatohara", "kebur-dengay", "xantoxara"].map((f) => (
+                                <button
+                                    key={f}
+                                    className={`btn btn-sm ${reviewFilter === f ? "btn-primary" : "btn-secondary"}`}
+                                    onClick={() => setReviewFilter(f)}
+                                    style={{ textTransform: "capitalize" }}
+                                >
+                                    {f === "all" ? "All Volumes" : f.replace("-", " ")}
+                                </button>
+                            ))}
+                        </div>
+
+                        {allReviews.length === 0 ? (
+                            <div style={{ textAlign: "center", padding: "3rem 1rem", color: "var(--text-secondary)" }}>
+                                <span style={{ fontSize: "2rem", display: "block", marginBottom: "0.5rem" }}>💬</span>
+                                No reader reviews submitted yet.
+                            </div>
+                        ) : (
+                            <div className="table-responsive">
+                                <table className="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Book</th>
+                                            <th>Reader</th>
+                                            <th>Rating</th>
+                                            <th>Review / Thoughts</th>
+                                            <th>Source</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {allReviews
+                                            .filter((r) => reviewFilter === "all" || r.bookSlug === reviewFilter)
+                                            .map((r) => (
+                                                <tr key={r.id}>
+                                                    <td>
+                                                        <strong style={{ color: "var(--gold)" }}>
+                                                            {r.bookTitle || r.bookSlug || "Book"}
+                                                        </strong>
+                                                    </td>
+                                                    <td>{r.username}</td>
+                                                    <td>
+                                                        <span style={{ color: "var(--gold)", fontSize: "0.9rem" }}>
+                                                            {"★".repeat(r.rating || 5)}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ maxWidth: "350px", fontSize: "0.85rem" }}>
+                                                        <p style={{ margin: 0, lineHeight: 1.4 }}>{r.comment}</p>
+                                                        {r.likes ? (
+                                                            <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px", display: "inline-block" }}>
+                                                                ❤️ {r.likes} likes
+                                                            </span>
+                                                        ) : null}
+                                                    </td>
+                                                    <td>
+                                                        <span style={{
+                                                            fontSize: "0.7rem",
+                                                            padding: "2px 6px",
+                                                            borderRadius: "4px",
+                                                            background: r.source === "scan" ? "#10b98133" : "rgba(255,255,255,0.08)",
+                                                            color: r.source === "scan" ? "#34d399" : "var(--text-secondary)"
+                                                        }}>
+                                                            {r.source || "web"}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
+                                                        {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : "-"}
+                                                    </td>
+                                                    <td>
+                                                        <div className="admin-actions">
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={() => handleDeleteReview(r.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
                 )}
             </div>
         </section>

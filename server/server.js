@@ -491,7 +491,6 @@ app.get("/api/news", function (_req, res) {
     res.json(news);
 });
 
-// Reader reviews (public) — registered next to /api/news for cPanel compatibility
 app.get("/api/reviews", handleGetFeedbacks);
 app.post("/api/reviews", handlePostFeedback);
 app.post("/api/reviews/:id/like", handleFeedbackLike);
@@ -500,6 +499,31 @@ app.get("/api/feedbacks", handleGetFeedbacks);
 app.post("/api/feedbacks", handlePostFeedback);
 app.post("/api/feedbacks/:id/like", handleFeedbackLike);
 app.post("/api/feedbacks/:id/replies", handleFeedbackReply);
+
+// ADMIN: Get all reader reviews across all books
+app.get("/api/all-reviews", requireAdmin, function (_req, res) {
+    try {
+        const feedbacks = readFeedbacks().map(normalizeFeedback);
+        feedbacks.sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+        res.json(feedbacks);
+    } catch (e) {
+        res.status(500).json({ error: "Failed to load all reviews" });
+    }
+});
+
+// ADMIN: Delete a review
+app.delete("/api/reviews/:id", requireAdmin, function (req, res) {
+    try {
+        var feedbacks = readFeedbacks();
+        var len = feedbacks.length;
+        feedbacks = feedbacks.filter(function (f) { return String(f.id) !== String(req.params.id); });
+        if (feedbacks.length === len) return res.status(404).json({ error: "Review not found" });
+        writeFeedbacks(feedbacks);
+        res.json({ success: true, message: "Review deleted" });
+    } catch (e) {
+        res.status(500).json({ error: "Failed to delete review" });
+    }
+});
 
 // POST new news item (admin)
 app.post("/api/news", requireAdmin, function (req, res) {
