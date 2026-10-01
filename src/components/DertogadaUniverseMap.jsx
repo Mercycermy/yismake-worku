@@ -4,6 +4,7 @@ import { useLanguage } from './LanguageContext';
 import { dertogadaUniverseLore, verifiedBooks } from '../data/yismakeData';
 import BookCover from './BookCover';
 import ModalInspectionFolio from './ModalInspectionFolio';
+import Icon from './Icon';
 
 export default function DertogadaUniverseMap() {
   const { lang } = useLanguage();
@@ -145,7 +146,7 @@ export default function DertogadaUniverseMap() {
                 onClick={() => setInspectionBook(selectedBook)}
                 className="mt-5 btn-relic text-xs py-2 px-5 w-full max-w-[288px] text-center"
               >
-                <span>[INSPECT ARCHIVAL FOLIO 👁]</span>
+                <span className="inline-flex items-center justify-center gap-2"><Icon name="search" size={14} />[INSPECT ARCHIVAL FOLIO]</span>
               </button>
             </div>
 

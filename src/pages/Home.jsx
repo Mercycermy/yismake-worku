@@ -3,55 +3,61 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import BookCover from '../components/BookCover';
 import QuickPurchaseModal from '../components/QuickPurchaseModal';
-import { verifiedBooks } from '../data/yismakeData';
+import Icon from '../components/Icon';
+import { verifiedBooks, authorData } from '../data/yismakeData';
 
 export default function Home() {
   const { lang } = useLanguage();
   const bioRef = useRef(null);
+  const trilogyRef = useRef(null);
   const [purchaseBook, setPurchaseBook] = useState(null);
 
   const scrollToBio = () => {
-    bioRef.current?.scrollIntoView({ behavior: 'smooth' });
+    bioRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada');
-  const keburDengay = verifiedBooks.find((b) => b.slug === 'kebur-dengay');
-  const melosBook = verifiedBooks.find((b) => b.slug === 'melos');
+  const scrollToTrilogy = () => {
+    trilogyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
-  const latestNews = [
+  // The 3 iconic sequel books in chronological saga order
+  const trilogyBooks = [
     {
-      id: 1,
-      date: '24 SEPTEMBER 2026',
-      titleEn: "The Lost Spell Shortlisted for the TA First Translation Prize in the United Kingdom",
-      titleAm: "«ክቡር ድንጋይ» (The Lost Spell) በእንግሊዝ ለታላቁ የ2022 TA First Translation Prize እጩ ሆነ",
-      image: '/images/the-lost-spell-award.jpg',
-      link: '/news#lost-spell-award'
+      partNumber: 1,
+      partLabelEn: 'PART I · THE GENESIS',
+      partLabelAm: 'ክፍል ፩ · የመጀመሪያው ምዕራፍ',
+      book: verifiedBooks.find((b) => b.slug === 'dertogada'),
+      subtitleEn: 'The Historic Record-Breaker That Sparked an Afrofuturist Renaissance',
+      subtitleAm: 'በአንድ ዓመት ውስጥ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች የተሸጠው ታሪካዊ መጽሐፍ',
+      highlightBadge: '200,000+ COPIES',
     },
     {
-      id: 2,
-      date: '12 AUGUST 2026',
-      titleEn: "The Living Archive: Yismake Worku Surpasses 18,600+ Subscribers on Official Telegram",
-      titleAm: "በይፋዊ የቴሌግራም ቻናል ከ18,600 በላይ አንባቢዎች ጋር የተደረገ የቀጥታ ውይይት",
-      image: '/images/library-bg.jpg',
-      link: '/news#telegram-community'
+      partNumber: 2,
+      partLabelEn: 'PART II · DIRECT SEQUEL',
+      partLabelAm: 'ክፍል ፪ · ቀጥተኛ ተከታይ',
+      book: verifiedBooks.find((b) => b.slug === 'ramatohara'),
+      subtitleEn: 'The Conspiracy Deepens Beneath Lake Tana as Global Superpowers Intervene',
+      subtitleAm: 'የዴርቶጋዳ ታላቅ ቀጣይ ምዕራፍ፤ ጥንታዊ ምስጢሮች ከዓለም አቀፍ የፖለቲካ ሴራ ጋር ሲፋጠጡ',
+      highlightBadge: 'DIRECT SEQUEL',
     },
     {
-      id: 3,
-      date: '18 JULY 2026',
-      titleEn: "Academic Study Explores Monasticism and Techno-Utopia in Dertogada",
-      titleAm: "ስለ ዴርቶጋዳ የቀረበ ዓለም አቀፍ አካዳሚያዊ ጥናት በታይለር ኤንድ ፍራንሲስ ታተመ",
-      image: '/images/dertogada-art.jpg',
-      link: '/news#academic-study'
+      partNumber: 3,
+      partLabelEn: 'PART III · THE CLIMAX',
+      partLabelAm: 'ክፍል ፫ · የፍጻሜው ማዕበል',
+      book: verifiedBooks.find((b) => b.slug === 'xantoxara'),
+      subtitleEn: 'Orbital Cryptography, Cybernetic Warfare, and Ancient Monastic Lineages',
+      subtitleAm: 'የቴክኖሎጂና የስለላው ፍልሚያ ወደ ሳይበርና የኮምፒውተር የደህንነት ምህዳር የዘለቀበት ድንቅ ሥራ',
+      highlightBadge: 'TRILOGY CLIMAX',
     }
   ];
 
   return (
     <div style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
-
       {/* ══════════════════════════════════════════════════════════════
-          HERO SECTION
+          1. HERO SECTION: Grand Ethiopian Author Aesthetic
           ══════════════════════════════════════════════════════════════ */}
       <section
+        className="jkr-home-landing-hero"
         style={{
           position: 'relative',
           width: '100%',
@@ -66,404 +72,562 @@ export default function Home() {
           backgroundPosition: 'center',
         }}
       >
-        {/* Gradient overlay */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to bottom, rgba(26,23,20,0.55) 0%, rgba(26,23,20,0.4) 50%, rgba(26,23,20,0.65) 100%)',
-        }} />
+        {/* Deep atmospheric overlay with gold tint */}
+        <div
+          className="jkr-home-landing-hero__content"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse at center, rgba(20,15,10,0.65) 0%, rgba(14,10,6,0.92) 100%)',
+          }}
+        />
 
-        <div style={{
-          position: 'relative',
-          zIndex: 10,
-          width: '100%',
-          maxWidth: '1000px',
-          margin: '0 auto',
-          padding: '4rem 1.5rem',
-          textAlign: 'center',
-        }}>
-          {/* Hero Title */}
-          <h1 style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            fontWeight: 700,
-            color: '#ffffff',
-            lineHeight: 1.15,
-            letterSpacing: '-0.01em',
-            marginBottom: '1.25rem',
-            textShadow: '0 2px 20px rgba(0,0,0,0.3)',
-          }}>
-            {lang === 'am' ? (
-              <>
-                እንኳን ወደ ይስማዕከ ወርቁ <br />
-                ይፋዊ ድረ-ገጽ በደህና መጡ።
-              </>
-            ) : (
-              <>
-                Welcome to Yismake Worku's <br />
-                official website.
-              </>
-            )}
-          </h1>
-
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(0.9375rem, 2vw, 1.125rem)',
-            color: 'rgba(255,255,255,0.85)',
-            lineHeight: 1.7,
-            maxWidth: '540px',
-            margin: '0 auto 3rem',
-            textShadow: '0 1px 8px rgba(0,0,0,0.3)',
-          }}>
-            {lang === 'am'
-              ? 'ስለ ደራሲውና የኢትዮጵያን የስነ-ጽሑፍ ታሪክ የቀየሩትን ድንቅ መጻሕፍቱን የተመለከቱ የቅርብ ጊዜ ዜናዎችንና መረጃዎችን እዚህ ያገኛሉ።'
-              : "Here you can find the latest news and information on him and the books that made him one of Ethiopia's best-known authors."}
-          </p>
-
-          {/* Dual Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '3rem', maxWidth: '800px', margin: '0 auto', alignItems: 'center' }}>
-            {/* COLUMN 1: OFFICIAL SITE */}
-            <div style={{ textAlign: 'center', padding: '1.5rem 1rem' }}>
-              <div style={{ marginBottom: '1.25rem' }}>
-                <div style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-                  fontWeight: 800,
-                  letterSpacing: '0.12em',
-                  color: '#ffffff',
-                  textTransform: 'uppercase',
-                  textShadow: '0 2px 12px rgba(0,0,0,0.5)',
-                }}>
-                  YISMAKE WORKU
-                </div>
-                <div style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '0.6875rem',
-                  letterSpacing: '0.28em',
-                  color: '#c9a84c',
-                  textTransform: 'uppercase',
-                  marginTop: '4px',
-                  textShadow: '0 1px 4px rgba(0,0,0,0.6)',
-                }}>
-                  {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Official Author Website'}
-                </div>
-              </div>
-
-              <p style={{
-                fontSize: '0.875rem',
-                color: 'rgba(255,255,255,0.9)',
-                maxWidth: '300px',
-                margin: '0 auto 1.5rem',
-                lineHeight: 1.7,
-                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-              }}>
-                {lang === 'am'
-                  ? 'ስለ ይስማዕከ ወርቁና ስለ ስነ-ጽሑፍ ስራዎቹ ሁሉንም የቅርብ ጊዜ ዜናዎችና መረጃዎችን ለማግኘት በዚህ በኩል ይግቡ።'
-                  : 'This way for all the latest news and information about Yismake Worku and his writing.'}
-              </p>
-
-              <button
-                onClick={scrollToBio}
-                className="jkr-pill-btn"
-                style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}
-              >
-                {lang === 'am' ? 'እዚህ ይግቡ' : 'Enter here'}
-              </button>
-            </div>
-
-            {/* COLUMN 2: STORIES */}
-            <div style={{ textAlign: 'center', padding: '1.5rem 1rem' }}>
-              <div style={{ marginBottom: '1.25rem' }}>
-                <div style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)',
-                  fontWeight: 800,
-                  letterSpacing: '0.08em',
-                  color: '#ffffff',
-                  textShadow: '0 2px 12px rgba(0,0,0,0.5)',
-                }}>
-                  YISMAKE WORKU'S
-                </div>
-                <div style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(1.25rem, 2.5vw, 1.5rem)',
-                  fontStyle: 'italic',
-                  color: '#c9a84c',
-                  marginTop: '-2px',
-                  textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-                }}>
-                  STORIES
-                </div>
-              </div>
-
-              <p style={{
-                fontSize: '0.875rem',
-                color: 'rgba(255,255,255,0.9)',
-                maxWidth: '300px',
-                margin: '0 auto 1.5rem',
-                lineHeight: 1.7,
-                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-              }}>
-                {lang === 'am'
-                  ? 'በጣና ሐይቅ ስር ስላለው የዴርቶጋዳ ሳይንሳዊ ዓለምና ተረኮች የበለጠ ለማወቅ ለሚፈልጉ ወጣት አንባቢዎች።'
-                  : "This way for younger readers, who want to find out more about Yismake Worku and his speculative stories."}
-              </p>
-
-              <Link to="/universe" className="jkr-pill-btn" style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
-                {lang === 'am' ? 'ይምጡና ይጎብኙ!' : 'Come on in!'}
-              </Link>
-            </div>
-          </div>
-
-          {/* Imposter Notification Banner */}
-          <div style={{
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
             width: '100%',
-            maxWidth: '600px',
-            margin: '3.5rem auto 0',
-            background: 'rgba(255,255,255,0.95)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(0,0,0,0.06)',
-            borderRadius: '999px',
-            padding: '0.75rem 1.5rem',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            textAlign: 'left',
-          }}>
-            <div style={{
-              width: '24px',
-              height: '24px',
-              borderRadius: '50%',
-              border: '1.5px solid #c9a84c',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              color: '#c9a84c',
-            }}>!</div>
-            <p style={{ fontSize: '0.75rem', color: '#3d3a35', lineHeight: 1.5 }}>
-              {lang === 'am' ? (
-                <>
-                  ስለ ሀሰተኛ ገጾችና ያልተፈቀዱ ቅጂዎች ጥንቃቄ ያድርጉ። ለበለጠ መረጃ የ{' '}
-                  <Link to="/enquiries" style={{ textDecoration: 'underline', fontWeight: 600, color: '#1a1714' }}>
-                    ጥያቄዎችና አድራሻ
-                  </Link>{' '}
-                  ገጻችንን ይጎብኙ።
-                </>
-              ) : (
-                <>
-                  We are aware of imposter accounts online posing as Yismake Worku. Please visit our{' '}
-                  <Link to="/enquiries" style={{ textDecoration: 'underline', fontWeight: 600, color: '#1a1714' }}>
-                    Enquiries
-                  </Link>{' '}
-                  page for more information.
-                </>
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          BIO SECTION
-          ══════════════════════════════════════════════════════════════ */}
-      <section ref={bioRef} style={{ padding: '5rem 0', background: 'var(--bg-primary)' }}>
-        <div className="site-container" style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
-          {/* Gold decorative element */}
-          <div className="jkr-gold-divider" style={{ marginBottom: '2.5rem' }}>
-            <span style={{ fontSize: '0.875rem', color: '#c9a84c' }}>❖</span>
-          </div>
-
-          <h2 className="jkr-section-title">
-            {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Yismake Worku'}
-          </h2>
-
-          <div className="jkr-editorial-body" style={{ marginBottom: '3rem' }}>
-            <p>
-              {lang === 'am'
-                ? 'ይስማዕከ ወርቁ በዘመናዊው የኢትዮጵያ ስነ-ጽሁፍ ውስጥ ከፍተኛ ተወዳጅነት ያተረፈ ደራሲና የባህል ፈር-ቀዳጅ ሲሆን፣ በታላቁ የ«ዴርቶጋዳ» ተከታታይ የሳይንስ ልቦለዱ እንዲሁም በታዋቂው ማህበራዊ ምጸቱ «ክቡር ድንጋይ» (The Lost Spell) ይታወቃል።'
-                : 'Yismake Worku is an Ethiopian author, cultural icon, and literary pioneer best known for creating the Dertogada series and the internationally acclaimed satire The Lost Spell (Kebur Dengay).'}
-            </p>
-            <p>
-              {lang === 'am'
-                ? 'የደራሲው ይፋዊ ድረ-ገጽ ስለ መጻሕፍቱና አዳዲስ ፕሮጀክቶቹ ወቅታዊ ዜናዎችን፣ በራሱ አንደበት የቀረቡ ጥልቅ ማስታወሻዎችን፣ ስለ ጽሕፈት ጥበብ የተሰጡ ምክሮችንና ስለ ህይወት ጉዞው የተሟላ መረጃዎችን በአንድ ላይ ያቀርባል።'
-                : 'His official website brings together news and updates on his books and current projects, personal reflections in his own words, essays offering a glimpse into his writing life, and information about his life and literary career.'}
-            </p>
-          </div>
-
-          {/* Polaroid Photo Stack */}
-          <div className="jkr-polaroid-stack" style={{ marginBottom: '1rem' }}>
-            <div className="jkr-polaroid-back-1">
-              <div style={{ width: '100%', height: '224px', overflow: 'hidden', background: '#edeae4' }}>
-                <img src="/images/library-bg.jpg" alt="Archival notes" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            </div>
-            <div className="jkr-polaroid-back-2">
-              <div style={{ width: '100%', height: '224px', overflow: 'hidden', background: '#edeae4' }}>
-                <img src="/images/dertogada-art.jpg" alt="Dertogada Universe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            </div>
-            <div className="jkr-polaroid-front">
-              <div style={{ width: '100%', height: '256px', overflow: 'hidden', background: '#1a1714', marginBottom: '12px' }}>
-                <img src="/images/yismake-portrait.jpg" alt="Yismake Worku" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: '0.875rem', fontWeight: 600, color: '#1a1714' }}>
-                Yismake Worku
-              </div>
-              <div style={{ fontSize: '0.6875rem', color: '#8a857d' }}>
-                Gojjam &amp; Addis Ababa, Ethiopia
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          CANONICAL WORKS
-          ══════════════════════════════════════════════════════════════ */}
-      <section style={{ padding: '4rem 0 5rem', background: 'var(--bg-primary)' }}>
-        <div className="site-container" style={{ maxWidth: '680px', margin: '0 auto' }}>
-          {/* Dertogada */}
-          {[
-            {
-              book: dertogadaBook,
-              titleAm: 'ዴርቶጋዳ',
-              titleEn: 'The Dertogada Saga',
-              descAm: 'የይስማዕከ ወርቁ የመጀመሪያ ልቦለድ የሆነው «ዴርቶጋዳ» በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት ፈጠረ።',
-              descEn: "Yismake Worku's debut novel, Dertogada, published in 2009, began a groundbreaking 5-volume speculative saga. The series broke Ethiopian publishing records with over 200,000 copies sold in its debut year across 10 editions.",
-            },
-            {
-              book: keburDengay,
-              titleAm: 'ክቡር ድንጋይ (The Lost Spell)',
-              titleEn: 'The Lost Spell',
-              descAm: 'በዶ/ር ቤተልሔም አትፊልድ ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው «ክቡር ድንጋይ» (The Lost Spell)፣ በታላቋ ብሪታንያ ለታላቁ የ2022 TA First Translation Prize ሽልማት እጩ ሆኖ ቀርቧል።',
-              descEn: 'Translated into English by Dr. Bethlehem Attfield and published in the UK by Henningham Family Press, The Lost Spell (Kebur Dengay) was shortlisted for the prestigious 2022 TA First Translation Prize in the United Kingdom.',
-            },
-            {
-              book: melosBook,
-              titleAm: 'ሌሎች ድርሰቶች',
-              titleEn: 'Other works',
-              descAm: 'ከዴርቶጋዳ በተጨማሪ ይስማዕከ ወርቁ የተለያዩ ራሳቸውን የቻሉ ልቦለዶችን አበርክቷል። ሜሎስ፣ ተልሚድ፣ ዛምራ፣ የቀንድ አውጣ ኑሮ፣ የኦጋዴን ድመቶች፣ ተከርቼም እንዲሁም የመጀመሪያ የግጥም መድበሉ የወንድ ምጥ ይገኙበታል።',
-              descEn: 'Alongside the Dertogada saga and The Lost Spell, Yismake Worku has written a rich range of standalone books exploring human morality, psychological suspense, and economic resilience.',
-            }
-          ].map((item, idx) => (
-            <div
-              key={idx}
+            maxWidth: '1000px',
+            margin: '0 auto',
+            padding: '5rem 1.5rem 4.5rem',
+            textAlign: 'center',
+          }}
+        >
+          {/* Author Badge */}
+          <div className="jkr-home-landing-hero__badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 border shadow-lg"
+            style={{
+              background: 'rgba(201,168,76,0.12)',
+              borderColor: 'rgba(201,168,76,0.4)',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <Icon name="spark" size={14} className="text-[#c9a84c]" />
+            <span
               style={{
-                textAlign: 'center',
-                paddingTop: idx > 0 ? '3rem' : 0,
-                marginTop: idx > 0 ? '3rem' : 0,
-                borderTop: idx > 0 ? '1px solid #edeae4' : 'none',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#e8e0d4',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-                <div style={{
-                  width: '200px',
-                  boxShadow: '0 16px 40px rgba(0,0,0,0.15)',
-                  transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
-                  cursor: 'pointer',
-                }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03) translateY(-4px)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1) translateY(0)'}
-                >
-                  <BookCover book={item.book} size="normal" />
-                </div>
-              </div>
-
-              <h3 style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.5rem, 3vw, 1.875rem)',
-                fontWeight: 700,
-                color: '#1a1714',
-                marginBottom: '0.75rem',
-              }}>
-                {lang === 'am' ? item.titleAm : item.titleEn}
-              </h3>
-
-              <p style={{
-                fontSize: '1rem',
-                color: '#5a564e',
-                lineHeight: 1.75,
-                marginBottom: '1.25rem',
-              }}>
-                {lang === 'am' ? item.descAm : item.descEn}
-              </p>
-
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <button
-                  onClick={() => setPurchaseBook(item.book)}
-                  className="jkr-pill-btn-dark"
-                  style={{ fontSize: '0.75rem', padding: '0.6rem 1.5rem' }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                  </svg>
-                  <span>{lang === 'am' ? 'ይግዙ' : 'Buy Now'}</span>
-                </button>
-                <Link
-                  to={item.book ? `/books/${item.book.slug}` : '/books'}
-                  className="jkr-pill-btn"
-                  style={{ fontSize: '0.75rem', padding: '0.6rem 1.5rem' }}
-                >
-                  {lang === 'am' ? 'ተጨማሪ →' : 'Read More →'}
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          LATEST NEWS
-          ══════════════════════════════════════════════════════════════ */}
-      <section style={{
-        padding: '5rem 0',
-        background: 'var(--bg-secondary)',
-        borderTop: '1px solid #edeae4',
-      }}>
-        <div className="site-container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <div className="jkr-gold-divider" style={{ marginBottom: '1.5rem' }}>
-              <span style={{ fontSize: '0.875rem', color: '#c9a84c' }}>❖</span>
-            </div>
-            <h2 className="jkr-section-title">
-              {lang === 'am' ? 'የቅርብ ጊዜ ዜናዎች' : 'Latest News'}
-            </h2>
-            <p style={{
-              fontSize: '1rem',
-              color: '#8a857d',
-              maxWidth: '480px',
-              margin: '0.75rem auto 0',
-            }}>
               {lang === 'am'
-                ? 'ስለ ይስማዕከ ወርቁ፣ መጻሕፍቱ፣ የትርጉም ሥራዎችና ይፋዊ ማስታወቂያዎች ወቅታዊ መረጃዎችን ያንብቡ።'
-                : 'Read the latest updates from Yismake Worku — books, writing projects, adaptations and official announcements.'}
-            </p>
+                ? 'የዘመናዊው የኢትዮጵያ ሳይንስና ምናባዊ ልቦለድ ፈር-ቀዳጅ'
+                : 'Architect of Modern Ethiopian Speculative Fiction'}
+            </span>
+            <Icon name="spark" size={14} className="text-[#c9a84c]" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '2rem', marginBottom: '3rem' }}>
-            {latestNews.map((article) => (
-              <article key={article.id} className="jkr-news-card">
-                <Link to={article.link} className="jkr-news-card__image">
-                  <img src={article.image} alt={article.titleEn} loading="lazy" />
-                </Link>
-                <p className="jkr-news-card__date">{article.date}</p>
-                <h3 className="jkr-news-card__title">
-                  <Link to={article.link}>
-                    {lang === 'am' ? article.titleAm : article.titleEn}
-                  </Link>
-                </h3>
-              </article>
+          {/* Hero Name Title */}
+          <h1
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(2.5rem, 6.5vw, 4.75rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              lineHeight: 1.08,
+              letterSpacing: '0.04em',
+              marginBottom: '1rem',
+              textShadow: '0 4px 24px rgba(0,0,0,0.6)',
+              textTransform: 'uppercase',
+            }}
+          >
+            {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}
+          </h1>
+
+          {/* Hero Tagline */}
+          <p
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1rem, 2.2vw, 1.35rem)',
+              color: 'rgba(240,235,225,0.92)',
+              lineHeight: 1.65,
+              maxWidth: '680px',
+              margin: '0 auto 2.5rem',
+              textShadow: '0 2px 10px rgba(0,0,0,0.6)',
+              fontWeight: 400,
+            }}
+          >
+            {lang === 'am'
+              ? 'ጥንታዊው የገዳማት ምስጢር፣ የብራና ጥበብና ዘመናዊው የጠፈር ምርምር የተዋሃዱበት ድንቅ የስነ-ጽሑፍ ዓለም።'
+              : 'Where ancient Ethiopian monastic contemplation, sacred Ge’ez parchments, and orbital rocketry converge into a transformative literary universe.'}
+          </p>
+
+          {/* Quick Accolades Grid */}
+          <div
+            className="jkr-home-landing-stats grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10"
+            style={{
+              padding: '1rem',
+              background: 'rgba(255,255,255,0.05)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              border: '1px solid rgba(201,168,76,0.2)',
+            }}
+          >
+            {[
+              { num: '200,000+', labelEn: 'Copies Sold', labelAm: 'የተሸጡ ቅጂዎች' },
+              { num: '10x', labelEn: 'Reprints First Year', labelAm: 'በአንድ ዓመት 10 እትም' },
+              { num: '15+', labelEn: 'Major Novels', labelAm: 'ታላላቅ ልቦለዶች' },
+              { num: 'UK 2022', labelEn: 'TA Prize Shortlist', labelAm: 'የእንግሊዝ ሽልማት እጩ' },
+            ].map((stat, i) => (
+              <div key={i} className="text-center p-1">
+                <div
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '1.25rem',
+                    fontWeight: 800,
+                    color: '#c9a84c',
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {stat.num}
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.625rem',
+                    color: '#d4cebe',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    marginTop: '2px',
+                    fontWeight: 600,
+                  }}
+                >
+                  {lang === 'am' ? stat.labelAm : stat.labelEn}
+                </div>
+              </div>
             ))}
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <Link to="/news" className="jkr-pill-btn-dark">
-              {lang === 'am' ? 'ሁሉንም ይመልከቱ' : 'View all'}
+          {/* Hero CTAs */}
+          <div className="jkr-home-landing-actions flex flex-wrap items-center justify-center gap-4">
+            <button
+              onClick={scrollToTrilogy}
+              className="jkr-pill-btn"
+              style={{
+                background: 'linear-gradient(135deg, #c9a84c, #b8860b)',
+                color: '#1a1714',
+                border: 'none',
+                boxShadow: '0 6px 24px rgba(201,168,76,0.35)',
+                fontWeight: 800,
+                cursor: 'pointer',
+                padding: '0.75rem 2rem',
+                fontSize: '0.875rem',
+              }}
+            >
+              <span>{lang === 'am' ? 'የዴርቶጋዳ ተከታታይ መጻሕፍት' : 'Explore The Trilogy Saga'}</span>
+              <Icon name="arrowDown" size={15} />
+            </button>
+
+            <button
+              onClick={scrollToBio}
+              className="jkr-pill-btn"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                color: '#ffffff',
+                borderColor: 'rgba(255,255,255,0.25)',
+                backdropFilter: 'blur(8px)',
+                cursor: 'pointer',
+                padding: '0.75rem 1.75rem',
+                fontSize: '0.875rem',
+              }}
+            >
+              <span>{lang === 'am' ? 'ስለ ደራሲው ያንብቡ' : 'About Yismake'}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          2. ABOUT ME SECTION: Author Profile & Philosophy
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        ref={bioRef}
+        style={{
+          padding: '5rem 0 4rem',
+          background: 'var(--bg-primary)',
+          borderBottom: '1px solid #edeae4',
+        }}
+      >
+        <div className="site-container max-w-4xl mx-auto">
+          {/* Gold Decorative Header */}
+          <div className="text-center mb-10">
+            <div className="jkr-gold-divider mb-3">
+              <Icon name="spark" size={15} />
+            </div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+                fontWeight: 800,
+                color: '#1a1714',
+                marginBottom: '0.5rem',
+              }}
+            >
+              {lang === 'am' ? 'ስለ ደራሲ ይስማዕከ ወርቁ' : 'About Yismake Worku'}
+            </h2>
+            <p
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1rem',
+                color: '#8a857d',
+                fontStyle: 'italic',
+              }}
+            >
+              {lang === 'am'
+                ? 'የደብረ ማርቆስ ዩኒቨርሲቲ መምህር፣ የሳይንስ ልቦለድ ፈር-ቀዳጅና የባህል ተመራማሪ'
+                : 'Debre Markos University Lecturer, Speculative Fiction Pioneer & Cultural Researcher'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center mb-12">
+            {/* Polaroid Photo Stack */}
+            <div className="md:col-span-5 flex justify-center">
+              <div className="jkr-polaroid-stack">
+                <div className="jkr-polaroid-back-1">
+                  <div style={{ width: '100%', height: '224px', overflow: 'hidden', background: '#edeae4' }}>
+                    <img src="/images/library-bg.jpg" alt="Archival notes" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                </div>
+                <div className="jkr-polaroid-back-2">
+                  <div style={{ width: '100%', height: '224px', overflow: 'hidden', background: '#edeae4' }}>
+                    <img src="/images/dertogada-art.jpg" alt="Dertogada Universe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                </div>
+                <div className="jkr-polaroid-front shadow-2xl">
+                  <div style={{ width: '100%', height: '256px', overflow: 'hidden', background: '#1a1714', marginBottom: '12px' }}>
+                    <img src={authorData.portrait} alt="Yismake Worku" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: '0.9375rem', fontWeight: 700, color: '#1a1714' }}>
+                    Yismake Worku
+                  </div>
+                  <div style={{ fontSize: '0.6875rem', color: '#8a857d', fontWeight: 500 }}>
+                    Gojjam &amp; Addis Ababa, Ethiopia
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Narrative & Philosophy */}
+            <div className="md:col-span-7 space-y-4 text-[#3d3a35]">
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.0625rem', lineHeight: 1.8 }}>
+                {lang === 'am' ? authorData.bio.am : authorData.bio.en}
+              </p>
+
+              {/* Author Quote Box */}
+              <div
+                style={{
+                  padding: '1.25rem 1.5rem',
+                  background: 'var(--bg-secondary)',
+                  borderLeft: '4px solid #c9a84c',
+                  borderRadius: '0 8px 8px 0',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '0.9375rem',
+                    fontStyle: 'italic',
+                    color: '#4a443b',
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {lang === 'am'
+                    ? '«ጥንታዊው የኢትዮጵያ ገዳማዊ ጥበብና የብራና ምስጢር ከዘመናዊው የጠፈር ምርምር፣ ቴክኖሎጂ እና አገራዊ ሉዓላዊነት ጋር የሚገናኝበት ድንቅ የልቦለድ ዓለም።»'
+                    : '“Where ancient Ethiopian monastic contemplation meets orbital rocketry, cybersecurity, and the sovereign African mind.”'}
+                </p>
+                <span
+                  style={{
+                    display: 'block',
+                    marginTop: '8px',
+                    fontSize: '0.6875rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#c9a84c',
+                  }}
+                >
+                  — Yismake Worku (ይስማዕከ ወርቁ)
+                </span>
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#1a1714] hover:text-[#c9a84c] transition-colors"
+                >
+                  <span>{lang === 'am' ? 'የተሟላ የህይወትና የደራሲነት ጉዞን ያንብቡ' : 'Read Full Literary Journey & Milestones'}</span>
+                  <Icon name="arrowRight" size={14} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          3. THE 3 SEQUEL BOOKS (ONLY APPEARS AFTER ABOUT ME)
+          ══════════════════════════════════════════════════════════════ */}
+      <section
+        ref={trilogyRef}
+        className="jkr-home-trilogy"
+        style={{
+          padding: '5rem 0 6rem',
+          background: 'var(--bg-secondary)',
+          position: 'relative',
+        }}
+      >
+        <div className="site-container jkr-home-trilogy__inner max-w-5xl mx-auto">
+          {/* Section Header */}
+          <div className="jkr-home-trilogy__header text-center mb-12">
+            <div className="jkr-gold-divider mb-3">
+              <Icon name="spark" size={15} />
+            </div>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: '#c9a84c',
+                display: 'block',
+                marginBottom: '6px',
+              }}
+            >
+              {lang === 'am' ? 'ተከታታይ የልቦለድ ስራዎች' : 'The Canonical Trilogy Saga'}
+            </span>
+            <h2
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: 800,
+                color: '#1a1714',
+                lineHeight: 1.15,
+                marginBottom: '1rem',
+              }}
+            >
+              {lang === 'am' ? 'የዴርቶጋዳ ሦስቱ ተከታታይ መጻሕፍት' : 'The Three Dertogada Sequels'}
+            </h2>
+            <p
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1.0625rem',
+                color: '#6b655d',
+                maxWidth: '640px',
+                margin: '0 auto',
+                lineHeight: 1.7,
+              }}
+            >
+              {lang === 'am'
+                ? 'በኢትዮጵያ ስነ-ጽሑፍ ታሪክ ውስጥ ከፍተኛ ተወዳጅነት ያተረፉት ሦስቱ ተከታታይ ልብ አንጠልጣይ የሳይንስና የስለላ ልቦለዶች በቅደም ተከተል'
+                : 'Experience the iconic sequence: from the subterranean genesis beneath Lake Tana to geopolitical intrigue and orbital cryptographic warfare.'}
+            </p>
+
+            {/* Sequence Connection Ribbon */}
+            <div className="flex items-center justify-center gap-3 sm:gap-6 mt-8 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">1</span>
+                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ዴርቶጋዳ' : 'Dertogada'}</span>
+              </div>
+              <Icon name="arrowRight" size={15} className="text-[#c9a84c]" />
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">2</span>
+                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ራማቶሐራ' : 'Ramatohara'}</span>
+              </div>
+              <Icon name="arrowRight" size={15} className="text-[#c9a84c]" />
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">3</span>
+                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ዣንቶዣራ' : 'Zhantozhara'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Sequel Books Grid / Timeline Stack */}
+          <div className="jkr-home-trilogy__list space-y-8">
+            {trilogyBooks.map((item, index) => {
+              const book = item.book;
+              if (!book) return null;
+
+              return (
+                <div
+                  key={book.id}
+                  className="jkr-home-trilogy__card bg-[#fdfcfa] border border-[#e8e2d5] rounded-xl p-6 sm:p-10 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                  style={{
+                    borderLeft: '5px solid #c9a84c',
+                  }}
+                >
+                  {/* Watermark Part Number */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      right: '1.5rem',
+                      top: '0.5rem',
+                      fontFamily: 'var(--font-serif)',
+                      fontSize: '6rem',
+                      fontWeight: 900,
+                      color: 'rgba(201,168,76,0.06)',
+                      lineHeight: 1,
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    }}
+                  >
+                    0{item.partNumber}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    {/* Column 1: Book Cover Showcase */}
+                    <div className="md:col-span-4 flex flex-col items-center justify-center">
+                      <div
+                        style={{
+                          width: '210px',
+                          boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
+                          borderRadius: '6px',
+                          overflow: 'hidden',
+                          transition: 'transform 0.3s ease',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0) scale(1)')}
+                      >
+                        <BookCover book={book} size="normal" />
+                      </div>
+
+                      {/* Series Badge Under Cover */}
+                      <div
+                        className="mt-4 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase"
+                        style={{
+                          background: 'rgba(201,168,76,0.15)',
+                          color: '#8a6d1a',
+                          border: '1px solid rgba(201,168,76,0.3)',
+                        }}
+                      >
+                        {item.highlightBadge}
+                      </div>
+                    </div>
+
+                    {/* Column 2: Book Narrative & Details */}
+                    <div className="md:col-span-8 space-y-4">
+                      {/* Part Label & Year */}
+                      <div className="flex items-center gap-3">
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-sans)',
+                            fontSize: '0.6875rem',
+                            fontWeight: 800,
+                            letterSpacing: '0.14em',
+                            textTransform: 'uppercase',
+                            color: '#c9a84c',
+                            background: '#1a1714',
+                            padding: '3px 10px',
+                            borderRadius: '4px',
+                          }}
+                        >
+                          {lang === 'am' ? item.partLabelAm : item.partLabelEn}
+                        </span>
+                        <span className="text-xs text-[#8a857d] font-semibold">
+                          {book.year} ({book.yearEc} ዓ.ም) • {book.pageCount} {lang === 'am' ? 'ገጾች' : 'Pages'}
+                        </span>
+                      </div>
+
+                      {/* Book Title */}
+                      <h3
+                        style={{
+                          fontFamily: 'var(--font-serif)',
+                          fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)',
+                          fontWeight: 800,
+                          color: '#1a1714',
+                          lineHeight: 1.15,
+                        }}
+                      >
+                        <Link to={`/books/${book.slug}`} className="hover:text-[#c9a84c] transition-colors">
+                          {lang === 'am' ? book.titleAm : book.titleEn}
+                        </Link>
+                      </h3>
+
+                      {/* Tagline / Subtitle */}
+                      <p
+                        style={{
+                          fontFamily: 'var(--font-serif)',
+                          fontSize: '1rem',
+                          fontStyle: 'italic',
+                          color: '#c9a84c',
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        "{lang === 'am' ? book.tagline.am : book.tagline.en}"
+                      </p>
+
+                      {/* Synopsis */}
+                      <p
+                        style={{
+                          fontSize: '0.9375rem',
+                          color: '#555047',
+                          lineHeight: 1.75,
+                        }}
+                      >
+                        {lang === 'am' ? book.description.am : book.description.en}
+                      </p>
+
+                      {/* Key Themes Chips */}
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {(lang === 'am' ? book.themesAm : book.themes).slice(0, 4).map((theme, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2.5 py-0.5 rounded text-[11px] font-medium"
+                            style={{
+                              background: '#f0ece4',
+                              color: '#5a554d',
+                            }}
+                          >
+                            {theme}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Action Buttons: Buy Now & Read More */}
+                      <div className="pt-4 flex items-center gap-3 flex-wrap">
+                        <button
+                          onClick={() => setPurchaseBook(book)}
+                          className="jkr-pill-btn-dark cursor-pointer flex items-center gap-2 !py-2.5 !px-6 !text-xs shadow-md"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                          </svg>
+                          <span>{lang === 'am' ? 'ይግዙ / እዘዙ' : 'Buy / Order Copy'}</span>
+                        </button>
+
+                        <Link
+                          to={`/books/${book.slug}`}
+                          className="jkr-pill-btn cursor-pointer flex items-center gap-1.5 !py-2.5 !px-6 !text-xs border border-gray-300 hover:border-black shadow-sm"
+                        >
+                          <span>{lang === 'am' ? 'ተጨማሪ መረጃና ቅምሻ' : 'Read More & Sample'}</span>
+                          <Icon name="arrowRight" size={14} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bottom Link to Full Catalogue */}
+          <div className="mt-14 text-center">
+            <Link
+              to="/books"
+              className="jkr-pill-btn-dark !py-3 !px-8 !text-sm shadow-xl inline-flex items-center gap-2"
+            >
+              <span>
+                {lang === 'am'
+                  ? 'ሁሉንም 15+ የይስማዕከ ወርቁ መጻሕፍት ይመልከቱ'
+                  : 'Explore All 15+ Masterpieces in the Full Catalogue'}
+              </span>
+              <Icon name="arrowRight" size={15} />
             </Link>
           </div>
         </div>

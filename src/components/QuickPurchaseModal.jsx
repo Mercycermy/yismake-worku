@@ -3,6 +3,7 @@ import { useLanguage } from './LanguageContext';
 import { Link } from 'react-router-dom';
 import BookCover from './BookCover';
 import { getBookSample } from '../data/bookSamples';
+import Icon from './Icon';
 
 export default function QuickPurchaseModal({ book, isOpen, onClose }) {
   const { lang } = useLanguage();
@@ -44,7 +45,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
         {/* Header */}
         <div className="px-6 py-4 bg-[#111111] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-amber-400 text-lg">🛒</span>
+            <Icon name="cart" size={18} className="text-amber-400" />
             <div>
               <h3 className="font-serif text-base sm:text-lg font-bold">
                 {lang === 'am' ? 'መጽሐፉን ይግዙ' : 'Purchase Authorized Copy'}
@@ -58,7 +59,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm font-bold cursor-pointer transition-colors"
           >
-            ✕
+            <Icon name="close" size={16} />
           </button>
         </div>
 
@@ -67,7 +68,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
           {orderPlaced ? (
             <div className="text-center py-8 space-y-4">
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                ✓
+                <Icon name="check" size={26} strokeWidth={2.4} />
               </div>
               <h4 className="font-serif text-2xl font-bold text-gray-900">
                 {lang === 'am' ? 'ትዕዛዝዎ ተመዝግቧል!' : 'Order Received Successfully!'}
@@ -110,7 +111,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
                     {lang === 'am' ? book.tagline?.am : book.tagline?.en}
                   </p>
                   <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold">
-                    <span>🛡️</span>
+                    <Icon name="shield" size={13} />
                     <span>{lang === 'am' ? 'ትክክለኛ የጸደቀ እትም' : 'Verified Genuine Edition'}</span>
                   </div>
                 </div>
@@ -175,7 +176,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 py-2.5 px-4 bg-[#229ED9] hover:bg-[#1e8bc0] text-white font-semibold rounded-md text-xs transition-colors shadow-sm"
                   >
-                    <span>💬</span>
+                    <Icon name="message" size={15} />
                     <span>{lang === 'am' ? 'በቴሌግራም እዘዝ' : 'Order via Telegram'}</span>
                   </a>
 
@@ -186,7 +187,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-gray-300 hover:border-black text-[#111111] font-semibold rounded-md text-xs transition-colors"
                     >
-                      <span>🏪</span>
+                      <Icon name="building" size={15} />
                       <span>{book.purchaseLinks[0].name}</span>
                     </a>
                   ) : (
@@ -196,7 +197,7 @@ export default function QuickPurchaseModal({ book, isOpen, onClose }) {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-gray-300 hover:border-black text-[#111111] font-semibold rounded-md text-xs transition-colors"
                     >
-                      <span>🏪</span>
+                      <Icon name="building" size={15} />
                       <span>Addis Books Online</span>
                     </a>
                   )}

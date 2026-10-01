@@ -6,6 +6,7 @@ import BookCover from '../components/BookCover';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
 import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import PageBanner from '../components/PageBanner';
+import Icon from '../components/Icon';
 
 export default function Books() {
   const { lang } = useLanguage();
@@ -58,19 +59,20 @@ export default function Books() {
   const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada') || verifiedBooks[0];
 
   return (
-    <div style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
+    <div className="jkr-books-page" style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
       <PageBanner title={lang === 'am' ? 'መጻሕፍት' : 'Books'} />
 
       {/* Featured Masterpiece */}
-      <section style={{
+      <section className="jkr-books-featured" style={{
         background: 'var(--bg-secondary)',
         padding: '4rem 0 5rem',
         borderBottom: '1px solid #edeae4',
       }}>
-        <div className="site-container" style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+        <div className="site-container jkr-books-featured__inner">
+          <div className="jkr-books-featured__cover-wrap">
             <Link
               to="/books/dertogada"
+              className="jkr-books-featured__cover"
               style={{
                 display: 'inline-block',
                 transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
@@ -84,7 +86,8 @@ export default function Books() {
             </Link>
           </div>
 
-          <div style={{
+          <div className="jkr-books-featured__copy">
+          <div className="jkr-books-featured__eyebrow" style={{
             fontSize: '0.6875rem',
             fontWeight: 700,
             color: '#c9a84c',
@@ -131,7 +134,7 @@ export default function Books() {
               : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 200,000 copies sold in its debut year alone.'}
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div className="jkr-books-featured__actions" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => setPurchaseBook(dertogadaBook)}
               className="jkr-pill-btn-dark"
@@ -144,18 +147,19 @@ export default function Books() {
               <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
             </button>
             <Link to="/books/dertogada" className="jkr-pill-btn" style={{ fontSize: '0.8125rem' }}>
-              {lang === 'am' ? 'ተጨማሪ ያንብቡ →' : 'Read More →'}
+              {lang === 'am' ? 'ተጨማሪ ያንብቡ' : 'Read More'} <Icon name="arrowRight" size={15} />
             </Link>
+          </div>
           </div>
         </div>
       </section>
 
       {/* Catalog */}
-      <div className="site-container" style={{ maxWidth: '1100px', margin: '0 auto', padding: '4rem 1.5rem 5rem' }}>
+      <div className="site-container jkr-books-catalog" style={{ maxWidth: '1100px', margin: '0 auto', padding: '4rem 1.5rem 5rem' }}>
         {/* Section Header */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <div className="jkr-gold-divider" style={{ marginBottom: '1.5rem' }}>
-            <span style={{ fontSize: '0.875rem', color: '#c9a84c' }}>❖</span>
+            <Icon name="spark" size={15} />
           </div>
           <h3 style={{
             fontFamily: 'var(--font-serif)',
@@ -242,8 +246,8 @@ export default function Books() {
                   border: 'none',
                   cursor: 'pointer',
                 }}
-              >
-                ✕
+                >
+                <Icon name="close" size={14} />
               </button>
             )}
           </div>
@@ -266,7 +270,7 @@ export default function Books() {
                 transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
               }}
-              className="group"
+              className="jkr-book-catalog-card group"
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-6px)';
                 e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.08)';
@@ -398,7 +402,7 @@ export default function Books() {
                     onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#c9a84c'; e.currentTarget.style.color = '#b8860b'; }}
                     onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e8e4de'; e.currentTarget.style.color = '#1a1714'; }}
                   >
-                    {lang === 'am' ? 'ተጨማሪ →' : 'Read More →'}
+                    {lang === 'am' ? 'ተጨማሪ' : 'Read More'} <Icon name="arrowRight" size={14} />
                   </Link>
                 </div>
 
@@ -430,7 +434,7 @@ export default function Books() {
                     onMouseEnter={(e) => e.currentTarget.style.color = '#c9a84c'}
                     onMouseLeave={(e) => e.currentTarget.style.color = '#8a857d'}
                   >
-                    ⊕ {lang === 'am' ? 'ፈትሽ' : 'Quick Inspect'}
+                    <Icon name="plus" size={13} /> {lang === 'am' ? 'ፈትሽ' : 'Quick Inspect'}
                   </button>
                   <span style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                     VERIFIED
@@ -450,7 +454,7 @@ export default function Books() {
             border: '1px solid #edeae4',
             borderRadius: '8px',
           }}>
-            <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '0.75rem', opacity: 0.5 }}>📖</span>
+            <Icon name="bookOpen" size={36} className="mx-auto mb-3 text-[#c9a84c] opacity-60" />
             <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#5a564e', marginBottom: '0.5rem' }}>
               {lang === 'am' ? 'ምንም መጽሐፍ አልተገኘም' : 'No Books Found'}
             </h3>

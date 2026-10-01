@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import MediaRenderer from "../components/MediaRenderer";
+import Icon from "../components/Icon";
 
 const NEWS_API = "/api/news";
 const BOOKS_API = "/api/books";
@@ -379,7 +380,7 @@ export default function Admin() {
                             className="btn btn-secondary btn-sm"
                             style={{ width: "100%", fontSize: "0.8rem", borderStyle: "dashed", cursor: "pointer" }}
                         >
-                            ⚡ Quick Login (Passkey: author-admin-2026)
+                            <><Icon name="spark" size={14} /> Quick Login (Passkey: author-admin-2026)</>
                         </button>
                     </form>
                 </div>
@@ -397,7 +398,7 @@ export default function Admin() {
                         <span className="section-label">Administration &amp; Control Flow</span>
                         <h1>Admin <span className="title-gradient">Portal</span></h1>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem", marginTop: "0.5rem", fontSize: "0.85rem" }}>
-                            <Link to="/" style={{ color: "var(--gold)", fontWeight: 600 }}>🌐 Home</Link>
+                            <Link to="/" style={{ color: "var(--gold)", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.35rem" }}><Icon name="globe" size={14} />Home</Link>
                             <span style={{ color: "var(--border-color)" }}>|</span>
                             <Link to="/books" style={{ color: "var(--gold)", fontWeight: 600 }}>Books</Link>
                             <span style={{ color: "var(--border-color)" }}>|</span>
@@ -1024,7 +1025,7 @@ export default function Admin() {
                             </div>
                             <div style={{ display: "flex", gap: "0.5rem" }}>
                                 <button className="btn btn-secondary btn-sm" onClick={fetchAllReviews}>
-                                    🔄 Refresh Reviews
+                                    <Icon name="refresh" size={14} /> Refresh Reviews
                                 </button>
                             </div>
                         </div>
@@ -1045,7 +1046,7 @@ export default function Admin() {
 
                         {allReviews.length === 0 ? (
                             <div style={{ textAlign: "center", padding: "3rem 1rem", color: "var(--text-secondary)" }}>
-                                <span style={{ fontSize: "2rem", display: "block", marginBottom: "0.5rem" }}>💬</span>
+                                <Icon name="message" size={26} style={{ display: "block", margin: "0 auto 0.5rem" }} />
                                 No reader reviews submitted yet.
                             </div>
                         ) : (
@@ -1075,14 +1076,16 @@ export default function Admin() {
                                                     <td>{r.username}</td>
                                                     <td>
                                                         <span style={{ color: "var(--gold)", fontSize: "0.9rem" }}>
-                                                            {"★".repeat(r.rating || 5)}
+                                                            {Array.from({ length: r.rating || 5 }, (_, index) => (
+                                                                <Icon key={index} name="star" size={13} className="inline-block align-[-2px] mr-0.5" />
+                                                            ))}
                                                         </span>
                                                     </td>
                                                     <td style={{ maxWidth: "350px", fontSize: "0.85rem" }}>
                                                         <p style={{ margin: 0, lineHeight: 1.4 }}>{r.comment}</p>
                                                         {r.likes ? (
                                                             <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px", display: "inline-block" }}>
-                                                                ❤️ {r.likes} likes
+                                                                <Icon name="heart" size={13} className="inline-block align-[-2px] mr-1" /> {r.likes} likes
                                                             </span>
                                                         ) : null}
                                                     </td>

@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
 import { authorData, verifiedBooks } from '../data/yismakeData';
+import Icon from './Icon';
 
 export default function AuthorHero() {
   const { lang } = useLanguage();
   const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada');
 
   return (
-    <section className="relative min-h-[92vh] pt-32 sm:pt-36 pb-20 sm:pb-24 border-b border-[var(--border-hairline)] overflow-hidden bg-[#0d1517]">
+    <section className="jkr-home-hero relative min-h-[92vh] pt-32 sm:pt-36 pb-20 sm:pb-24 border-b border-[var(--border-hairline)] overflow-hidden bg-[#0d1517]">
       {/* Background Subtle Manuscript Drafting Grid */}
       <div className="absolute inset-0 manuscript-grid opacity-25 pointer-events-none" />
 
@@ -110,11 +111,11 @@ export default function AuthorHero() {
             <div className="pt-2 flex flex-wrap items-center gap-5">
               <a href="#universe-section" className="btn-relic">
                 <span>{lang === 'am' ? '፩ / የዴርቶጋዳን ዓለም አስስ' : '01 / ENTER THE SAGA'}</span>
-                <span>↓</span>
+                <Icon name="arrowDown" size={15} />
               </a>
               <Link to="/books" className="btn-marginal">
                 <span>{lang === 'am' ? 'የተሟላ የመጻሕፍት ማህደር (15+)' : 'COMPLETE CATALOGUE (15+)'}</span>
-                <span className="marginal-glyph">→</span>
+                <Icon name="arrowRight" size={15} className="marginal-glyph" />
               </Link>
             </div>
           </div>
@@ -171,7 +172,7 @@ export default function AuthorHero() {
                   <span className="text-[var(--primary)] font-bold">200,000+ COPIES PRINTED</span>
                   <Link to={`/books/${dertogadaBook.slug}`} className="btn-marginal text-[10px]">
                     <span>{lang === 'am' ? 'ሙሉ ማህደር' : 'VIEW DOSSIER'}</span>
-                    <span className="marginal-glyph">→</span>
+                    <Icon name="arrowRight" size={13} className="marginal-glyph" />
                   </Link>
                 </div>
               </div>

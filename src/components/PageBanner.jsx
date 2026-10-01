@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from './Icon';
 
 /**
  * Full-width page banner with desk/writing background
@@ -38,7 +39,7 @@ export default function PageBanner({ title }) {
           marginBottom: '1rem',
         }}>
           <span style={{ height: '1px', width: '40px', background: 'rgba(201,168,76,0.5)' }} />
-          <span style={{ color: '#c9a84c', fontSize: '0.75rem' }}>❖</span>
+          <Icon name="spark" size={14} style={{ color: '#c9a84c' }} />
           <span style={{ height: '1px', width: '40px', background: 'rgba(201,168,76,0.5)' }} />
         </div>
 

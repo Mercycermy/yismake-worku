@@ -1,19 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
 
 export default function Footer() {
   const { lang } = useLanguage();
-
-  const footerLinks = [
-    { to: '/', en: 'Home', am: 'መነሻ' },
-    { to: '/books', en: 'Books', am: 'መጻሕፍት' },
-    { to: '/about', en: 'About', am: 'ስለ ደራሲው' },
-    { to: '/news', en: 'News', am: 'ዜናዎች' },
-    { to: '/contact', en: 'Contact & Rights', am: 'አድራሻና ግንኙነት' },
-    { to: '/verify', en: 'Verify Book', am: 'የመጽሐፍ ማረጋገጫ' },
-    { to: '/admin', en: 'Admin', am: 'አድሚን' }
-  ];
 
   const socialLinks = [
     {
@@ -59,72 +48,26 @@ export default function Footer() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         color: '#e8e0d4',
-        paddingTop: '4.5rem',
-        paddingBottom: '3.5rem',
+        paddingTop: '3.5rem',
+        paddingBottom: '3rem',
         overflow: 'hidden',
         borderTop: '2px solid #3d2a1b',
       }}
     >
       {/* Dark overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'rgba(14,10,6,0.88)',
-        backdropFilter: 'blur(2px)',
-        pointerEvents: 'none',
-      }} />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(14,10,6,0.92)',
+          backdropFilter: 'blur(3px)',
+          pointerEvents: 'none',
+        }}
+      />
 
-      <div className="site-container" style={{ position: 'relative', zIndex: 10 }}>
-        {/* Navigation */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: '2.5rem',
-          paddingBottom: '1.5rem',
-          borderBottom: '1px solid rgba(77,55,37,0.4)',
-        }}>
-          <ul style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '1.5rem',
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.75rem',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}>
-            {footerLinks.map((item) => (
-              <li key={item.to}>
-                <Link
-                  to={item.to}
-                  style={{
-                    color: '#c4bfb5',
-                    textDecoration: 'none',
-                    transition: 'color 0.25s',
-                    fontWeight: 500,
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#c9a84c'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#c4bfb5'}
-                >
-                  {lang === 'am' ? item.am : item.en}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
+      <div className="site-container relative z-10">
         {/* Social Links */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '1rem',
-          marginBottom: '2.5rem',
-        }}>
+        <div className="flex justify-center items-center gap-4 mb-8">
           {socialLinks.map((link) => (
             <a
               key={link.label}
@@ -132,11 +75,11 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                width: '40px',
-                height: '40px',
+                width: '42px',
+                height: '42px',
                 borderRadius: '50%',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(201,168,76,0.2)',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(201,168,76,0.3)',
                 color: '#c9a84c',
                 display: 'flex',
                 alignItems: 'center',
@@ -149,12 +92,12 @@ export default function Footer() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = '#c9a84c';
                 e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                e.currentTarget.style.background = 'rgba(201,168,76,0.1)';
+                e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.2)';
+                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.3)';
                 e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
               }}
             >
               {link.icon}
@@ -162,75 +105,78 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Author Brand */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '2rem',
-          userSelect: 'none',
-        }}>
-          <div style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.5rem, 3vw, 1.875rem)',
-            fontWeight: 800,
-            letterSpacing: '0.18em',
-            color: '#e8e0d4',
-            textTransform: 'uppercase',
-          }}>
+        {/* Author Brand Signature */}
+        <div className="flex flex-col items-center justify-center mb-6 text-center select-none">
+          <div
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.5rem, 3.5vw, 2rem)',
+              fontWeight: 800,
+              letterSpacing: '0.18em',
+              color: '#e8e0d4',
+              textTransform: 'uppercase',
+            }}
+          >
             YISMAKE WORKU
           </div>
-          <div style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '0.6875rem',
-            letterSpacing: '0.3em',
-            color: '#c9a84c',
-            textTransform: 'uppercase',
-            marginTop: '4px',
-          }}>
-            {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'Official Author Website'}
+          <div
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '0.75rem',
+              letterSpacing: '0.3em',
+              color: '#c9a84c',
+              textTransform: 'uppercase',
+              marginTop: '4px',
+            }}
+          >
+            {lang === 'am' ? 'ይስማዕከ ወርቁ — ይፋዊ የደራሲው ማህደር' : 'Official Author Dossier & Archive'}
           </div>
         </div>
 
-        {/* Copyright & Legal */}
-        <div style={{
-          maxWidth: '680px',
-          margin: '0 auto',
-          textAlign: 'center',
-          fontFamily: 'var(--font-serif)',
-          fontSize: '0.6875rem',
-          color: '#8a7e70',
-          lineHeight: 1.65,
-        }}>
-          <p style={{
-            fontWeight: 700,
-            color: '#c4bfb5',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            marginBottom: '0.75rem',
-          }}>
+        {/* Authenticity Disclaimer & Legal */}
+        <div
+          style={{
+            maxWidth: '700px',
+            margin: '0 auto',
+            textAlign: 'center',
+            fontFamily: 'var(--font-serif)',
+            fontSize: '0.75rem',
+            color: '#8a7e70',
+            lineHeight: 1.65,
+          }}
+        >
+          <p
+            style={{
+              color: '#c9a84c',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.75rem',
+              background: 'rgba(26,17,10,0.7)',
+              border: '1px solid rgba(201,168,76,0.25)',
+              padding: '0.75rem 1.25rem',
+              borderRadius: '8px',
+              marginBottom: '1.25rem',
+            }}
+          >
+            {lang === 'am'
+              ? 'ማሳሰቢያ፡ በይስማዕከ ወርቁ ስም የተከፈቱ ሀሰተኛ የማህበራዊ ሚዲያ ገጾችና ያልተፈቀዱ የፒዲኤፍ (PDF) ስርጭቶች እንዳሉ እናውቃለን። እባክዎ ህጋዊና የተፈረመባቸውን የመጽሐፍ ቅጂዎች ብቻ ይግዙ።'
+              : 'Notice: We are aware of imposter online accounts and unauthorized digital copies posing as Yismake Worku. Please support genuine Ethiopian literature through verified editions.'}
+          </p>
+
+          <p
+            style={{
+              fontWeight: 700,
+              color: '#c4bfb5',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              marginBottom: '0.5rem',
+            }}
+          >
             &copy; {new Date().getFullYear()} YISMAKE WORKU. ALL RIGHTS RESERVED.
           </p>
 
-          <p style={{
-            color: '#c9a84c',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '0.6875rem',
-            background: 'rgba(26,17,10,0.6)',
-            border: '1px solid rgba(77,55,37,0.3)',
-            padding: '0.75rem 1rem',
-            borderRadius: '6px',
-            marginBottom: '1rem',
-          }}>
-            {lang === 'am'
-              ? 'ማሳሰቢያ፡ በይስማዕከ ወርቁ ስም የተከፈቱ ሀሰተኛ የማህበራዊ ሚዲያ ገጾችና ያልተፈቀዱ የፒዲኤፍ (PDF) ስርጭቶች እንዳሉ እናውቃለን።'
-              : 'We are aware of imposter accounts and counterfeit printings posing as Yismake Worku and his publishers. Please visit our Enquiries page for verified information.'}
-          </p>
-
-          <div style={{ fontSize: '0.625rem', color: '#6b6058', lineHeight: 1.75 }}>
-            <p>Dertogada, Ramatohara, Xantoxara, Yoratorad, Yotod, and associated character names &copy; Yismake Worku.</p>
-            <p>"The Lost Spell" translation &copy; Dr. Bethlehem Attfield; published by Henningham Family Press, London.</p>
+          <div style={{ fontSize: '0.6875rem', color: '#6b6058', lineHeight: 1.75 }}>
+            <p>Dertogada, Ramatohara, Xantoxara, Yoratorad, Yotod &amp; characters &copy; Yismake Worku.</p>
+            <p>"The Lost Spell" English translation &copy; Dr. Bethlehem Attfield; published by Henningham Family Press, London.</p>
             <p style={{ marginTop: '0.25rem' }}>DERTOGADA UNIVERSE is a registered literary trademark of Yismake Worku.</p>
           </div>
         </div>

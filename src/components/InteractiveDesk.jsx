@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
 import { verifiedBooks, verifiedQuotes } from '../data/yismakeData';
+import Icon from './Icon';
 
 export default function InteractiveDesk({ onSwitchToStory }) {
   const { lang } = useLanguage();
@@ -13,7 +14,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'notebook',
       title: lang === 'am' ? 'የዴርቶጋዳ የእጅ ጽሑፍ ማስታወሻዎች' : 'Manuscript Notebooks: Dertogada Drafts',
       subtitle: lang === 'am' ? 'የመጀመሪያው ረቂቅ እና ምስጢራዊ ኮዶች' : 'Early drafts, character sketches & Lake Tana formulas',
-      icon: '📖',
+      icon: 'bookOpen',
       pos: 'left-[22%] top-[48%]',
       color: '#e5c06e',
       content: {
@@ -28,7 +29,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'glasses',
       title: lang === 'am' ? 'የደራሲው መነጽር' : 'The Author’s Reading Glasses',
       subtitle: lang === 'am' ? 'የፈጠራ አመለካከትና ተመስጦ' : 'Literary Vision & Foundational Influences',
-      icon: '👓',
+      icon: 'glasses',
       pos: 'left-[24%] top-[18%]',
       color: '#a0e6e5',
       content: {
@@ -43,7 +44,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'coffee',
       title: lang === 'am' ? 'የኢትዮጵያ ቡና ጽዋ' : 'Traditional Ethiopian Buna Cup',
       subtitle: lang === 'am' ? 'የጸሐፊው የዕለት ተዕለት ልማድ' : 'The Daily Writing Ritual & Coffee Culture',
-      icon: '☕',
+      icon: 'coffee',
       pos: 'left-[69%] top-[25%]',
       color: '#ffb95f',
       content: {
@@ -58,7 +59,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'paperball',
       title: lang === 'am' ? 'የተጨማደደ ረቂቅ ወረቀት' : 'Screwed-up Paper: Discarded Drafts',
       subtitle: lang === 'am' ? 'ያልታተሙ ትዕይንቶችና አማራጭ ፍጻሜዎች' : 'Alternate plot twists, deleted scenes & discarded ideas',
-      icon: '📜',
+      icon: 'scroll',
       pos: 'left-[53%] top-[56%]',
       color: '#ef4444',
       content: {
@@ -73,7 +74,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'books',
       title: lang === 'am' ? 'የታተሙት መጻሕፍት ክምችት' : 'Stack of Published Works',
       subtitle: lang === 'am' ? 'ከዴርቶጋዳ እስከ ክቡር ድንጋይ' : '15+ Masterpieces across 2 Decades',
-      icon: '📚',
+      icon: 'bookOpen',
       pos: 'left-[84%] top-[50%]',
       color: '#3cddc7',
       content: {
@@ -88,7 +89,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
       id: 'pen',
       title: lang === 'am' ? 'የደራሲው ብዕር' : 'Fountain Pen & Inkwell',
       subtitle: lang === 'am' ? 'የአጻጻፍ ፍልስፍና' : 'The Art of Written Word & Craft',
-      icon: '✒️',
+      icon: 'feather',
       pos: 'left-[46%] top-[25%]',
       color: '#e5c06e',
       content: {
@@ -124,8 +125,8 @@ export default function InteractiveDesk({ onSwitchToStory }) {
             onClick={onSwitchToStory}
             className="flex items-center gap-2 px-4 py-2 bg-[#2a1c12] hover:bg-[#3d2a1b] border border-[#5a3e29] hover:border-[#d4af37] text-xs font-serif text-[#d4af37] tracking-wider uppercase transition-all shadow-md cursor-pointer rounded-sm"
           >
-            <span>📖 {lang === 'am' ? 'ወደ ዋናው ገጽ ተመለስ' : 'Switch to Story View'}</span>
-            <span>↓</span>
+            <span className="inline-flex items-center gap-2"><Icon name="bookOpen" size={15} />{lang === 'am' ? 'ወደ ዋናው ገጽ ተመለስ' : 'Switch to Story View'}</span>
+            <Icon name="arrowDown" size={14} />
           </button>
         </div>
       </div>
@@ -158,7 +159,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
                 className="relative flex items-center justify-center w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/75 border-2 border-[#d4af37] hover:border-white hover:scale-110 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.6)] cursor-pointer"
                 aria-label={spot.title}
               >
-                <span className="text-base sm:text-lg">{spot.icon}</span>
+                <Icon name={spot.icon} size={19} className="text-[#e5c06e]" />
                 <span className="absolute -inset-1 rounded-full border border-[#d4af37] animate-ping opacity-60 pointer-events-none" />
               </button>
 
@@ -175,7 +176,7 @@ export default function InteractiveDesk({ onSwitchToStory }) {
 
           {/* Desk Bottom Caption Note */}
           <div className="absolute bottom-4 left-6 z-20 bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 rounded text-xs font-serif text-[#d4af37]/90 max-w-md hidden sm:block">
-            <span className="font-bold">✨ Interactive Writing Desk</span> — Click any highlighted item above to inspect the author’s journals, discarded drafts, glasses, and published works.
+            <span className="font-bold inline-flex items-center gap-1.5"><Icon name="spark" size={13} /> Interactive Writing Desk</span> — Click any highlighted item above to inspect the author’s journals, discarded drafts, glasses, and published works.
           </div>
         </div>
       </div>

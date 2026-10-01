@@ -16,6 +16,7 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Verify from './pages/Verify';
 import SampleReader from './pages/SampleReader';
+import PostDetail from './pages/PostDetail';
 import Sources from './pages/Sources';
 
 function ScrollToTop() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/author" element={<About />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<PostDetail />} />
           <Route path="/archive" element={<News />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/enquiries" element={<Contact />} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../components/LanguageContext';
 import { academicSources } from '../data/yismakeData';
 import PageBanner from '../components/PageBanner';
+import Icon from '../components/Icon';
 
 export default function Sources() {
   const { lang } = useLanguage();
@@ -72,7 +73,7 @@ export default function Sources() {
 
               {source.recognition && (
                 <div className="text-xs text-[#c59b27] font-bold mt-2 font-serif">
-                  ★ {source.recognition}
+                  <Icon name="star" size={13} className="inline-block align-[-2px] mr-1" /> {source.recognition}
                 </div>
               )}
 
@@ -97,7 +98,7 @@ export default function Sources() {
                     className="jkr-pill-btn-dark !text-xs !py-1.5 !px-5 inline-flex items-center gap-1.5"
                   >
                     <span>{lang === 'am' ? 'ዋናውን ምንጭ ይመልከቱ' : 'Access Primary Source'}</span>
-                    <span>↗</span>
+                    <Icon name="external" size={13} />
                   </a>
                 </div>
               )}

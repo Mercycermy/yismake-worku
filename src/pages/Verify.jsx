@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import Icon from "../components/Icon";
 
 const API = "/api/verify";
 
@@ -211,8 +212,8 @@ export default function Verify() {
                             )}
 
                             {result.scans && result.scans === 1 && (
-                                <div className="verify-badge">
-                                    ★ First Verification
+                                <div className="verify-badge inline-flex items-center gap-1.5">
+                                    <Icon name="star" size={14} /> First Verification
                                 </div>
                             )}
                         </div>
@@ -225,7 +226,7 @@ export default function Verify() {
                                 
                                 {feedbackSubmitted ? (
                                     <div style={{ textAlign: "center", padding: "1.5rem" }}>
-                                        <div style={{ color: "var(--gold)", fontSize: "3rem", marginBottom: "0.5rem" }}>★</div>
+                                        <div style={{ color: "var(--gold)", marginBottom: "0.5rem" }}><Icon name="star" size={42} /></div>
                                         <h4 style={{ color: "white" }}>Thank you for your feedback!</h4>
                                         <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem", marginTop: "0.5rem" }}>
                                             Your comments have been posted to the book's discussion page.
@@ -270,7 +271,7 @@ export default function Verify() {
                                                         onMouseEnter={() => setHoveredRating(star)}
                                                         onMouseLeave={() => setHoveredRating(0)}
                                                     >
-                                                        ★
+                                                        <Icon name="star" size={24} />
                                                     </span>
                                                 ))}
                                             </div>
