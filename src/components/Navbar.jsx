@@ -37,7 +37,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="sticky top-0 left-0 right-0 z-50 transition-all duration-300 navbar-header"
       style={{
         background: isScrolled ? 'rgba(253,252,250,0.96)' : '#fdfcfa',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
@@ -56,6 +56,7 @@ export default function Navbar() {
           >
             <div className="flex flex-col">
               <span
+                className="group-hover:text-[#c9a84c] navbar-author-name"
                 style={{
                   fontFamily: 'var(--font-serif)',
                   fontSize: isScrolled ? '1.35rem' : '1.55rem',
@@ -64,24 +65,10 @@ export default function Navbar() {
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   lineHeight: 1.1,
-                  transition: 'color 0.25s',
+                  transition: 'color 0.25s, font-size 0.25s',
                 }}
-                className="group-hover:text-[#c9a84c]"
               >
                 {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '0.625rem',
-                  letterSpacing: '0.28em',
-                  color: '#c9a84c',
-                  textTransform: 'uppercase',
-                  fontWeight: 600,
-                  marginTop: '2px',
-                }}
-              >
-                {lang === 'am' ? 'ይፋዊ የደራሲው ድረ-ገጽ' : 'Official Author Website'}
               </span>
             </div>
           </Link>

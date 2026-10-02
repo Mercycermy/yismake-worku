@@ -2643,3 +2643,50 @@ img {
     min-height: 17rem;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE: Navbar, Hero, Book Categories
+   ══════════════════════════════════════════════════════════════ */
+
+/* Phone-specific navbar: smaller author name + reduced padding */
+@media (max-width: 640px) {
+  .navbar-header {
+    padding: 8px 0 !important;
+  }
+  .navbar-author-name {
+    font-size: 1.1rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  /* Hero section: smaller text on phone */
+  .jkr-home-landing-hero h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+  }
+  .hero-tagline {
+    font-size: 0.875rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .jkr-home-landing-hero .jkr-home-landing-hero__badge span {
+    font-size: 0.65rem !important;
+  }
+
+  /* Add space between copies sold section and explore button on phone */
+  .jkr-home-landing-stats {
+    margin-bottom: 2rem !important;
+  }
+  .jkr-home-landing-actions {
+    margin-top: 1rem;
+  }
+}
+
+/* Fade-in animation for category book reveals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

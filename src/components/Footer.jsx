@@ -133,7 +133,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Authenticity Disclaimer & Legal */}
+        {/* Legal */}
         <div
           style={{
             maxWidth: '700px',
@@ -147,38 +147,15 @@ export default function Footer() {
         >
           <p
             style={{
-              color: '#c9a84c',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.75rem',
-              background: 'rgba(26,17,10,0.7)',
-              border: '1px solid rgba(201,168,76,0.25)',
-              padding: '0.75rem 1.25rem',
-              borderRadius: '8px',
-              marginBottom: '1.25rem',
-            }}
-          >
-            {lang === 'am'
-              ? 'ማሳሰቢያ፡ በይስማዕከ ወርቁ ስም የተከፈቱ ሀሰተኛ የማህበራዊ ሚዲያ ገጾችና ያልተፈቀዱ የፒዲኤፍ (PDF) ስርጭቶች እንዳሉ እናውቃለን። እባክዎ ህጋዊና የተፈረመባቸውን የመጽሐፍ ቅጂዎች ብቻ ይግዙ።'
-              : 'Notice: We are aware of imposter online accounts and unauthorized digital copies posing as Yismake Worku. Please support genuine Ethiopian literature through verified editions.'}
-          </p>
-
-          <p
-            style={{
               fontWeight: 700,
               color: '#c4bfb5',
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
-              marginBottom: '0.5rem',
+              marginBottom: '0',
             }}
           >
             &copy; {new Date().getFullYear()} YISMAKE WORKU. ALL RIGHTS RESERVED.
           </p>
-
-          <div style={{ fontSize: '0.6875rem', color: '#6b6058', lineHeight: 1.75 }}>
-            <p>Dertogada, Ramatohara, Xantoxara, Yoratorad, Yotod &amp; characters &copy; Yismake Worku.</p>
-            <p>"The Lost Spell" English translation &copy; Dr. Bethlehem Attfield; published by Henningham Family Press, London.</p>
-            <p style={{ marginTop: '0.25rem' }}>DERTOGADA UNIVERSE is a registered literary trademark of Yismake Worku.</p>
-          </div>
         </div>
       </div>
     </footer>
