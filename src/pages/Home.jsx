@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import BookCover from '../components/BookCover';
 import Icon from '../components/Icon';
+import HeroSection from '../components/HeroSection';
 import { verifiedBooks, authorData, authorHighlights } from '../data/yismakeData';
 
 const bookExcerpt = (copy, maxLength = 290) => {
@@ -13,12 +14,7 @@ const bookExcerpt = (copy, maxLength = 290) => {
 
 export default function Home() {
   const { lang } = useLanguage();
-  const bioRef = useRef(null);
   const trilogyRef = useRef(null);
-
-  const scrollToBio = () => {
-    bioRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   const scrollToTrilogy = () => {
     trilogyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -86,191 +82,14 @@ export default function Home() {
   return (
     <div style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
       {/* ══════════════════════════════════════════════════════════════
-          1. HERO SECTION: Grand Ethiopian Author Aesthetic
+          1. HERO SECTION: Masterpiece Author & 3D Book Showcase
           ══════════════════════════════════════════════════════════════ */}
-      <section
-        className="jkr-home-landing-hero"
-        style={{
-          position: 'relative',
-          width: '100%',
-          minHeight: '88vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          backgroundImage: "url('/images/writers-desk.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {/* Deep atmospheric overlay with gold tint */}
-        <div
-          className="jkr-home-landing-hero__content"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'radial-gradient(ellipse at center, rgba(20,15,10,0.65) 0%, rgba(14,10,6,0.92) 100%)',
-          }}
-        />
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            width: '100%',
-            maxWidth: '1000px',
-            margin: '0 auto',
-            padding: '5rem 1.5rem 4.5rem',
-            textAlign: 'center',
-          }}
-        >
-          {/* Author Badge */}
-          <div className="jkr-home-landing-hero__badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 border shadow-lg"
-            style={{
-              background: 'rgba(201,168,76,0.12)',
-              borderColor: 'rgba(201,168,76,0.4)',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            <Icon name="spark" size={14} className="text-[#c9a84c]" />
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: '#e8e0d4',
-              }}
-            >
-              {lang === 'am'
-                ? 'የዘመናዊው የኢትዮጵያ ሳይንስና ምናባዊ ልቦለድ ፈር-ቀዳጅ'
-                : 'Ethiopian Novelist · Creator of the Dertogada Universe'}
-            </span>
-            <Icon name="spark" size={14} className="text-[#c9a84c]" />
-          </div>
-
-          {/* Hero Name Title */}
-          <h1
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.75rem, 5.5vw, 4.5rem)',
-              fontWeight: 800,
-              color: '#ffffff',
-              lineHeight: 1.08,
-              letterSpacing: '0.04em',
-              marginBottom: '1rem',
-              textShadow: '0 4px 24px rgba(0,0,0,0.6)',
-              textTransform: 'uppercase',
-            }}
-          >
-            {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}
-          </h1>
-
-          {/* Hero Tagline */}
-          <p
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
-              color: 'rgba(240,235,225,0.92)',
-              lineHeight: 1.65,
-              maxWidth: '680px',
-              margin: '0 auto 2rem',
-              textShadow: '0 2px 10px rgba(0,0,0,0.6)',
-              fontWeight: 400,
-            }}
-          >
-            {lang === 'am'
-              ? 'በዴርቶጋዳ ዓለም ውስጥ የገዳማዊ ባህል፣ የስለላ ታሪኮችና የወደፊት ሳይንስ ይገናኛሉ።'
-              : 'In the Dertogada universe, Ethiopian monastic traditions meet espionage, speculative science, and bold visions of the future.'}
-          </p>
-
-          {/* Quick Accolades Grid */}
-          <div
-            className="jkr-home-landing-stats grid grid-cols-3 gap-3 max-w-2xl mx-auto mb-12 sm:mb-12"
-            style={{
-              padding: '1rem',
-              background: 'rgba(255,255,255,0.05)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              border: '1px solid rgba(201,168,76,0.2)',
-            }}
-          >
-            {authorHighlights.map((stat) => (
-              <div key={stat.value} className="text-center p-1">
-                <div
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '1.25rem',
-                    fontWeight: 800,
-                    color: '#c9a84c',
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {stat.value}
-                </div>
-                <div
-                  style={{
-                    fontSize: '0.625rem',
-                    color: '#d4cebe',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em',
-                    marginTop: '2px',
-                    fontWeight: 600,
-                  }}
-                >
-                  {lang === 'am' ? stat.labelAm : stat.labelEn}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Hero CTAs */}
-          <div className="jkr-home-landing-actions flex flex-wrap items-center justify-center gap-4 mt-6 sm:mt-4">
-            <button
-              onClick={scrollToTrilogy}
-              className="jkr-pill-btn"
-              style={{
-                background: 'linear-gradient(135deg, #c9a84c, #b8860b)',
-                color: '#1a1714',
-                border: 'none',
-                boxShadow: '0 6px 24px rgba(201,168,76,0.35)',
-                fontWeight: 800,
-                cursor: 'pointer',
-                padding: '0.75rem 2rem',
-                fontSize: '0.875rem',
-              }}
-            >
-              <span>{lang === 'am' ? 'የይስማዕከ ወርቁን መጻሕፍት አስስ' : 'Explore All Series & Books'}</span>
-              <Icon name="arrowDown" size={15} />
-            </button>
-
-            <button
-              onClick={scrollToBio}
-              className="jkr-pill-btn"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                color: '#ffffff',
-                borderColor: 'rgba(255,255,255,0.25)',
-                backdropFilter: 'blur(8px)',
-                cursor: 'pointer',
-                padding: '0.75rem 1.75rem',
-                fontSize: '0.875rem',
-              }}
-            >
-              <span>{lang === 'am' ? 'ስለ ደራሲው ያንብቡ' : 'About Yismake'}</span>
-            </button>
-          </div>
-        </div>
-      </section>
+      <HeroSection scrollToTrilogy={scrollToTrilogy} />
 
       {/* ══════════════════════════════════════════════════════════════
           2. ABOUT ME SECTION: Author Profile & Philosophy
           ══════════════════════════════════════════════════════════════ */}
       <section
-        ref={bioRef}
         style={{
           padding: '5rem 0 4rem',
           background: 'var(--bg-primary)',
