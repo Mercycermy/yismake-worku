@@ -2,15 +2,19 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import BookCover from '../components/BookCover';
-import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import Icon from '../components/Icon';
-import { verifiedBooks, authorData } from '../data/yismakeData';
+import { verifiedBooks, authorData, authorHighlights } from '../data/yismakeData';
+
+const bookExcerpt = (copy, maxLength = 290) => {
+  const text = (copy || '').trim();
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength).replace(/\s+\S*$/, '')}…`;
+};
 
 export default function Home() {
   const { lang } = useLanguage();
   const bioRef = useRef(null);
   const trilogyRef = useRef(null);
-  const [purchaseBook, setPurchaseBook] = useState(null);
 
   const scrollToBio = () => {
     bioRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -20,36 +24,64 @@ export default function Home() {
     trilogyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // The 3 iconic sequel books in chronological saga order
-  const trilogyBooks = [
+  // 4 Canonical Book Categories as requested:
+  // 1: Dertogada Sequels (5 books)
+  // 2: Kibur Dingay Sequels (3 books)
+  // 3: Other Novels (4 books)
+  // 4: Poetry Books (2 books)
+  const [activeCategory, setActiveCategory] = useState('dertogada');
+
+  const bookCategories = [
     {
-      partNumber: 1,
-      partLabelEn: 'PART I · THE GENESIS',
-      partLabelAm: 'ክፍል ፩ · የመጀመሪያው ምዕራፍ',
-      book: verifiedBooks.find((b) => b.slug === 'dertogada'),
-      subtitleEn: 'The Historic Record-Breaker That Sparked an Afrofuturist Renaissance',
-      subtitleAm: 'በአንድ ዓመት ውስጥ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች የተሸጠው ታሪካዊ መጽሐፍ',
-      highlightBadge: '200,000+ COPIES',
+      id: 'dertogada',
+      titleEn: 'Dertogada Sequels',
+      titleAm: 'የዴርቶጋዳ ተከታታይ መጻሕፍት',
+      count: 5,
+      badgeEn: '5 SAGA BOOKS',
+      badgeAm: '5 ተከታታይ ቅጾች',
+      subtitleEn: 'The monumental 5-part speculative saga: Dertogada, Ramatohara, Zhantozhara, Yoratorad, and Yotod.',
+      subtitleAm: 'በኢትዮጵያ ስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠሩት አምስቱ ተከታታይ የሳይንስና የስለላ ልቦለዶች።',
+      bookSlugs: ['dertogada', 'ramatohara', 'xantoxara', 'yoratorad', 'yotod']
     },
     {
-      partNumber: 2,
-      partLabelEn: 'PART II · DIRECT SEQUEL',
-      partLabelAm: 'ክፍል ፪ · ቀጥተኛ ተከታይ',
-      book: verifiedBooks.find((b) => b.slug === 'ramatohara'),
-      subtitleEn: 'The Conspiracy Deepens Beneath Lake Tana as Global Superpowers Intervene',
-      subtitleAm: 'የዴርቶጋዳ ታላቅ ቀጣይ ምዕራፍ፤ ጥንታዊ ምስጢሮች ከዓለም አቀፍ የፖለቲካ ሴራ ጋር ሲፋጠጡ',
-      highlightBadge: 'DIRECT SEQUEL',
+      id: 'kibur-dingay',
+      titleEn: 'Kibur Dingay Sequels',
+      titleAm: 'የክቡር ድንጋይ ተከታታይ መጻሕፍት',
+      count: 3,
+      badgeEn: '3 MASTERPIECES',
+      badgeAm: '3 ድንቅ ስራዎች',
+      subtitleEn: 'The internationally acclaimed masterpiece and its gripping geopolitical thrillers.',
+      subtitleAm: 'በእንግሊዝ አገር የታጨው «ክቡር ድንጋይ»፣ «ደህንነቱ» እና «የኦጋዴን ድመቶች»።',
+      bookSlugs: ['kebur-dengay', 'dehinetu', 'yeogaden-demetoch']
     },
     {
-      partNumber: 3,
-      partLabelEn: 'PART III · THE CLIMAX',
-      partLabelAm: 'ክፍል ፫ · የፍጻሜው ማዕበል',
-      book: verifiedBooks.find((b) => b.slug === 'xantoxara'),
-      subtitleEn: 'Orbital Cryptography, Cybernetic Warfare, and Ancient Monastic Lineages',
-      subtitleAm: 'የቴክኖሎጂና የስለላው ፍልሚያ ወደ ሳይበርና የኮምፒውተር የደህንነት ምህዳር የዘለቀበት ድንቅ ሥራ',
-      highlightBadge: 'TRILOGY CLIMAX',
+      id: 'other-novels',
+      titleEn: 'Other Novels',
+      titleAm: 'ሌሎች ልቦለዶች',
+      count: 4,
+      badgeEn: '4 VISIONARY NOVELS',
+      badgeAm: '4 ልቦለዶች',
+      subtitleEn: 'Independent masterworks of philosophy, human struggle, and social satire.',
+      subtitleAm: 'ተልሚድ፣ ተከርቸም፣ ዘምራ እና ሜሎስ — የተለያዩ ማህበራዊና ፍልስፍናዊ ድንቅ ልቦለዶች።',
+      bookSlugs: ['telmid', 'tekerchem', 'zamra', 'melos']
+    },
+    {
+      id: 'poetry',
+      titleEn: 'Poetry Books',
+      titleAm: 'የግጥም መጻሕፍት',
+      count: 2,
+      badgeEn: '2 POETRY ANTHOLOGIES',
+      badgeAm: '2 የግጥም መድበሎች',
+      subtitleEn: 'Poignant verses, cultural reflections, and early artistic masterpieces.',
+      subtitleAm: 'የደራሲው የወጣትነት የግጥም መድበሎችና ማህበራዊ ምጸቶች፡ «የወንድ ምጥ» እና «የቀንድ አውጣ ኑሮ»።',
+      bookSlugs: ['yewond-mit', 'yekend-awta-nuro']
     }
   ];
+
+  const currentCategory = bookCategories.find((c) => c.id === activeCategory) || bookCategories[0];
+  const activeBooks = currentCategory.bookSlugs
+    .map((slug) => verifiedBooks.find((b) => b.slug === slug))
+    .filter(Boolean);
 
   return (
     <div style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
@@ -115,7 +147,7 @@ export default function Home() {
             >
               {lang === 'am'
                 ? 'የዘመናዊው የኢትዮጵያ ሳይንስና ምናባዊ ልቦለድ ፈር-ቀዳጅ'
-                : 'Architect of Modern Ethiopian Speculative Fiction'}
+                : 'Ethiopian Novelist · Creator of the Dertogada Universe'}
             </span>
             <Icon name="spark" size={14} className="text-[#c9a84c]" />
           </div>
@@ -124,7 +156,7 @@ export default function Home() {
           <h1
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2.5rem, 6.5vw, 4.75rem)',
+              fontSize: 'clamp(1.75rem, 5.5vw, 4.5rem)',
               fontWeight: 800,
               color: '#ffffff',
               lineHeight: 1.08,
@@ -141,23 +173,23 @@ export default function Home() {
           <p
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1rem, 2.2vw, 1.35rem)',
+              fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
               color: 'rgba(240,235,225,0.92)',
               lineHeight: 1.65,
               maxWidth: '680px',
-              margin: '0 auto 2.5rem',
+              margin: '0 auto 2rem',
               textShadow: '0 2px 10px rgba(0,0,0,0.6)',
               fontWeight: 400,
             }}
           >
             {lang === 'am'
-              ? 'ጥንታዊው የገዳማት ምስጢር፣ የብራና ጥበብና ዘመናዊው የጠፈር ምርምር የተዋሃዱበት ድንቅ የስነ-ጽሑፍ ዓለም።'
-              : 'Where ancient Ethiopian monastic contemplation, sacred Ge’ez parchments, and orbital rocketry converge into a transformative literary universe.'}
+              ? 'በዴርቶጋዳ ዓለም ውስጥ የገዳማዊ ባህል፣ የስለላ ታሪኮችና የወደፊት ሳይንስ ይገናኛሉ።'
+              : 'In the Dertogada universe, Ethiopian monastic traditions meet espionage, speculative science, and bold visions of the future.'}
           </p>
 
           {/* Quick Accolades Grid */}
           <div
-            className="jkr-home-landing-stats grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10"
+            className="jkr-home-landing-stats grid grid-cols-3 gap-3 max-w-2xl mx-auto mb-12 sm:mb-12"
             style={{
               padding: '1rem',
               background: 'rgba(255,255,255,0.05)',
@@ -166,13 +198,8 @@ export default function Home() {
               border: '1px solid rgba(201,168,76,0.2)',
             }}
           >
-            {[
-              { num: '200,000+', labelEn: 'Copies Sold', labelAm: 'የተሸጡ ቅጂዎች' },
-              { num: '10x', labelEn: 'Reprints First Year', labelAm: 'በአንድ ዓመት 10 እትም' },
-              { num: '15+', labelEn: 'Major Novels', labelAm: 'ታላላቅ ልቦለዶች' },
-              { num: 'UK 2022', labelEn: 'TA Prize Shortlist', labelAm: 'የእንግሊዝ ሽልማት እጩ' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-1">
+            {authorHighlights.map((stat) => (
+              <div key={stat.value} className="text-center p-1">
                 <div
                   style={{
                     fontFamily: 'var(--font-serif)',
@@ -182,7 +209,7 @@ export default function Home() {
                     lineHeight: 1.1,
                   }}
                 >
-                  {stat.num}
+                  {stat.value}
                 </div>
                 <div
                   style={{
@@ -201,7 +228,7 @@ export default function Home() {
           </div>
 
           {/* Hero CTAs */}
-          <div className="jkr-home-landing-actions flex flex-wrap items-center justify-center gap-4">
+          <div className="jkr-home-landing-actions flex flex-wrap items-center justify-center gap-4 mt-6 sm:mt-4">
             <button
               onClick={scrollToTrilogy}
               className="jkr-pill-btn"
@@ -216,7 +243,7 @@ export default function Home() {
                 fontSize: '0.875rem',
               }}
             >
-              <span>{lang === 'am' ? 'የዴርቶጋዳ ተከታታይ መጻሕፍት' : 'Explore The Trilogy Saga'}</span>
+              <span>{lang === 'am' ? 'የይስማዕከ ወርቁን መጻሕፍት አስስ' : 'Explore All Series & Books'}</span>
               <Icon name="arrowDown" size={15} />
             </button>
 
@@ -368,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          3. THE 3 SEQUEL BOOKS (ONLY APPEARS AFTER ABOUT ME)
+          3. MASTERPIECES & SEQUELS BY CATEGORY
           ══════════════════════════════════════════════════════════════ */}
       <section
         ref={trilogyRef}
@@ -381,7 +408,7 @@ export default function Home() {
       >
         <div className="site-container jkr-home-trilogy__inner max-w-5xl mx-auto">
           {/* Section Header */}
-          <div className="jkr-home-trilogy__header text-center mb-12">
+          <div className="jkr-home-trilogy__header text-center mb-10">
             <div className="jkr-gold-divider mb-3">
               <Icon name="spark" size={15} />
             </div>
@@ -397,76 +424,139 @@ export default function Home() {
                 marginBottom: '6px',
               }}
             >
-              {lang === 'am' ? 'ተከታታይ የልቦለድ ስራዎች' : 'The Canonical Trilogy Saga'}
+              {lang === 'am' ? 'የይስማዕከ ወርቁ የስነ-ጽሑፍ ዓለማት' : 'The Literary Oeuvre of Yismake Worku'}
             </span>
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontSize: 'clamp(1.85rem, 4vw, 2.75rem)',
                 fontWeight: 800,
                 color: '#1a1714',
-                lineHeight: 1.15,
-                marginBottom: '1rem',
+                lineHeight: 1.2,
+                marginBottom: '0.85rem',
               }}
             >
-              {lang === 'am' ? 'የዴርቶጋዳ ሦስቱ ተከታታይ መጻሕፍት' : 'The Three Dertogada Sequels'}
+              {lang === 'am' ? 'ተከታታይ እና የተመረጡ መጻሕፍት' : 'The Masterpiece Series & Works'}
             </h2>
             <p
               style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: '1.0625rem',
                 color: '#6b655d',
-                maxWidth: '640px',
+                maxWidth: '680px',
                 margin: '0 auto',
                 lineHeight: 1.7,
               }}
             >
               {lang === 'am'
-                ? 'በኢትዮጵያ ስነ-ጽሑፍ ታሪክ ውስጥ ከፍተኛ ተወዳጅነት ያተረፉት ሦስቱ ተከታታይ ልብ አንጠልጣይ የሳይንስና የስለላ ልቦለዶች በቅደም ተከተል'
-                : 'Experience the iconic sequence: from the subterranean genesis beneath Lake Tana to geopolitical intrigue and orbital cryptographic warfare.'}
+                ? 'ከዴርቶጋዳ አምስቱ ተከታታይ ቅጾች እስከ ክቡር ድንጋይ፣ ፍልስፍናዊ ልቦለዶች እና የግጥም መድበሎች ድረስ። ከታች ያሉትን ካርዶች በመጫን መጻሕፍቱን ይመልከቱ።'
+                : 'From the legendary five Dertogada sagas to the acclaimed Kibur Dingay thrillers, visionary standalone novels, and early poetry collections. Click any category below to explore.'}
             </p>
+          </div>
 
-            {/* Sequence Connection Ribbon */}
-            <div className="flex items-center justify-center gap-3 sm:gap-6 mt-8 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">1</span>
-                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ዴርቶጋዳ' : 'Dertogada'}</span>
-              </div>
-              <Icon name="arrowRight" size={15} className="text-[#c9a84c]" />
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">2</span>
-                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ራማቶሐራ' : 'Ramatohara'}</span>
-              </div>
-              <Icon name="arrowRight" size={15} className="text-[#c9a84c]" />
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#1a1714] text-[#c9a84c] text-xs font-bold flex items-center justify-center">3</span>
-                <span className="text-xs font-bold text-[#1a1714]">{lang === 'am' ? 'ዣንቶዣራ' : 'Zhantozhara'}</span>
-              </div>
+          {/* 4 Interactive Category Selector Cards */}
+          <div className="jkr-home-category-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {bookCategories.map((cat, idx) => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.id)}
+                  aria-pressed={isActive}
+                  className={`jkr-home-category-card text-left p-5 rounded-xl transition-all duration-300 relative cursor-pointer border ${
+                    isActive
+                      ? 'bg-[#1a1714] text-[#fdfcfa] border-[#c9a84c] shadow-xl scale-[1.02]'
+                      : 'bg-[#ffffff] text-[#1a1714] border-[#e8e2d5] hover:border-[#c9a84c]/60 hover:shadow-md'
+                  }`}
+                  style={{
+                    boxShadow: isActive ? '0 12px 28px rgba(201,168,76,0.18)' : undefined,
+                  }}
+                >
+                  {/* Category Card Header & Badge */}
+                  <div className="jkr-home-category-card__meta flex items-center justify-between gap-2 mb-3">
+                    <span
+                      className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full ${
+                        isActive
+                          ? 'bg-[#c9a84c] text-[#1a1714]'
+                          : 'bg-[#f0ece4] text-[#7a746a]'
+                      }`}
+                    >
+                      {cat.count} {lang === 'am' ? 'መጻሕፍት' : 'Books'}
+                    </span>
+                    <span className={`text-xs font-bold ${isActive ? 'text-[#c9a84c]' : 'text-[#8a857d]'}`}>
+                      0{idx + 1}
+                    </span>
+                  </div>
+
+                  {/* Category Title */}
+                  <h3
+                    className="jkr-home-category-card__title text-base font-bold mb-1 leading-snug"
+                    style={{ fontFamily: 'var(--font-serif)' }}
+                  >
+                    {lang === 'am' ? cat.titleAm : cat.titleEn}
+                  </h3>
+
+                  {/* Subtitle / summary */}
+                  <p
+                    className={`jkr-home-category-card__summary text-xs line-clamp-2 leading-relaxed ${
+                      isActive ? 'text-[#d6d0c4]' : 'text-[#6b655d]'
+                    }`}
+                  >
+                    {lang === 'am' ? cat.subtitleAm : cat.subtitleEn}
+                  </p>
+
+                  {/* Active Indicator Bar */}
+                  {isActive && (
+                    <div
+                      className="absolute bottom-0 left-4 right-4 h-[3px] rounded-t-full bg-[#c9a84c]"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Category Banner */}
+          <div className="jkr-home-selected-category mb-8 p-4 sm:p-5 rounded-lg bg-[#f4f0e6] border border-[#e2d8c3] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <span className="jkr-home-selected-category__eyebrow text-[11px] font-bold tracking-widest uppercase text-[#8a6d1a] block mb-1">
+                {lang === 'am' ? 'የተመረጠው ዘርፍ' : 'Current Series Selection'}
+              </span>
+              <h4 className="jkr-home-selected-category__title text-xl font-bold text-[#1a1714]" style={{ fontFamily: 'var(--font-serif)' }}>
+                {lang === 'am' ? currentCategory.titleAm : currentCategory.titleEn}
+              </h4>
+              <p className="jkr-home-selected-category__summary text-xs text-[#6b655d] mt-0.5">
+                {lang === 'am' ? currentCategory.subtitleAm : currentCategory.subtitleEn}
+              </p>
+            </div>
+            <div className="jkr-home-selected-category__count text-xs font-bold text-[#1a1714] bg-white px-3 py-1.5 rounded-full border border-[#e2d8c3] whitespace-nowrap">
+              {activeBooks.length} {lang === 'am' ? 'መጻሕፍት ተዘርዝረዋል' : 'Books Displayed'}
             </div>
           </div>
 
-          {/* 3 Sequel Books Grid / Timeline Stack */}
-          <div className="jkr-home-trilogy__list space-y-8">
-            {trilogyBooks.map((item, index) => {
-              const book = item.book;
+          {/* Books List for the Active Category */}
+          <div className="space-y-8">
+            {activeBooks.map((book, index) => {
               if (!book) return null;
 
               return (
                 <div
                   key={book.id}
-                  className="jkr-home-trilogy__card bg-[#fdfcfa] border border-[#e8e2d5] rounded-xl p-6 sm:p-10 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                  className="jkr-home-work-card bg-[#fdfcfa] border border-[#e8e2d5] rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden"
                   style={{
                     borderLeft: '5px solid #c9a84c',
                   }}
                 >
                   {/* Watermark Part Number */}
                   <div
+                    className="jkr-home-work-index"
                     style={{
                       position: 'absolute',
                       right: '1.5rem',
                       top: '0.5rem',
                       fontFamily: 'var(--font-serif)',
-                      fontSize: '6rem',
+                      fontSize: '5rem',
                       fontWeight: 900,
                       color: 'rgba(201,168,76,0.06)',
                       lineHeight: 1,
@@ -474,16 +564,17 @@ export default function Home() {
                       userSelect: 'none',
                     }}
                   >
-                    0{item.partNumber}
+                    0{index + 1}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                    {/* Column 1: Book Cover Showcase */}
+                    {/* Column 1: Authentic Book Cover Showcase */}
                     <div className="md:col-span-4 flex flex-col items-center justify-center">
                       <div
+                        className="jkr-home-work-cover"
                         style={{
-                          width: '210px',
-                          boxShadow: '0 20px 40px rgba(0,0,0,0.18)',
+                          width: '190px',
+                          boxShadow: '0 16px 36px rgba(0,0,0,0.18)',
                           borderRadius: '6px',
                           overflow: 'hidden',
                           transition: 'transform 0.3s ease',
@@ -497,21 +588,21 @@ export default function Home() {
 
                       {/* Series Badge Under Cover */}
                       <div
-                        className="mt-4 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase"
+                        className="mt-4 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase text-center"
                         style={{
                           background: 'rgba(201,168,76,0.15)',
                           color: '#8a6d1a',
                           border: '1px solid rgba(201,168,76,0.3)',
                         }}
                       >
-                        {item.highlightBadge}
+                        {lang === 'am' ? `ቅጽ 0${index + 1}` : `Book 0${index + 1}`}
                       </div>
                     </div>
 
                     {/* Column 2: Book Narrative & Details */}
                     <div className="md:col-span-8 space-y-4">
                       {/* Part Label & Year */}
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
                         <span
                           style={{
                             fontFamily: 'var(--font-sans)',
@@ -525,7 +616,7 @@ export default function Home() {
                             borderRadius: '4px',
                           }}
                         >
-                          {lang === 'am' ? item.partLabelAm : item.partLabelEn}
+                          {lang === 'am' ? currentCategory.badgeAm : currentCategory.badgeEn}
                         </span>
                         <span className="text-xs text-[#8a857d] font-semibold">
                           {book.year} ({book.yearEc} ዓ.ም) • {book.pageCount} {lang === 'am' ? 'ገጾች' : 'Pages'}
@@ -536,10 +627,10 @@ export default function Home() {
                       <h3
                         style={{
                           fontFamily: 'var(--font-serif)',
-                          fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)',
+                          fontSize: 'clamp(1.6rem, 3.2vw, 2.2rem)',
                           fontWeight: 800,
                           color: '#1a1714',
-                          lineHeight: 1.15,
+                          lineHeight: 1.18,
                         }}
                       >
                         <Link to={`/books/${book.slug}`} className="hover:text-[#c9a84c] transition-colors">
@@ -548,64 +639,57 @@ export default function Home() {
                       </h3>
 
                       {/* Tagline / Subtitle */}
-                      <p
-                        style={{
-                          fontFamily: 'var(--font-serif)',
-                          fontSize: '1rem',
-                          fontStyle: 'italic',
-                          color: '#c9a84c',
-                          lineHeight: 1.5,
-                        }}
-                      >
-                        "{lang === 'am' ? book.tagline.am : book.tagline.en}"
-                      </p>
+                      {book.tagline && (
+                        <p
+                          style={{
+                            fontFamily: 'var(--font-serif)',
+                            fontSize: '0.98rem',
+                            fontStyle: 'italic',
+                            color: '#c9a84c',
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          "{lang === 'am' ? book.tagline.am : book.tagline.en}"
+                        </p>
+                      )}
 
                       {/* Synopsis */}
                       <p
+                        className="jkr-home-work-summary"
                         style={{
-                          fontSize: '0.9375rem',
+                          fontSize: '0.925rem',
                           color: '#555047',
                           lineHeight: 1.75,
                         }}
                       >
-                        {lang === 'am' ? book.description.am : book.description.en}
+                        {bookExcerpt(lang === 'am' ? book.description?.am : book.description?.en)}
                       </p>
 
                       {/* Key Themes Chips */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {(lang === 'am' ? book.themesAm : book.themes).slice(0, 4).map((theme, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className="px-2.5 py-0.5 rounded text-[11px] font-medium"
-                            style={{
-                              background: '#f0ece4',
-                              color: '#5a554d',
-                            }}
-                          >
-                            {theme}
-                          </span>
-                        ))}
-                      </div>
+                      {((lang === 'am' ? book.themesAm : book.themes) || []).length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {(lang === 'am' ? book.themesAm : book.themes).slice(0, 4).map((theme, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="px-2.5 py-0.5 rounded text-[11px] font-medium"
+                              style={{
+                                background: '#f0ece4',
+                                color: '#5a554d',
+                              }}
+                            >
+                              {theme}
+                            </span>
+                          ))}
+                        </div>
+                      )}
 
-                      {/* Action Buttons: Buy Now & Read More */}
-                      <div className="pt-4 flex items-center gap-3 flex-wrap">
-                        <button
-                          onClick={() => setPurchaseBook(book)}
-                          className="jkr-pill-btn-dark cursor-pointer flex items-center gap-2 !py-2.5 !px-6 !text-xs shadow-md"
-                        >
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                          </svg>
-                          <span>{lang === 'am' ? 'ይግዙ / እዘዙ' : 'Buy / Order Copy'}</span>
-                        </button>
-
+                      {/* Action Button: Read More & Sample */}
+                      <div className="jkr-home-work-actions pt-3 flex items-center gap-3 flex-wrap">
                         <Link
                           to={`/books/${book.slug}`}
-                          className="jkr-pill-btn cursor-pointer flex items-center gap-1.5 !py-2.5 !px-6 !text-xs border border-gray-300 hover:border-black shadow-sm"
+                          className="jkr-pill-btn-dark cursor-pointer flex items-center gap-2 !py-2.5 !px-6 !text-xs shadow-md"
                         >
-                          <span>{lang === 'am' ? 'ተጨማሪ መረጃና ቅምሻ' : 'Read More & Sample'}</span>
+                          <span>{lang === 'am' ? 'ተጨማሪ መረጃና የይዘት ቅምሻ' : 'Read More & Book Details'}</span>
                           <Icon name="arrowRight" size={14} />
                         </Link>
                       </div>
@@ -620,7 +704,7 @@ export default function Home() {
           <div className="mt-14 text-center">
             <Link
               to="/books"
-              className="jkr-pill-btn-dark !py-3 !px-8 !text-sm shadow-xl inline-flex items-center gap-2"
+              className="jkr-home-trilogy__catalogue-link jkr-pill-btn-dark !py-3 !px-8 !text-sm shadow-xl inline-flex items-center gap-2"
             >
               <span>
                 {lang === 'am'
@@ -633,14 +717,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quick Purchase Modal */}
-      {purchaseBook && (
-        <QuickPurchaseModal
-          book={purchaseBook}
-          isOpen={Boolean(purchaseBook)}
-          onClose={() => setPurchaseBook(null)}
-        />
-      )}
     </div>
   );
 }

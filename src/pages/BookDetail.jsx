@@ -4,7 +4,6 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import { getBookSample } from '../data/bookSamples';
 import BookCover from '../components/BookCover';
-import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import LanguageToggle from '../components/LanguageToggle';
 import Icon from '../components/Icon';
 
@@ -12,20 +11,6 @@ export default function BookDetail() {
   const { slug } = useParams();
   const { lang } = useLanguage();
   const book = verifiedBooks.find((b) => b.slug === slug);
-
-  // Quick Purchase Modal State
-  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
-
-  // Purchase Form State
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [orderForm, setOrderForm] = useState({
-    name: '',
-    phone: '',
-    city: 'Addis Ababa',
-    address: '',
-    format: 'paperback',
-    paymentMethod: 'telebirr'
-  });
 
   // Read Sample State
   const [sampleChapterIdx, setSampleChapterIdx] = useState(0);
@@ -48,15 +33,7 @@ export default function BookDetail() {
   const [replyText, setReplyText] = useState({ username: '', comment: '' });
 
   const sampleData = getBookSample(slug);
-  const pricing = sampleData?.pricing || {
-    paperback: '380 ETB',
-    hardcover: '550 ETB',
-    ebook: '200 ETB',
-    usd: '$14.99'
-  };
-
   // Section references for smooth scrolling
-  const purchaseRef = useRef(null);
   const sampleRef = useRef(null);
   const verifyRef = useRef(null);
   const discussionRef = useRef(null);
@@ -320,19 +297,6 @@ export default function BookDetail() {
 
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
             <button
-              onClick={() => scrollToSection(purchaseRef)}
-              className="px-3.5 py-1.5 rounded-full font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-sm text-[11px] sm:text-xs"
-              style={{
-                background: 'linear-gradient(135deg, #c9a84c, #b8860b)',
-                color: '#1a1714',
-                boxShadow: '0 2px 10px rgba(201,168,76,0.3)',
-              }}
-            >
-              <Icon name="cart" size={14} />
-              <span>{lang === 'am' ? 'ቅጂ ይግዙ' : 'Purchase Copy'}</span>
-            </button>
-
-            <button
               onClick={() => scrollToSection(sampleRef)}
               className="px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer flex items-center gap-1.5 text-[11px] sm:text-xs border hover:border-[#c9a84c] hover:text-[#c9a84c]"
               style={{
@@ -402,36 +366,10 @@ export default function BookDetail() {
                 <div className="overflow-hidden rounded-lg group-hover:scale-102 transition-transform duration-300 flex justify-center">
                   <BookCover book={book} size="large" />
                 </div>
-                {book.isBestseller && (
-                  <div
-                    className="absolute -top-3 -right-3 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-md"
-                    style={{
-                      background: 'linear-gradient(135deg, #c9a84c, #b8860b)',
-                      color: '#1a1714',
-                    }}
-                  >
-                    <Icon name="medal" size={13} /> {lang === 'am' ? 'ምርጥ ሽያጭ' : 'Bestseller'}
-                  </div>
-                )}
               </div>
 
-              {/* Action Buttons: Buy Now & Read Sample */}
+              {/* Read Sample */}
               <div className="mt-7 w-full space-y-3">
-                <button
-                  onClick={() => setPurchaseModalOpen(true)}
-                  className="w-full py-3.5 px-5 font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 group"
-                  style={{
-                    background: 'linear-gradient(135deg, #1a1714 0%, #2a221b 100%)',
-                    border: '1px solid rgba(201,168,76,0.4)',
-                    color: '#ffffff',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-                  }}
-                >
-                  <Icon name="cart" size={16} />
-                  <span>{lang === 'am' ? 'አሁን ይግዙ (Buy Now)' : 'Buy Now'}</span>
-                  <span className="text-[#c9a84c] font-mono text-xs font-bold">· {pricing.paperback}</span>
-                </button>
-
                 <button
                   onClick={() => scrollToSection(sampleRef)}
                   className="w-full py-3 px-5 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] hover:bg-[#fbf9f4] text-[#1a1714] font-semibold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-xs"
@@ -441,27 +379,7 @@ export default function BookDetail() {
                 </button>
               </div>
 
-              {/* Fast Trust Indicators */}
-              <div
-                className="mt-5 p-4 rounded-xl w-full text-xs text-[#555047] space-y-2 border"
-                style={{
-                  background: 'linear-gradient(135deg, #fdfbf7 0%, #f7f3ea 100%)',
-                  borderColor: '#e8dfc8',
-                }}
-              >
-                <div className="flex items-center gap-2.5 font-bold text-[#1e6f42]">
-                  <span className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center text-[10px]">✓</span>
-                  <span>{lang === 'am' ? 'ይፋዊ ደራሲያዊ የጸደቀ እትም' : 'Official Authorized Edition'}</span>
-                </div>
-                <div className="flex items-center gap-2.5 font-medium">
-                  <Icon name="shield" size={15} />
-                  <span>{lang === 'am' ? 'የሆሎግራም ማረጋገጫ ኮድ አለው' : 'Includes Holographic Security Seal'}</span>
-                </div>
-                <div className="flex items-center gap-2.5 font-medium">
-                  <Icon name="truck" size={15} />
-                  <span>{lang === 'am' ? 'ፈጣን የአዲስ አበባና የክልል አቅርቦት' : 'Fast Delivery across Ethiopia & Abroad'}</span>
-                </div>
-              </div>
+
             </div>
           </div>
 
@@ -547,12 +465,12 @@ export default function BookDetail() {
                   marginBottom: '0.75rem',
                 }}
               >
-                {lang === 'am' ? 'የህትመት መረጃ' : 'Publication Dossier'}
+                {lang === 'am' ? 'ስለ መጽሐፉ' : 'About this book'}
               </h2>
-                <div className="jkr-publication-grid grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div className="jkr-publication-grid grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                 <div className="jkr-publication-fact p-3.5 bg-white border border-[#e8e2d5] rounded-xl shadow-xs">
                   <span className="text-[#8a857d] block text-[10px] uppercase font-bold tracking-wider mb-1">
-                    Publisher
+                    {lang === 'am' ? 'አሳታሚ' : 'Publisher'}
                   </span>
                   <span className="text-[#1a1714] font-semibold text-xs line-clamp-1">
                     {lang === 'am' ? book.publisherAm : book.publisher}
@@ -560,359 +478,25 @@ export default function BookDetail() {
                 </div>
                 <div className="jkr-publication-fact p-3.5 bg-white border border-[#e8e2d5] rounded-xl shadow-xs">
                   <span className="text-[#8a857d] block text-[10px] uppercase font-bold tracking-wider mb-1">
-                    Page Count
+                    {lang === 'am' ? 'የገጽ ብዛት' : 'Pages'}
                   </span>
-                  <span className="text-[#1a1714] font-semibold text-xs">{book.pageCount} Pages</span>
+                  <span className="text-[#1a1714] font-semibold text-xs">
+                    {book.pageCount} {lang === 'am' ? 'ገጾች' : 'pages'}
+                  </span>
                 </div>
                 <div className="jkr-publication-fact p-3.5 bg-white border border-[#e8e2d5] rounded-xl shadow-xs">
                   <span className="text-[#8a857d] block text-[10px] uppercase font-bold tracking-wider mb-1">
-                    Binding
+                    {lang === 'am' ? 'የመጀመሪያ ቋንቋ' : 'Original language'}
                   </span>
-                  <span className="text-[#1a1714] font-semibold text-xs">Paperback / Hardcover</span>
-                </div>
-                <div className="jkr-publication-fact p-3.5 bg-white border border-[#e8e2d5] rounded-xl shadow-xs">
-                  <span className="text-[#8a857d] block text-[10px] uppercase font-bold tracking-wider mb-1">
-                    Standard Price
+                  <span className="text-[#1a1714] font-semibold text-xs">
+                    {lang === 'am' ? book.languageAm || 'አማርኛ' : book.language || 'Amharic'}
                   </span>
-                  <span className="text-[#b8860b] font-bold text-xs font-mono">{pricing.paperback}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ─────────────────────────────────────────────────────────────
-            PILLAR 1: PURCHASE COPY (#purchase)
-            ───────────────────────────────────────────────────────────── */}
-        <section
-          ref={purchaseRef}
-          id="purchase"
-          className="jkr-book-detail-section my-20 pt-16 border-t border-[#e8e2d5] scroll-mt-24"
-        >
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="jkr-gold-divider mb-3">
-              <Icon name="spark" size={15} />
-            </div>
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.6875rem',
-                fontWeight: 800,
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#c9a84c',
-                display: 'block',
-                marginBottom: '4px',
-              }}
-            >
-              {lang === 'am' ? 'ምዕራፍ ፩ · ህጋዊ ቅጂ' : 'Section I · Authorized Edition'}
-            </span>
-            <h2
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2rem, 3.8vw, 2.65rem)',
-                fontWeight: 800,
-                color: '#1a1714',
-                marginBottom: '0.5rem',
-              }}
-            >
-              {lang === 'am' ? 'የመጽሐፉን ህጋዊ ቅጂ ይግዙ' : 'Purchase Authorized Copy'}
-            </h2>
-            <p className="text-sm text-[#6e685f] mt-2 font-serif">
-              {lang === 'am'
-                ? 'የይስማዕከ ወርቁን ኦሪጂናል መጻሕፍት በቀጥታ በማዘዝ ወይም በታወቁ የመጻሕፍት መደብሮች በኩል ይግዙ።'
-                : 'Acquire authentic author editions with verifiable security seal, directly or via verified distributors.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left: Edition Cards & Instant Channels */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="border border-[#e8e2d5] rounded-2xl p-6 bg-white shadow-md space-y-5">
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '1.15rem',
-                    fontWeight: 800,
-                    color: '#1a1714',
-                  }}
-                  className="border-b border-[#f5f3ef] pb-3"
-                >
-                  {lang === 'am' ? 'የእትም አማራጮችና ዋጋዎች' : 'Available Editions & Pricing'}
-                </h3>
-
-                <div className="space-y-3">
-                  <div
-                    onClick={() => setOrderForm({ ...orderForm, format: 'paperback' })}
-                    className={`jkr-edition-option p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all border ${
-                      orderForm.format === 'paperback'
-                        ? 'bg-[#fbf9f4] border-[#c9a84c] shadow-sm'
-                        : 'bg-white border-[#e8e2d5] hover:border-gray-400'
-                    }`}
-                  >
-                    <div>
-                      <div className="font-bold text-sm text-[#1a1714] flex items-center gap-1.5">
-                        <span>{lang === 'am' ? 'መደበኛ ቅጂ (Paperback)' : 'Standard Paperback'}</span>
-                        {orderForm.format === 'paperback' && (
-                          <span className="text-[10px] text-[#c9a84c] font-bold">✓ Selected</span>
-                        )}
-                      </div>
-                      <div className="text-xs text-[#736d65]">
-                        {book.pageCount} Pages · High Quality Print
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-base font-bold text-[#1a1714] font-mono">{pricing.paperback}</div>
-                      <div className="text-[10px] text-[#8a857d]">{pricing.usd}</div>
-                    </div>
-                  </div>
-
-                  <div
-                    onClick={() => setOrderForm({ ...orderForm, format: 'hardcover' })}
-                    className={`jkr-edition-option p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all border ${
-                      orderForm.format === 'hardcover'
-                        ? 'bg-[#fbf9f4] border-[#c9a84c] shadow-sm'
-                        : 'bg-white border-[#e8e2d5] hover:border-gray-400'
-                    }`}
-                  >
-                    <div>
-                      <div className="font-bold text-sm text-[#1a1714] flex items-center gap-1.5">
-                        <span>{lang === 'am' ? 'ዴሉክስ ቅጂ (Hardcover)' : 'Collector Hardcover'}</span>
-                        {orderForm.format === 'hardcover' && (
-                          <span className="text-[10px] text-[#c9a84c] font-bold">✓ Selected</span>
-                        )}
-                      </div>
-                      <div className="text-xs text-[#736d65]">
-                        Foil-stamped spine · Archival cloth
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-base font-bold text-[#1a1714] font-mono">{pricing.hardcover}</div>
-                    </div>
-                  </div>
-
-                  <div
-                    onClick={() => setOrderForm({ ...orderForm, format: 'ebook' })}
-                    className={`jkr-edition-option p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all border ${
-                      orderForm.format === 'ebook'
-                        ? 'bg-[#fbf9f4] border-[#c9a84c] shadow-sm'
-                        : 'bg-white border-[#e8e2d5] hover:border-gray-400'
-                    }`}
-                  >
-                    <div>
-                      <div className="font-bold text-sm text-[#1a1714] flex items-center gap-1.5">
-                        <span>{lang === 'am' ? 'ዲጂታል ቅጂ (E-Book)' : 'Official E-Book'}</span>
-                        {orderForm.format === 'ebook' && (
-                          <span className="text-[10px] text-[#c9a84c] font-bold">✓ Selected</span>
-                        )}
-                      </div>
-                      <div className="text-xs text-[#736d65]">
-                        Secure digital reader access
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-base font-bold text-[#1a1714] font-mono">{pricing.ebook}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Instant Order Channels */}
-                <div className="pt-2 space-y-2.5">
-                  <a
-                    href={`https://t.me/yismakeworku?text=${encodeURIComponent(
-                      `Hello, I would like to purchase "${book.titleEn}" (${pricing[orderForm.format] || pricing.paperback}). Please assist me with delivery.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 px-4 bg-[#229ED9] hover:bg-[#1e8bc0] text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
-                  >
-                    <Icon name="message" size={15} />
-                    <span>{lang === 'am' ? 'በቴሌግራም በቀጥታ እዘዝ' : 'Order Directly on Telegram'}</span>
-                  </a>
-
-                  {book.purchaseLinks?.map((pl, i) => (
-                    <a
-                      key={i}
-                      href={pl.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-2.5 px-4 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] text-[#1a1714] font-semibold rounded-xl text-xs flex items-center justify-center gap-2 transition-all"
-                    >
-                      <Icon name="building" size={15} />
-                      <span>{pl.name}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Express Delivery Order Form */}
-            <div className="lg:col-span-7">
-              <div className="border border-[#e8e2d5] rounded-2xl p-6 sm:p-8 bg-white shadow-md">
-                {orderPlaced ? (
-                  <div className="text-center py-10 space-y-4 animate-fade-in">
-                    <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-3xl font-bold shadow-xs">
-                      ✓
-                    </div>
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-serif)',
-                        fontSize: '1.75rem',
-                        fontWeight: 800,
-                        color: '#1a1714',
-                      }}
-                    >
-                      {lang === 'am' ? 'የትዕዛዝ ጥያቄዎ ደርሶናል!' : 'Order Placed Successfully!'}
-                    </h3>
-                    <p className="text-sm text-[#5a554c] max-w-md mx-auto leading-relaxed">
-                      {lang === 'am'
-                        ? `እናመሰግናለን ${orderForm.name}። የመጽሐፍ አቅርቦት ክፍላችን በ${orderForm.phone} ደውሎ ያረጋግጣል።`
-                        : `Thank you, ${orderForm.name}. Our delivery coordinator will call ${orderForm.phone} to finalize delivery.`}
-                    </p>
-                    <button
-                      onClick={() => setOrderPlaced(false)}
-                      className="mt-4 px-6 py-2.5 bg-[#1a1714] text-white text-xs font-bold rounded-full hover:bg-black transition-colors cursor-pointer"
-                    >
-                      {lang === 'am' ? 'አዲስ ትዕዛዝ አስገባ' : 'Place Another Order'}
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-serif)',
-                        fontSize: '1.35rem',
-                        fontWeight: 800,
-                        color: '#1a1714',
-                        marginBottom: '0.25rem',
-                      }}
-                    >
-                      {lang === 'am' ? 'ፈጣን የማድረሻ ቅጽ (Direct Delivery Form)' : 'Direct Delivery Order Form'}
-                    </h3>
-                    <p className="text-xs text-[#736d65] mb-6">
-                      {lang === 'am'
-                        ? 'መረጃዎን ያስገቡ፤ መጽሐፉ ያሉበት ድረስ ይላክልዎታል። ክፍያ በቴሌብር፣ በንግድ ባንክ ወይም ሲደርስዎት መፈጸም ይችላሉ።'
-                        : 'Enter your delivery details. We deliver within Addis Ababa and regional cities with verified security packaging.'}
-                    </p>
-
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (orderForm.name && orderForm.phone) setOrderPlaced(true);
-                      }}
-                      className="space-y-4"
-                    >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                            {lang === 'am' ? 'ሙሉ ስም' : 'Full Name *'}
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="Abebe Kebede"
-                            value={orderForm.name}
-                            onChange={(e) => setOrderForm({ ...orderForm, name: e.target.value })}
-                            className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                            {lang === 'am' ? 'ስልክ ቁጥር' : 'Phone Number *'}
-                          </label>
-                          <input
-                            type="tel"
-                            required
-                            placeholder="0911XXXXXX"
-                            value={orderForm.phone}
-                            onChange={(e) => setOrderForm({ ...orderForm, phone: e.target.value })}
-                            className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                          <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                            {lang === 'am' ? 'ከተማ' : 'City'}
-                          </label>
-                          <input
-                            type="text"
-                            value={orderForm.city}
-                            onChange={(e) => setOrderForm({ ...orderForm, city: e.target.value })}
-                            className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                            {lang === 'am' ? 'የእትም ዓይነት' : 'Format'}
-                          </label>
-                          <select
-                            value={orderForm.format}
-                            onChange={(e) => setOrderForm({ ...orderForm, format: e.target.value })}
-                            className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                          >
-                            <option value="paperback">Paperback ({pricing.paperback})</option>
-                            <option value="hardcover">Hardcover ({pricing.hardcover})</option>
-                            <option value="ebook">E-Book ({pricing.ebook})</option>
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                            {lang === 'am' ? 'የክፍያ ዘዴ' : 'Payment'}
-                          </label>
-                          <select
-                            value={orderForm.paymentMethod}
-                            onChange={(e) =>
-                              setOrderForm({ ...orderForm, paymentMethod: e.target.value })
-                            }
-                            className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                          >
-                            <option value="telebirr">Telebirr (ቴሌብር)</option>
-                            <option value="cbe">CBE Birr (ንግድ ባንክ)</option>
-                            <option value="cod">Cash on Delivery</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-[#1a1714] mb-1">
-                          {lang === 'am' ? 'የማድረሻ አድራሻ (ክፍለ ከተማ፣ ሰፈር)' : 'Specific Delivery Address / Location'}
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="e.g., Bole Medhanialem, Near Edna Mall"
-                          value={orderForm.address}
-                          onChange={(e) => setOrderForm({ ...orderForm, address: e.target.value })}
-                          className="w-full text-xs px-3.5 py-2.5 bg-[#faf8f4] border border-[#e8e2d5] rounded-lg focus:border-[#c9a84c] focus:bg-white outline-none transition-colors"
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full py-3.5 px-4 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
-                        style={{
-                          background: 'linear-gradient(135deg, #1a1714 0%, #2a221b 100%)',
-                          border: '1px solid rgba(201,168,76,0.3)',
-                          color: '#ffffff',
-                        }}
-                      >
-                        <span>✓</span>
-                        <span>
-                          {lang === 'am'
-                            ? `ትዕዛዙን አረጋግጥ — ${pricing[orderForm.format] || pricing.paperback}`
-                            : `Confirm Purchase Order — ${pricing[orderForm.format] || pricing.paperback}`}
-                        </span>
-                      </button>
-                    </form>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
         {/* ─────────────────────────────────────────────────────────────
             PILLAR 2: READ SAMPLE (#sample)
             ───────────────────────────────────────────────────────────── */}
@@ -1139,20 +723,7 @@ export default function BookDetail() {
               </div>
             </div>
 
-            {/* Bottom Bar: Want more? Buy copy */}
-            <div className="bg-[#f7f5ef] px-6 py-5 border-t border-[#e8e2d5] flex flex-wrap items-center justify-between gap-4">
-              <div className="text-xs text-[#5a554c] font-serif">
-                {lang === 'am'
-                  ? 'የተሟላውን 380+ ገጽ ታሪክ ለማንበብ የመጽሐፉን ሙሉ ቅጂ ይዘዙ።'
-                  : 'Enjoyed this excerpt? Continue Shagiz and Didimos’s journeys in the full physical volume.'}
-              </div>
-              <button
-                onClick={() => scrollToSection(purchaseRef)}
-                className="px-6 py-2.5 bg-[#1a1714] hover:bg-black text-white font-bold text-xs rounded-full transition-all cursor-pointer shadow-sm flex items-center gap-2"
-              >
-                <span>{lang === 'am' ? 'ሙሉውን ቅጂ ይዘዙ →' : 'Order Full Volume →'}</span>
-              </button>
-            </div>
+
           </div>
         </section>
 
@@ -1206,18 +777,18 @@ export default function BookDetail() {
                 <label className="block text-xs font-bold text-[#1a1714] uppercase tracking-wider mb-2">
                   {lang === 'am' ? 'የደህንነት ኮድ ያስገቡ (Security Code)' : 'Enter Book Verification Code'}
                 </label>
-                <div className="flex gap-2">
+                <div className="jkr-verify-controls flex gap-2">
                   <input
                     type="text"
                     placeholder="e.g. BK-DERT001"
                     value={verifyCode}
                     onChange={(e) => setVerifyCode(e.target.value.toUpperCase())}
-                    className="flex-1 font-mono uppercase text-sm sm:text-base px-4 py-3 bg-[#faf8f4] border border-[#e8e2d5] rounded-xl focus:border-[#c9a84c] focus:bg-white outline-none tracking-widest transition-colors"
+                    className="jkr-verify-code-input flex-1 font-mono uppercase text-sm sm:text-base px-4 py-3 bg-[#faf8f4] border border-[#e8e2d5] rounded-xl focus:border-[#c9a84c] focus:bg-white outline-none tracking-widest transition-colors"
                   />
                   <button
                     type="submit"
                     disabled={verifyLoading}
-                    className="px-6 py-3 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-sm shrink-0 flex items-center gap-1.5"
+                    className="jkr-verify-code-button px-6 py-3 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-sm shrink-0 flex items-center gap-1.5"
                     style={{
                       background: 'linear-gradient(135deg, #1a1714 0%, #2a221b 100%)',
                       border: '1px solid rgba(201,168,76,0.4)',
@@ -1397,9 +968,9 @@ export default function BookDetail() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="jkr-discussion-grid grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left: Submit a Review Form */}
-            <div className="lg:col-span-5 bg-white border border-[#e8e2d5] rounded-2xl p-6 sm:p-7 shadow-md">
+            <div className="jkr-review-form-card lg:col-span-5 bg-white border border-[#e8e2d5] rounded-2xl p-6 sm:p-7 shadow-md">
               <h3
                 style={{
                   fontFamily: 'var(--font-serif)',
@@ -1500,7 +1071,7 @@ export default function BookDetail() {
             {/* Right: Comments Stream */}
             <div className="lg:col-span-7 space-y-4">
               {/* Header metrics */}
-              <div className="p-4 bg-white border border-[#e8e2d5] rounded-xl flex items-center justify-between shadow-xs">
+              <div className="jkr-review-summary p-4 bg-white border border-[#e8e2d5] rounded-xl flex items-center justify-between shadow-xs">
                 <div className="flex items-center gap-3">
                   <div
                     style={{
@@ -1523,7 +1094,7 @@ export default function BookDetail() {
                     </div>
                   </div>
                 </div>
-                <div className="text-xs font-mono font-semibold text-[#8a857d] bg-[#faf8f4] px-3 py-1.5 border border-[#e8e2d5] rounded-lg">
+                <div className="jkr-review-summary__book text-xs font-mono font-semibold text-[#8a857d] bg-[#faf8f4] px-3 py-1.5 border border-[#e8e2d5] rounded-lg">
                   {book.titleEn}
                 </div>
               </div>
@@ -1545,9 +1116,9 @@ export default function BookDetail() {
                   {reviews.map((rev) => (
                     <div
                       key={rev.id}
-                      className="p-5 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] rounded-xl shadow-xs transition-all space-y-3"
+                      className="jkr-reader-review-card p-5 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] rounded-xl shadow-xs transition-all space-y-3"
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="jkr-reader-review-card__header flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
                           <div className="w-8 h-8 rounded-full bg-[#1a1714] text-[#c9a84c] font-bold text-xs flex items-center justify-center">
                             {rev.username ? rev.username.charAt(0).toUpperCase() : 'R'}
@@ -1564,7 +1135,7 @@ export default function BookDetail() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="jkr-reader-review-card__rating flex items-center gap-2">
                           <span className="flex text-[#c9a84c]">
                             {Array.from({ length: Math.max(1, Math.min(5, Number(rev.rating) || 5)) }, (_, star) => (
                               <Icon key={star} name="star" size={13} className="fill-current" />
@@ -1578,7 +1149,7 @@ export default function BookDetail() {
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-[#4a453e] leading-relaxed font-sans">
+                      <p className="jkr-reader-review-card__comment text-xs sm:text-sm text-[#4a453e] leading-relaxed font-sans">
                         {rev.comment}
                       </p>
 
@@ -1723,14 +1294,7 @@ export default function BookDetail() {
         )}
       </div>
 
-      {/* Quick Purchase Modal */}
-      {purchaseModalOpen && (
-        <QuickPurchaseModal
-          book={book}
-          isOpen={purchaseModalOpen}
-          onClose={() => setPurchaseModalOpen(false)}
-        />
-      )}
+
     </div>
   );
 }

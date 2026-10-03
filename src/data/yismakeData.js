@@ -11,6 +11,17 @@
  * - Goodreads verified records & Ethiopian media interviews (EBS, Arts TV)
  */
 
+export const authorHighlights = [
+  { value: '500,000+', valueAm: '500,000+', labelEn: 'Copies Sold', labelAm: 'የተሸጡ ቅጂዎች' },
+  { value: '10x', valueAm: '10x', labelEn: 'Reprints First Year', labelAm: 'በመጀመሪያው ዓመት የታተመበት ጊዜ' },
+  { value: 'Amharic', valueAm: 'አማርኛ', labelEn: 'Original Language', labelAm: 'የመጀመሪያ ቋንቋ' },
+];
+
+const authorLiterarySignature = {
+  en: 'Bringing Ethiopian monastic traditions into conversation with espionage fiction and speculative science.',
+  am: 'የኢትዮጵያ ገዳማዊ ትውፊትን ከዘመናዊ የስለላ ልቦለድና ሳይንስ ጋር ማዋሃድ።'
+};
+
 export const authorData = {
   name: {
     en: "Yismake Worku",
@@ -33,9 +44,10 @@ export const authorData = {
     am: "የደብረ ማርቆስ ዩኒቨርሲቲ መምህር"
   },
   bio: {
-    en: "Yismake Worku is one of the most prolific, transformative, and widely-read contemporary novelists in modern Ethiopian history. Bursting into national consciousness at just twenty-two years old with his 2009 record-breaking techno-thriller 'Dertogada', he fundamentally redefined Amharic literature. By synthesizing ancient Ethiopian ecclesiastical scholarship, secret Ge'ez manuscripts, and monastic contemplation with orbital rocketry, cybersecurity, geopolitics, and Afrofuturist aspirations, Yismake created a whole new genre for a generation of readers. Surviving a catastrophic car accident in August 2017 with inspiring fortitude, his literary universe continues to bridge Ethiopian sovereignty, scientific curiosity, and incisive social satire.",
-    am: "ይስማዕከ ወርቁ በዘመናዊው የኢትዮጵያ ስነ-ጽሁፍ ውስጥ ትልቅ የለውጥ ማዕበል ካስነሱ ድንቅ ደራሲያን መካከል ግንባር ቀደሙ ነው። በ22 ዓመቱ በ2001 ዓ.ም ባሳተመው 'ዴርቶጋዳ' በተሰኘው ልብ አንጠልጣይ የሳይንስና የስለላ ልቦለዱ የአገሪቱን የመጻሕፍት ገበያ ታሪክ ሰበረ። ጥንታዊውን የኢትዮጵያ ገዳማዊ ጥበብና የብራና ምሥጢር ከዘመናዊው የጠፈር ምርምር፣ ቴክኖሎጂና አገራዊ ሉዓላዊነት ጋር በማዋሃድ አዲስ የአጻጻፍ ፈሊጥ ፈጠረ። በነሐሴ 2009 ዓ.ም የደረሰበትን ከባድ የመኪና አደጋ በጽናት ተቋቁሞ ወደ ጥበብ ዓለም የተመለሰው ደራሲ፣ ሥራዎቹ በአገር ውስጥም ሆነ በዓለም አቀፍ ደረጃ ከፍተኛ ትኩረት ተችሯቸዋል።"
+    en: "Yismake Worku is one of the most prolific, transformative, and widely-read contemporary novelists in modern Ethiopian history. Bursting into national consciousness at just twenty-two years old with his 2009 record-breaking techno-thriller 'Dertogada', he fundamentally redefined Amharic literature. By synthesizing ancient Ethiopian ecclesiastical scholarship, secret Ge'ez manuscripts, and fantasy thriller contemplation with orbital rocketry, cybersecurity, geopolitics, and Afrofuturist aspirations, Yismake created a whole new genre for a generation of readers. Surviving a catastrophic car accident in August 2017 with inspiring fortitude, his literary universe continues to bridge Ethiopian sovereignty, scientific curiosity, and incisive social satire.",
+    am: "ይስማዕከ ወርቁ በዘመናዊው የኢትዮጵያ ስነ-ጽሁፍ ውስጥ ትልቅ የለውጥ ማዕበል ካስነሱ ድንቅ ደራሲያን መካከል ግንባር ቀደሙ ነው። በ22 ዓመቱ በ2001 ዓ.ም ባሳተመው 'ዴርቶጋዳ' በተሰኘው ልብ አንጠልጣይ የሳይንስና የስለላ ልቦለዱ የአገሪቱን የመጻሕፍት ገበያ ታሪክ ሰበረ። ጥንታዊውን የኢትዮጵያ ምናባዊ ልብ አንጠልጣይ (fantasy thriller) ጥበብና የብራና ምሥጢር ከዘመናዊው የጠፈር ምርምር፣ ቴክኖሎጂና አገራዊ ሉዓላዊነት ጋር በማዋሃድ አዲስ የአጻጻፍ ፈሊጥ ፈጠረ። በነሐሴ 2009 ዓ.ም የደረሰበትን ከባድ የመኪና አደጋ በጽናት ተቋቁሞ ወደ ጥበብ ዓለም የተመለሰው ደራሲ፣ ሥራዎቹ በአገር ውስጥም ሆነ በዓለም አቀፍ ደረጃ ከፍተኛ ትኩረት ተችሯቸዋል።"
   },
+  literarySignature: authorLiterarySignature,
   portrait: "/images/yismake-portrait.jpg",
   avatar: "/images/yismake-portrait.jpg",
   telegram: {
@@ -45,9 +57,8 @@ export const authorData = {
   },
   stats: {
     booksPublished: "15+",
-    dertogadaSales: "200,000+ Copies",
-    reprintsFirstYear: "10 Editions",
-    awards: "TA First Translation Prize Shortlist (2022, UK)"
+    dertogadaSales: "500,000+ Copies",
+    reprintsFirstYear: "10 Reprints"
   }
 };
 
@@ -57,8 +68,8 @@ export const dertogadaUniverseLore = {
     am: "የዴርቶጋዳ የልቦለድ ዓለም እና ተከታታይ ቅደም ተከተል"
   },
   subtitle: {
-    en: "Where Ancient Ethiopian Monastic Wisdom Meets Subterranean Quantum Science",
-    am: "ጥንታዊ የኢትዮጵያ ገዳማዊ ምሥጢር ከከርሰ-ምድር ሳይንሳዊ ምርምር ጋር ሲገናኝ"
+    en: "Where Ancient Ethiopian Fantasy Thriller Wisdom Meets Subterranean Quantum Science",
+    am: "ጥንታዊ የኢትዮጵያ ምናባዊና ልብ አንጠልጣይ ጥበብ ከከርሰ-ምድር ሳይንሳዊ ምርምር ጋር ሲገናኝ"
   },
   description: {
     en: "The Dertogada saga stands as a milestone in African speculative fiction. Centered on a clandestine consortium of patriotic Ethiopian scholars and scientists operating from a submerged, state-of-the-art laboratory beneath Lake Tana, the series examines the clash between foreign espionage cartels (CIA, Mossad) and indigenous technological sovereignty. The saga questions what happens when a nation's historic diaspora intellectual capital returns home to revive the kingdom of science.",
@@ -151,15 +162,15 @@ export const verifiedBooks = [
     languageAm: "አማርኛ (የእንግሊዝኛ ትርጉም ያለው)",
     translator: "Zelalem Nigussie (English Edition, 2012, Unity Publishers)",
     translatorAm: "ዘላለም ንጉሤ (የእንግሊዝኛ እትም፣ 2012፣ ዩኒቲ አሳታሚ)",
-    coverImage: "/images/books/dertogada.jpg",
+    coverImage: "/images/Dertogada Sequels/images (17) (17)(1)(1).jpg",
     accentColor: "#00f0ff",
     tagline: {
       en: "A tattooed mystery, a NASA scientist, and a subterranean sanctuary beneath Lake Tana.",
       am: "ምስጢራዊው ንቅሳት፣ የናሳው የጠፈር ተመራማሪ እና በጣና ሐይቅ ሥር የተሰወረው ድንቅ ማዕከል።"
     },
     description: {
-      en: "The historic novel that sparked a revolution in contemporary Ethiopian literature. Over 200,000 copies sold across ten editions in its debut year. The story follows the kidnapping and recruitment race for Ethiopian-born NASA aerospace genius Shagiz Ejigu. International intelligence agencies converge on East Africa, only to discover a secret society of patriotic scientists operating a futuristic subterranean facility beneath ancient Lake Tana.",
-      am: "በኢትዮጵያ ዘመናዊ ስነ-ጽሁፍ ውስጥ ከፍተኛ የሽያጭ ክብረ ወሰን ያስመዘገበ ድንቅ ልብ አንጠልጣይ ልቦለድ። በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች ተሽጠዋል። በናሳ ውስጥ የሚሰራው ኢትዮጵያዊው የጠፈር መሃንዲስ ሻጊዝ እጅጉ በአለም አቀፍ የስለላ ድርጅቶች ሲፈለግ፣ በአገር ውስጥ ደግሞ በጣና ሐይቅ ሥር የተገነባው 'ዴርቶጋዳ' የተሰኘው ሚስጥራዊ የሳይንስ ተቋም የአገሪቱን እውቀት ለማስጠበቅ የሚያደርገውን ብርቱ ፍልሚያ ያሳያል።"
+      en: "The historic novel that sparked a revolution in contemporary Ethiopian literature. Over 500,000 copies sold across ten editions in its debut year. The story follows the kidnapping and recruitment race for Ethiopian-born NASA aerospace genius Shagiz Ejigu. International intelligence agencies converge on East Africa, only to discover a secret society of patriotic scientists operating a futuristic subterranean facility beneath ancient Lake Tana.",
+      am: "በኢትዮጵያ ዘመናዊ ስነ-ጽሁፍ ውስጥ ከፍተኛ የሽያጭ ክብረ ወሰን ያስመዘገበ ድንቅ ልብ አንጠልጣይ ልቦለድ። በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ500,000 በላይ ቅጂዎች ተሽጠዋል። በናሳ ውስጥ የሚሰራው ኢትዮጵያዊው የጠፈር መሃንዲስ ሻጊዝ እጅጉ በአለም አቀፍ የስለላ ድርጅቶች ሲፈለግ፣ በአገር ውስጥ ደግሞ በጣና ሐይቅ ሥር የተገነባው 'ዴርቶጋዳ' የተሰኘው ሚስጥራዊ የሳይንስ ተቋም የአገሪቱን እውቀት ለማስጠበቅ የሚያደርገውን ብርቱ ፍልሚያ ያሳያል።"
     },
     themes: [
       "Techno-Utopian Patriotism",
@@ -174,11 +185,6 @@ export const verifiedBooks = [
       "የጥንት የብራና እውቀት እና ዘመናዊ ሳይንስ",
       "ስለላ እና አገራዊ ሉዓላዊነት",
       "የሴቶች የአመራርና የስለላ ብቃት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books (Audiobook & Print)", url: "https://addisbooks.com/book/dertogada" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/16133457-dertogada" },
-      { name: "Telegram Author Channel", url: "https://t.me/yismakeworku" }
     ],
     isFeatured: true
   },
@@ -199,7 +205,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/ramatohara.jpg",
+    coverImage: "/images/Dertogada Sequels/images (17) (18).jpeg",
     accentColor: "#f39c12",
     tagline: {
       en: "The conspiracy deepens as ancient sacred codes clash with geopolitical power plays.",
@@ -221,11 +227,6 @@ export const verifiedBooks = [
       "የግዕዝ ምስጢራዊ ኮዶች",
       "በፈተና ውስጥ የሚጸና አርበኝነት"
     ],
-    purchaseLinks: [
-      { name: "Addis Books Audiobook", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/22378873-ramatohara" },
-      { name: "Telegram Channel", url: "https://t.me/yismakeworku" }
-    ],
     isFeatured: true
   },
   {
@@ -245,7 +246,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/xantoxara.jpg",
+    coverImage: "/images/Dertogada Sequels/57921213.jpg",
     accentColor: "#9b59b6",
     tagline: {
       en: "The third threshold of the saga: orbital secrets and cryptographic warfare.",
@@ -264,11 +265,6 @@ export const verifiedBooks = [
       "የክሪፕቶግራፊና የመረጃ ጥበቃ",
       "ዘርና አገራዊ ማንነት",
       "የሳይበር ምልከታና ደህንነት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/57921213-xantoxara" },
-      { name: "Telegram Channel", url: "https://t.me/yismakeworku" }
     ],
     isFeatured: true
   },
@@ -291,7 +287,7 @@ export const verifiedBooks = [
     languageAm: "አማርኛ እና እንግሊዝኛ (The Lost Spell)",
     translator: "Bethlehem Attfield (PhD, University of Birmingham)",
     translatorAm: "ዶ/ር ቤተልሔም አትፊልድ",
-    coverImage: "/images/books/kebur-dengay.jpg",
+    coverImage: "/images/Kibur Dingay sequels/28999868.jpg",
     accentColor: "#e74c3c",
     tagline: {
       en: "A wealthy businessman transforms into a street dog — and witnesses the naked truth of society.",
@@ -313,11 +309,6 @@ export const verifiedBooks = [
       "ሹለክላኪ ፖለቲካና የህብረተሰብ ቅኔ",
       "ርህራሄና የመደብ ግብዝነት"
     ],
-    purchaseLinks: [
-      { name: "Henningham Family Press (UK Edition)", url: "https://henninghamfamilypress.com/the-lost-spell/" },
-      { name: "Addis Books (Amharic Edition)", url: "https://addisbooks.com" },
-      { name: "Goodreads (The Lost Spell)", url: "https://www.goodreads.com/book/show/60424558-the-lost-spell" }
-    ],
     isFeatured: true
   },
   {
@@ -337,7 +328,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/zamra.jpg",
+    coverImage: "/images/Other Novels/71GxxrWF8ML._UF1000,1000_QL80_.jpg",
     accentColor: "#1abc9c",
     tagline: {
       en: "The ruthless scramble for gold and mineral wealth along Ethiopia's sacred rivers.",
@@ -356,10 +347,6 @@ export const verifiedBooks = [
       "የማዕድን ዝርፊያና የጥቅም ቡድኖች",
       "የወንዞች መበከልና የአካባቢ ጥበቃ",
       "ማህበራዊ ፍትህና የደሃው ጥሪ"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/23473950-zamra" }
     ],
     isFeatured: false
   },
@@ -380,7 +367,7 @@ export const verifiedBooks = [
     publisherAm: "ብርሃንና ሰላም / ደራሲው",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/gefuan.jpg",
+    coverImage: "/images/Other Novels/33870307.jpg",
     accentColor: "#c0392b",
     tagline: {
       en: "A searing sociological autopsy of mob hysteria, toxic rumors, and mass injustice.",
@@ -399,10 +386,6 @@ export const verifiedBooks = [
       "የሀሰተኛ ወሬና የስነ-ልቦና መዛባት",
       "የተገፉ ዜጎች ሰቆቃ",
       "የሞራልና የህሊና ድፍረት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/27855018-gefuan" }
     ],
     isFeatured: false
   },
@@ -423,7 +406,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/yoratorad.jpg",
+    coverImage: "/images/Dertogada Sequels/81TLkFwNjSL._UF1000,1000_QL80_.jpg",
     accentColor: "#2980b9",
     tagline: {
       en: "The fourth chapter of the saga: where consciousness, destiny, and technology intersect.",
@@ -442,10 +425,6 @@ export const verifiedBooks = [
       "የህልውና እና የቴክኖሎጂ ቁርኝት",
       "ዕጣ ፈንታ እና ነጻነት",
       "የላቀ እውቀት የሚያስከትለው ኃላፊነት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/22378875-yoratorad" }
     ],
     isFeatured: false
   },
@@ -466,7 +445,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/yotod.jpg",
+    coverImage: "/images/Dertogada Sequels/61KYMlkY+nL._AC_UF1000,1000_QL80_.jpg",
     accentColor: "#8e44ad",
     tagline: {
       en: "The monumental culmination of the 5-book saga begun in Dertogada.",
@@ -485,10 +464,6 @@ export const verifiedBooks = [
       "የሉዓላዊነት ድል",
       "የትንቢትና የሳይንስ ፍጻሜ",
       "የምሁራን አርበኝነት አሻራ"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/30282463-yotod" }
     ],
     isFeatured: false
   },
@@ -509,7 +484,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/melos.jpg",
+    coverImage: "/images/Other Novels/images (17) (20).jpeg",
     accentColor: "#3498db",
     tagline: {
       en: "When the mind becomes a mirror reflecting unspoken human motives.",
@@ -528,10 +503,6 @@ export const verifiedBooks = [
       "የሰው ልጅ ድብቅ ጭንብሎች",
       "ጥፋተኝነት እና የህሊና እረፍት",
       "የፍልስፍና ጥያቄዎች"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/22378878-melos" }
     ],
     isFeatured: false
   },
@@ -552,7 +523,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/telmid.jpg",
+    coverImage: "/images/Other Novels/28999785.jpg",
     accentColor: "#d35400",
     tagline: {
       en: "The eternal student seeking truth in a world obsessed with hollow authority.",
@@ -571,10 +542,6 @@ export const verifiedBooks = [
       "የመምህርና የደቀ-መዝሙር ግንኙነት",
       "እውነተኛ ጥበብን የመፈለግ ጥሪ",
       "የትምህርት ሥነ-ምግባር መሸርሸር"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com/book/show/22378879-telmid" }
     ],
     isFeatured: false
   },
@@ -595,7 +562,7 @@ export const verifiedBooks = [
     publisherAm: "ንግድ ማተሚያ ቤት / ደራሲው",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/yewond-mit.jpg",
+    coverImage: "/images/Poetry Books/images (17) (21).jpeg",
     accentColor: "#7f8c8d",
     tagline: {
       en: "Yismake Worku's literary genesis: a piercing collection of poetic verses.",
@@ -614,10 +581,6 @@ export const verifiedBooks = [
       "የደራሲው የመጀመሪያ የጥበብ ቋንቋ",
       "ማህበራዊ ትዝብትና ፍቅር",
       "የኢትዮጵያዊ ቅኔ ትንሳኤ"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com" }
     ],
     isFeatured: false
   },
@@ -638,7 +601,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/yekend-awta-nuro.jpg",
+    coverImage: "/images/Poetry Books/images.jpg",
     accentColor: "#16a085",
     tagline: {
       en: "Navigating survival carrying one's entire fragile world on one's back.",
@@ -657,10 +620,6 @@ export const verifiedBooks = [
       "የኑሮ ትግልና ጽናት",
       "የቀንድ አውጣ ተምሳሌት",
       "የአዲስ አበባ ተጨባጭ ህይወት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com" }
     ],
     isFeatured: false
   },
@@ -681,7 +640,7 @@ export const verifiedBooks = [
     publisherAm: "ደራሲው",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/yeogaden-demetoch.jpg",
+    coverImage: "/images/Kibur Dingay sequels/images-86.jpeg",
     accentColor: "#e67e22",
     tagline: {
       en: "Shadow warfare, desert politics, and regional intrigue in Eastern Ethiopia.",
@@ -700,10 +659,6 @@ export const verifiedBooks = [
       "የበረሃ ፖለቲካ እና ድንበር",
       "የመስክ ስለላ እና ግጭቶች",
       "ታሪክና አገራዊ አንድነት"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com" }
     ],
     isFeatured: false
   },
@@ -724,7 +679,7 @@ export const verifiedBooks = [
     publisherAm: "ፋር ኢስት ትሬዲንግ",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/dehinetu.jpg",
+    coverImage: "/images/Kibur Dingay sequels/images (17) (19).jpeg",
     accentColor: "#2c3e50",
     tagline: {
       en: "Inside the covert chambers of national intelligence and compromised loyalties.",
@@ -743,10 +698,6 @@ export const verifiedBooks = [
       "የደህንነት ተቋማት ውስጣዊ አሰራር",
       "ታማኝነት እና ክህደት",
       "የመረጃ ቴክኖሎጂ እና ቁጥጥር"
-    ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Goodreads Profile", url: "https://www.goodreads.com" }
     ],
     isFeatured: false
   },
@@ -767,7 +718,7 @@ export const verifiedBooks = [
     publisherAm: "ደራሲው",
     language: "Amharic",
     languageAm: "አማርኛ",
-    coverImage: "/images/books/tekerchem.jpg",
+    coverImage: "/images/Other Novels/33870307.jpg",
     accentColor: "#555555",
     tagline: {
       en: "When physical barriers close, only the unfettered human mind remains free.",
@@ -787,10 +738,6 @@ export const verifiedBooks = [
       "አካላዊ ፈተና እና የህሊና ጽናት",
       "የማይበገር የሰው ልጅ ወኔ"
     ],
-    purchaseLinks: [
-      { name: "Addis Books", url: "https://addisbooks.com" },
-      { name: "Telegram Channel", url: "https://t.me/yismakeworku" }
-    ],
     isFeatured: false
   }
 ];
@@ -807,8 +754,8 @@ export const authorTimeline = [
     year: "2009 (2001 ዓ.ም)",
     titleEn: "The Dertogada Phenomenon & Literary Earthquake",
     titleAm: "የዴርቶጋዳ ታላቅ ማዕበል",
-    descEn: "At age 22, Yismake publishes 'Dertogada'. In one year, it undergoes 10 print editions and sells over 200,000 copies, setting records in Ethiopian publishing history and launching modern Amharic techno-fiction.",
-    descAm: "በ22 ዓመቱ 'ዴርቶጋዳ'ን አሳተመ። መጽሐፉ በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሁፍ ታሪክ ትልቅ አብዮት ፈጠረ።"
+    descEn: "At age 22, Yismake publishes 'Dertogada'. In one year, it undergoes 10 print editions and sells over 500,000 copies, setting records in Ethiopian publishing history and launching modern Amharic techno-fiction.",
+    descAm: "በ22 ዓመቱ 'ዴርቶጋዳ'ን አሳተመ። መጽሐፉ በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ500,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሁፍ ታሪክ ትልቅ አብዮት ፈጠረ።"
   },
   {
     year: "2010–2011",

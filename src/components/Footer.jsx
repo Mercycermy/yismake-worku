@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
+import { verifiedBooks } from '../data/yismakeData';
 
 export default function Footer() {
   const { lang } = useLanguage();
@@ -106,7 +108,7 @@ export default function Footer() {
         </div>
 
         {/* Author Brand Signature */}
-        <div className="flex flex-col items-center justify-center mb-6 text-center select-none">
+        <div className="flex flex-col items-center justify-center mb-8 text-center select-none">
           <div
             style={{
               fontFamily: 'var(--font-serif)',
@@ -133,7 +135,37 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Legal */}
+        {/* Books Directory Grid */}
+        <div className="mb-10 pt-6 border-t border-[#3d2a1b]/60">
+          <div className="text-center mb-5">
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.6875rem',
+                fontWeight: 700,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: '#c9a84c',
+              }}
+            >
+              {lang === 'am' ? 'የመጻሕፍት ማውጫ' : 'Published Works Directory'}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-y-2.5 gap-x-4 text-center max-w-4xl mx-auto">
+            {verifiedBooks.map((b) => (
+              <Link
+                key={b.id}
+                to={`/books/${b.slug}`}
+                className="text-xs text-[#a69c8e] hover:text-[#c9a84c] transition-colors line-clamp-1"
+                style={{ fontFamily: 'var(--font-serif)' }}
+              >
+                {lang === 'am' ? b.titleAm : b.titleEn}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Legal Copyright */}
         <div
           style={{
             maxWidth: '700px',

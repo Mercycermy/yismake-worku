@@ -1,36 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
-import { authorData, authorTimeline } from '../data/yismakeData';
+import { authorData, authorHighlights } from '../data/yismakeData';
 import PageBanner from '../components/PageBanner';
 import Icon from '../components/Icon';
 
 export default function About() {
   const { lang } = useLanguage();
-
-  const milestoneIcons = [
-    'feather',
-    'telescope',
-    'spark',
-    'building',
-    'theatre',
-    'bookOpen',
-    'shield',
-    'medal',
-    'archive',
-  ];
-
-  const milestoneTags = [
-    { en: 'POETIC GENESIS', am: 'የጥበብ ጅማሮ' },
-    { en: 'HISTORIC BREAKTHROUGH', am: 'ታሪካዊ አብዮት' },
-    { en: 'STORYWORLD EXPANSION', am: 'የዓለሙ መስፋፋት' },
-    { en: 'ACADEMIC RECOGNITION', am: 'አካዳሚያዊ አድናቆት' },
-    { en: 'SATIRICAL MASTERPIECE', am: 'ማህበራዊ ምጸት' },
-    { en: 'PENTOLOGY CULMINATION', am: 'አምስቱ ድርሰቶች' },
-    { en: 'RESILIENCE & RECOVERY', am: 'ጽናትና ተጋድሎ' },
-    { en: 'UK TRANSLATION PRIZE', am: 'የእንግሊዝ ሽልማት' },
-    { en: 'THE LIVING ARCHIVE', am: 'የቀጠለው አሻራ' },
-  ];
 
   const pillars = [
     {
@@ -133,16 +109,11 @@ export default function About() {
             </div>
 
             {/* Quick Author Fact Chips */}
-            <div className="w-full grid grid-cols-2 gap-3 max-w-sm">
-              {[
-                { label: lang === 'am' ? 'የትውልድ ስፍራ' : 'Origins', val: 'Gojjam / Tana' },
-                { label: lang === 'am' ? 'የታተሙ መጻሕፍት' : 'Books Published', val: '15+ Works' },
-                { label: lang === 'am' ? 'የመጀመሪያ እትም ሽያጭ' : 'Debut Sales', val: '200,000+ Copies' },
-                { label: lang === 'am' ? 'የእንግሊዝ ሽልማት' : 'UK Translation', val: 'TA Prize Finalist' },
-              ].map((f, i) => (
+            <div className="jkr-about-highlights w-full grid grid-cols-3 gap-3 max-w-xl">
+              {authorHighlights.map((fact) => (
                 <div
-                  key={i}
-                  className="p-3 bg-[#f7f5f0] border border-[#e8e2d5] rounded-lg text-center shadow-2xs"
+                  key={fact.value}
+                  className="jkr-about-highlight p-3 bg-[#f7f5f0] border border-[#e8e2d5] rounded-lg text-center shadow-2xs"
                 >
                   <span
                     style={{
@@ -155,7 +126,7 @@ export default function About() {
                       marginBottom: '2px',
                     }}
                   >
-                    {f.label}
+                    {lang === 'am' ? fact.labelAm : fact.labelEn}
                   </span>
                   <span
                     style={{
@@ -165,10 +136,17 @@ export default function About() {
                       color: '#1a1714',
                     }}
                   >
-                    {f.val}
+                    {lang === 'am' ? fact.valueAm : fact.value}
                   </span>
                 </div>
               ))}
+            </div>
+
+            <div className="jkr-about-signature mt-6 max-w-xl">
+              <span>{lang === 'am' ? 'የስነ-ጽሑፍ ልዩ ድምፅ' : 'A literary signature'}</span>
+              <p>
+                {lang === 'am' ? authorData.literarySignature.am : authorData.literarySignature.en}
+              </p>
             </div>
           </div>
 
@@ -300,56 +278,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* The Literary Journey */}
-        <div className="jkr-about-journey pt-20 border-t border-[#e8e2d5]">
-          <div className="text-center mb-14">
-            <div className="jkr-gold-divider mb-4">
-              <Icon name="spark" size={15} />
-            </div>
-            <span className="jkr-section-badge mb-4">
-              {lang === 'am' ? 'የህይወትና የደራሲነት ጉዞ' : 'Chronicles of Mastery'}
-            </span>
-            <h2 className="jkr-section-heading mb-4">
-              {lang === 'am' ? 'ዋና ዋና የስነ-ጽሑፍ ምዕራፎች' : 'The Literary Journey'}
-            </h2>
-            <p className="jkr-section-lead">
-              {lang === 'am'
-                ? 'ከመጀመሪያው የግጥም መድበል እስከ ዓለም አቀፍ የትርጉም ሽልማት እጩነት'
-                : 'A chronological odyssey of breakthrough works, national phenomena, and international honors.'}
-            </p>
-          </div>
-
-          <div className="jkr-journey-rail max-w-3xl mx-auto">
-            {authorTimeline.map((item, idx) => {
-              const icon = milestoneIcons[idx] || 'spark';
-              const tag = milestoneTags[idx] || { en: 'LITERARY MILESTONE', am: 'የስነ-ጽሑፍ ምዕራፍ' };
-
-              return (
-                <div key={idx} className="jkr-journey-item group">
-                  <div className="jkr-journey-node"><Icon name={icon} size={15} /></div>
-                  <div className="jkr-journey-card">
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <span className="jkr-section-badge jkr-section-badge--dark !text-[10px] !py-0.5">
-                        {lang === 'am' ? tag.am : tag.en}
-                      </span>
-                      <span className="text-xs font-mono font-bold text-[#8a857d] bg-[#f5f3ef] px-2.5 py-0.5 rounded-full">
-                        {item.year}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-lg sm:text-xl font-extrabold text-[#1a1714] mb-2 leading-snug group-hover:text-[#b8860b] transition-colors">
-                      {lang === 'am' ? item.titleAm : item.titleEn}
-                    </h3>
-                    <p className="text-sm text-[#5a554c] leading-relaxed font-serif">
-                      {lang === 'am' ? item.descAm : item.descEn}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Bottom Catalog Links */}
-          <div className="mt-16 text-center pt-10 border-t border-[#e8e2d5] flex flex-wrap justify-center gap-4">
+        {/* Bottom Catalog Links */}
+        <div className="jkr-about-catalogue-actions mt-24 text-center pt-14 border-t border-[#e8e2d5] flex flex-wrap justify-center gap-4">
             <Link
               to="/books"
               className="jkr-pill-btn-dark !py-3 !px-8 !text-xs shadow-lg inline-flex items-center gap-2"
@@ -370,6 +300,5 @@ export default function About() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

@@ -10,8 +10,7 @@ export const booksData = verifiedBooks.map(book => ({
   taglineAm: book.tagline.am,
   description: book.description.en,
   descriptionAm: book.description.am,
-  cover: book.coverImage,
-  buyLink: book.purchaseLinks?.[0]?.url || "https://t.me/yismakeworku"
+  cover: book.coverImage
 }));
 
 export default booksData;

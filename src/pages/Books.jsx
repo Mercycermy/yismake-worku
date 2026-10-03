@@ -4,7 +4,6 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
-import QuickPurchaseModal from '../components/QuickPurchaseModal';
 import PageBanner from '../components/PageBanner';
 import Icon from '../components/Icon';
 
@@ -13,7 +12,6 @@ export default function Books() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [inspectionBook, setInspectionBook] = useState(null);
-  const [purchaseBook, setPurchaseBook] = useState(null);
 
   const categories = [
     { id: 'ALL', en: 'All Works', am: 'ሁሉም ስራዎች' },
@@ -130,24 +128,14 @@ export default function Books() {
             margin: '0 auto 1.5rem',
           }}>
             {lang === 'am'
-              ? 'በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ200,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠረው የአገሪቱ የመጀመሪያው የሳይንስና የስለላ ልቦለድ።'
-              : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 200,000 copies sold in its debut year alone.'}
+              ? 'በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ500,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠረው የአገሪቱ የመጀመሪያው የሳይንስና የስለላ ልቦለድ።'
+              : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 500,000 copies sold in its debut year alone.'}
           </p>
 
           <div className="jkr-books-featured__actions" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => setPurchaseBook(dertogadaBook)}
-              className="jkr-pill-btn-dark"
-              style={{ fontSize: '0.8125rem' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-              </svg>
-              <span>{lang === 'am' ? 'አሁን ይግዙ' : 'Buy Now'}</span>
-            </button>
-            <Link to="/books/dertogada" className="jkr-pill-btn" style={{ fontSize: '0.8125rem' }}>
-              {lang === 'am' ? 'ተጨማሪ ያንብቡ' : 'Read More'} <Icon name="arrowRight" size={15} />
+            <Link to="/books/dertogada" className="jkr-pill-btn-dark" style={{ fontSize: '0.8125rem', padding: '0.65rem 1.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <span>{lang === 'am' ? 'ሙሉውን ዝርዝር ያንብቡ' : 'Read Full Book Details'}</span>
+              <Icon name="arrowRight" size={15} />
             </Link>
           </div>
           </div>
@@ -354,55 +342,32 @@ export default function Books() {
 
               {/* Actions */}
               <div style={{ padding: '1rem 1.5rem 1.25rem', marginTop: 'auto' }}>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button
-                    onClick={() => setPurchaseBook(book)}
+                <div style={{ display: 'flex' }}>
+                  <Link
+                    to={`/books/${book.slug}`}
                     style={{
-                      flex: 1,
-                      padding: '0.55rem 0.75rem',
+                      width: '100%',
+                      padding: '0.6rem 0.75rem',
                       background: '#1a1714',
                       color: '#faf8f4',
                       fontSize: '0.75rem',
                       fontWeight: 700,
                       fontFamily: 'var(--font-sans)',
                       borderRadius: '6px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s',
+                      border: '1px solid #1a1714',
+                      textDecoration: 'none',
+                      textAlign: 'center',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '5px',
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#c9a84c'; e.currentTarget.style.color = '#1a1714'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#1a1714'; e.currentTarget.style.color = '#faf8f4'; }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                    </svg>
-                    <span>{lang === 'am' ? 'ይግዙ' : 'Buy Now'}</span>
-                  </button>
-                  <Link
-                    to={`/books/${book.slug}`}
-                    style={{
-                      flex: 1,
-                      padding: '0.55rem 0.75rem',
-                      background: 'transparent',
-                      color: '#1a1714',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      fontFamily: 'var(--font-sans)',
-                      borderRadius: '6px',
-                      border: '1.5px solid #e8e4de',
-                      textDecoration: 'none',
-                      textAlign: 'center',
+                      gap: '6px',
                       transition: 'all 0.25s',
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#c9a84c'; e.currentTarget.style.color = '#b8860b'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e8e4de'; e.currentTarget.style.color = '#1a1714'; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#c9a84c'; e.currentTarget.style.borderColor = '#c9a84c'; e.currentTarget.style.color = '#1a1714'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#1a1714'; e.currentTarget.style.borderColor = '#1a1714'; e.currentTarget.style.color = '#faf8f4'; }}
                   >
-                    {lang === 'am' ? 'ተጨማሪ' : 'Read More'} <Icon name="arrowRight" size={14} />
+                    <span>{lang === 'am' ? 'ተጨማሪ መረጃ ያንብቡ' : 'Read More & Details'}</span>
+                    <Icon name="arrowRight" size={14} />
                   </Link>
                 </div>
 
@@ -476,14 +441,6 @@ export default function Books() {
         />
       )}
 
-      {/* Quick Purchase Modal */}
-      {purchaseBook && (
-        <QuickPurchaseModal
-          book={purchaseBook}
-          isOpen={Boolean(purchaseBook)}
-          onClose={() => setPurchaseBook(null)}
-        />
-      )}
     </div>
   );
 }

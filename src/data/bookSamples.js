@@ -1,16 +1,9 @@
 /**
- * Authentic literary sample excerpts and purchase specifications
- * for Yismake Worku's published books.
+ * Literary sample excerpts for Yismake Worku's published books.
  */
 
 export const bookSamplesData = {
   dertogada: {
-    pricing: {
-      paperback: "380 ETB",
-      hardcover: "550 ETB",
-      ebook: "200 ETB",
-      usd: "$14.99"
-    },
     sampleCode: "BK-DERT001",
     totalPages: 384,
     sampleChapters: [
@@ -45,12 +38,6 @@ export const bookSamplesData = {
     ]
   },
   'kebur-dengay': {
-    pricing: {
-      paperback: "350 ETB",
-      hardcover: "520 ETB",
-      ebook: "180 ETB",
-      usd: "$16.99"
-    },
     sampleCode: "BK-KEBUR01",
     totalPages: 320,
     sampleChapters: [
@@ -72,12 +59,6 @@ export const bookSamplesData = {
     ]
   },
   ramatohara: {
-    pricing: {
-      paperback: "390 ETB",
-      hardcover: "560 ETB",
-      ebook: "210 ETB",
-      usd: "$14.99"
-    },
     sampleCode: "BK-RAMA001",
     totalPages: 396,
     sampleChapters: [
@@ -97,12 +78,6 @@ export const bookSamplesData = {
     ]
   },
   xantoxara: {
-    pricing: {
-      paperback: "400 ETB",
-      hardcover: "580 ETB",
-      ebook: "220 ETB",
-      usd: "$15.99"
-    },
     sampleCode: "BK-XANTO01",
     totalPages: 412,
     sampleChapters: [
@@ -120,12 +95,6 @@ export const bookSamplesData = {
     ]
   },
   zamra: {
-    pricing: {
-      paperback: "360 ETB",
-      hardcover: "530 ETB",
-      ebook: "190 ETB",
-      usd: "$13.99"
-    },
     sampleCode: "BK-ZAMRA01",
     totalPages: 348,
     sampleChapters: [
@@ -147,12 +116,6 @@ export const bookSamplesData = {
 export function getBookSample(slug) {
   if (!slug) return null;
   return bookSamplesData[slug] || {
-    pricing: {
-      paperback: "350 ETB",
-      hardcover: "520 ETB",
-      ebook: "180 ETB",
-      usd: "$14.99"
-    },
     sampleCode: `BK-${slug.slice(0, 5).toUpperCase()}01`,
     totalPages: 320,
     sampleChapters: [

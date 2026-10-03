@@ -130,6 +130,37 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
     symbol: '❖'
   };
 
+  const [imageError, setImageError] = React.useState(false);
+  const coverSrc = book.coverImage || book.cover;
+
+  if (coverSrc && !imageError) {
+    return (
+      <div
+        className={`relative select-none codex-shadow transition-transform duration-500 overflow-hidden ${sizeStyles} ${className}`}
+        style={{
+          boxShadow: '-8px 12px 28px rgba(0,0,0,0.45), 0 0 15px -4px rgba(201,168,76,0.25)',
+          borderRadius: '4px',
+          backgroundColor: '#0a0e14',
+        }}
+      >
+        <img
+          src={coverSrc}
+          alt={book.titleEn || book.titleAm || 'Book Cover'}
+          onError={() => setImageError(true)}
+          className="w-full h-full object-cover object-center block"
+          loading="lazy"
+        />
+        {showSpine && <div className="codex-spine" />}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(105deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 15%, transparent 40%, rgba(0,0,0,0.2) 100%)',
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative select-none codex-shadow transition-transform duration-500 overflow-hidden ${sizeStyles} ${className}`}

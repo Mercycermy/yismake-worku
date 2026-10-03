@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
 import BookCover from './BookCover';
-import QuickPurchaseModal from './QuickPurchaseModal';
 
 export default function BookCard({ book, onInspect }) {
   const { lang } = useLanguage();
-  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
 
   if (!book) return null;
 
   return (
-    <>
-      <article
+    <article
         style={{
           background: '#ffffff',
           border: '1px solid #edeae4',
@@ -123,44 +120,7 @@ export default function BookCard({ book, onInspect }) {
         }}>
           <div style={{
             display: 'flex',
-            gap: '0.5rem',
           }}>
-            <button
-              onClick={() => setPurchaseModalOpen(true)}
-              style={{
-                flex: 1,
-                padding: '0.6rem 0.75rem',
-                background: '#1a1714',
-                color: '#faf8f4',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                fontFamily: 'var(--font-sans)',
-                letterSpacing: '0.04em',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.25s',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#c9a84c';
-                e.currentTarget.style.color = '#1a1714';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#1a1714';
-                e.currentTarget.style.color = '#faf8f4';
-              }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-              </svg>
-              <span>{lang === 'am' ? 'ይግዙ' : 'Buy Now'}</span>
-            </button>
-
             <Link
               to={`/books/${book.slug}`}
               style={{
@@ -235,13 +195,5 @@ export default function BookCard({ book, onInspect }) {
         </div>
       </article>
 
-      {purchaseModalOpen && (
-        <QuickPurchaseModal
-          book={book}
-          isOpen={purchaseModalOpen}
-          onClose={() => setPurchaseModalOpen(false)}
-        />
-      )}
-    </>
   );
 }

@@ -37,11 +37,10 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 left-0 right-0 z-50 transition-all duration-300 navbar-header"
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 navbar-header ${isScrolled ? 'is-scrolled' : ''}`}
       style={{
         background: isScrolled ? 'rgba(253,252,250,0.96)' : '#fdfcfa',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-        padding: isScrolled ? '12px 0' : '18px 0',
         borderBottom: isScrolled ? '1px solid #e8e4de' : '1px solid #f0ece6',
         boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.05)' : 'none',
       }}
@@ -55,19 +54,7 @@ export default function Navbar() {
             style={{ textDecoration: 'none' }}
           >
             <div className="flex flex-col">
-              <span
-                className="group-hover:text-[#c9a84c] navbar-author-name"
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: isScrolled ? '1.35rem' : '1.55rem',
-                  fontWeight: 800,
-                  color: '#1a1714',
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  lineHeight: 1.1,
-                  transition: 'color 0.25s, font-size 0.25s',
-                }}
-              >
+              <span className="group-hover:text-[#c9a84c] navbar-author-name">
                 {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}
               </span>
             </div>

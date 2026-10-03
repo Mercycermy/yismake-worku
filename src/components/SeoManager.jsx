@@ -131,7 +131,7 @@ export default function SeoManager() {
         const canonical = `${SITE_URL}${normalizedPath}`;
         page = {
           title: `${book.titleAm} (${book.titleEn}) by Yismake Worku | Official Book Dossier`,
-          description: `${book.tagline.en} Explore plot synopsis, themes, and purchase options for ${book.titleEn} by Ethiopian author Yismake Worku.`,
+          description: `${book.tagline.en} Explore the plot, themes, publication details, and reading sample for ${book.titleEn} by Ethiopian author Yismake Worku.`,
           image: DEFAULT_IMAGE,
           type: "book",
           schema: [
