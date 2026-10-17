@@ -45,6 +45,32 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+html.dark-theme,
+[data-theme='dark'] {
+  --bg-primary: #12100e;
+  --bg-secondary: #1a1714;
+  --bg-tertiary: #24201b;
+  --bg-cream: #181512;
+  --text-primary: #f5f1eb;
+  --text-secondary: #c2beb6;
+  --text-muted: #8a857d;
+  --text-gold: #e8cf78;
+}
+
+html.dark-theme body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html.dark-theme header {
+  background-color: rgba(18, 16, 14, 0.95) !important;
+  border-bottom-color: #2a2520 !important;
+}
+
+html.dark-theme .navbar-author-name {
+  color: #f5f1eb;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -4031,7 +4057,7 @@ img {
   z-index: 1;
   width: 100%;
   max-width: 84rem;
-  padding: clamp(6rem, 10vh, 8rem) 1.5rem clamp(2rem, 5vh, 4rem);
+  padding: clamp(2rem, 4vh, 4rem) 1.5rem clamp(1.5rem, 3vh, 2.5rem);
 }
 
 .hero-editorial-grid {
@@ -4377,13 +4403,12 @@ img {
 
 @media (max-width: 680px) {
   .hero-masterpiece-section {
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: auto;
     align-items: flex-start;
   }
 
   .hero-shell {
-    padding: max(4.75rem, calc(env(safe-area-inset-top) + 4rem)) 1rem 1.5rem;
+    padding: max(1.25rem, calc(env(safe-area-inset-top) + 1rem)) 1rem 1.25rem;
   }
 
   .hero-editorial-grid {

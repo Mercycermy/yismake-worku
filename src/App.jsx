@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { LanguageProvider } from './components/LanguageContext';
+import { ThemeProvider } from './components/ThemeContext';
 import SeoManager from './components/SeoManager';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -8,6 +9,7 @@ import Home from './pages/Home';
 import Universe from './pages/Universe';
 import Books from './pages/Books';
 import BookDetail from './pages/BookDetail';
+import CategoryDetail from './pages/CategoryDetail';
 import About from './pages/About';
 import News from './pages/News';
 import InHisOwnWords from './pages/InHisOwnWords';
@@ -36,13 +38,15 @@ function ScrollToTop() {
 function App() {
   return (
     <LanguageProvider>
-      <Router>
+      <ThemeProvider>
+        <Router>
         <ScrollToTop />
         <SeoManager />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/books/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/books/:slug" element={<BookDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/author" element={<About />} />
@@ -70,6 +74,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      </ThemeProvider>
     </LanguageProvider>
   );
 }
