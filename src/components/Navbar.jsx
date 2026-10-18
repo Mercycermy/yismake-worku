@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
-import LanguageToggle from './LanguageToggle';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const { lang } = useLanguage();
@@ -107,12 +107,12 @@ export default function Navbar() {
               })}
             </nav>
 
-            <LanguageToggle variant="light" size="md" />
+            <ThemeToggle variant="light" size="md" />
           </div>
 
           {/* Mobile Right Controls: Translation Toggle + Hamburger (STRICTLY lg:hidden) */}
           <div className="flex lg:hidden items-center gap-2">
-            <LanguageToggle variant="compact" size="sm" />
+            <ThemeToggle variant="compact" size="sm" />
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

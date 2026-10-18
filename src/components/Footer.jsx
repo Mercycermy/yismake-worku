@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
-import { verifiedBooks } from '../data/yismakeData';
 
 export default function Footer() {
   const { lang } = useLanguage();
@@ -37,155 +36,81 @@ export default function Footer() {
       href: 'https://henninghamfamilypress.com/the-lost-spell/',
       label: 'Publisher',
       title: 'Henningham Family Press (UK Publisher)',
-      icon: <span style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: '0.6875rem' }}>UK</span>,
+      icon: <span style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: '0.8125rem' }}>H</span>,
     },
+  ];
+
+  const navLinks = [
+    { to: '/', en: 'Home', am: 'መነሻ' },
+    { to: '/books', en: 'Books', am: 'መጻሕፍት' },
+    { to: '/about', en: 'About', am: 'ስለ ደራሲው' },
+    { to: '/news', en: 'News', am: 'ዜናዎች' },
+    { to: '/contact', en: 'Contact', am: 'አድራሻ' },
   ];
 
   return (
     <footer
-      id="colophon"
       style={{
-        position: 'relative',
-        backgroundImage: "url('/images/footer-bg.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        color: '#e8e0d4',
-        paddingTop: '3.5rem',
-        paddingBottom: '3rem',
-        overflow: 'hidden',
-        borderTop: '2px solid #3d2a1b',
+        background: '#120d09',
+        color: '#d4cebe',
+        padding: '3.5rem 0 2.5rem',
+        borderTop: '2px solid #c9a84c',
       }}
     >
-      {/* Dark overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'rgba(14,10,6,0.92)',
-          backdropFilter: 'blur(3px)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      <div className="site-container relative z-10">
-        {/* Social Links */}
-        <div className="flex justify-center items-center gap-4 mb-8">
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+      <div className="site-container max-w-5xl mx-auto px-4">
+        {/* Top: Brand signature & Social Channels */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#3d2a1b]/60">
+          <div className="text-center md:text-left">
+            <h3
               style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '50%',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(201,168,76,0.3)',
-                color: '#c9a84c',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s',
-                textDecoration: 'none',
-              }}
-              title={link.title}
-              aria-label={link.label}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#c9a84c';
-                e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.3)';
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1.25rem',
+                fontWeight: 800,
+                color: '#f5f0e6',
+                letterSpacing: '0.04em',
+                marginBottom: '0.2rem',
               }}
             >
-              {link.icon}
-            </a>
-          ))}
-        </div>
+              YISMAKE WORKU · ይስማዕከ ወርቁ
+            </h3>
+            <p className="text-xs text-[#a69c8e]">
+              {lang === 'am' ? 'ይፋዊ የደራሲው ማህደርና የስነ-ጽሑፍ ቢሮ' : 'Official Author Archive & Literary Desk'}
+            </p>
+          </div>
 
-        {/* Author Brand Signature */}
-        <div className="flex flex-col items-center justify-center mb-8 text-center select-none">
-          <div
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.5rem, 3.5vw, 2rem)',
-              fontWeight: 800,
-              letterSpacing: '0.18em',
-              color: '#e8e0d4',
-              textTransform: 'uppercase',
-            }}
-          >
-            YISMAKE WORKU
-          </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: '0.75rem',
-              letterSpacing: '0.3em',
-              color: '#c9a84c',
-              textTransform: 'uppercase',
-              marginTop: '4px',
-            }}
-          >
-            {lang === 'am' ? 'ይስማዕከ ወርቁ — ይፋዊ የደራሲው ማህደር' : 'Official Author Dossier & Archive'}
-          </div>
-        </div>
-
-        {/* Books Directory Grid */}
-        <div className="mb-10 pt-6 border-t border-[#3d2a1b]/60">
-          <div className="text-center mb-5">
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.6875rem',
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#c9a84c',
-              }}
-            >
-              {lang === 'am' ? 'የመጻሕፍት ማውጫ' : 'Published Works Directory'}
-            </span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-y-2.5 gap-x-4 text-center max-w-4xl mx-auto">
-            {verifiedBooks.map((b) => (
-              <Link
-                key={b.id}
-                to={`/books/${b.slug}`}
-                className="text-xs text-[#a69c8e] hover:text-[#c9a84c] transition-colors line-clamp-1"
-                style={{ fontFamily: 'var(--font-serif)' }}
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            {socialLinks.map((s, idx) => (
+              <a
+                key={idx}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={s.title}
+                className="w-9 h-9 rounded-full bg-[#241a12] border border-[#4a3525] text-[#c9a84c] hover:bg-[#c9a84c] hover:text-[#120d09] transition-all flex items-center justify-center text-xs"
               >
-                {lang === 'am' ? b.titleAm : b.titleEn}
-              </Link>
+                {s.icon}
+              </a>
             ))}
           </div>
         </div>
 
+        {/* Middle: Clean Navigation Links (replacing the book list directory) */}
+        <div className="py-6 border-b border-[#3d2a1b]/40 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold uppercase tracking-wider text-[#a69c8e]">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="hover:text-[#c9a84c] transition-colors"
+            >
+              {lang === 'am' ? link.am : link.en}
+            </Link>
+          ))}
+        </div>
+
         {/* Legal Copyright */}
-        <div
-          style={{
-            maxWidth: '700px',
-            margin: '0 auto',
-            textAlign: 'center',
-            fontFamily: 'var(--font-serif)',
-            fontSize: '0.75rem',
-            color: '#8a7e70',
-            lineHeight: 1.65,
-          }}
-        >
-          <p
-            style={{
-              fontWeight: 700,
-              color: '#c4bfb5',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              marginBottom: '0',
-            }}
-          >
+        <div className="pt-6 text-center text-xs text-[#8a7e70] font-mono">
+          <p>
             &copy; {new Date().getFullYear()} YISMAKE WORKU. ALL RIGHTS RESERVED.
           </p>
         </div>

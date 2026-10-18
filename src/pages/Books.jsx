@@ -1,438 +1,195 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import BookCover from '../components/BookCover';
 import ModalInspectionFolio from '../components/ModalInspectionFolio';
-import PageBanner from '../components/PageBanner';
 import Icon from '../components/Icon';
 
 export default function Books() {
   const { lang } = useLanguage();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategoryQuery = searchParams.get('category');
   const [inspectionBook, setInspectionBook] = useState(null);
 
-  const categories = [
-    { id: 'ALL', en: 'All Works', am: 'ሁሉም ስራዎች' },
-    { id: 'DERTOGADA', en: 'The Dertogada Pentology', am: 'የዴርቶጋዳ 5 ተከታታይ' },
-    { id: 'TRANSLATION', en: 'International Translations', am: 'ዓለም አቀፍ ትርጉሞች' },
-    { id: 'PHILOSOPHY', en: 'Philosophical & Satire', am: 'ፍልስፍናዊና ማህበራዊ' },
-    { id: 'POETRY', en: 'Poetry & Early Works', am: 'ግጥም እና የመጀመሪያ ስራዎች' }
+  const bookCategories = [
+    {
+      id: 'dertogada',
+      titleEn: 'Dertogada Sequels',
+      titleAm: 'የዴርቶጋዳ ተከታታይ መጻሕፍት',
+      tagEn: 'THE DERTOGADA SAGA · 5 VOLUMES',
+      tagAm: 'የዴርቶጋዳ 5 ተከታታይ ቅጾች',
+      subtitleEn: 'The monumental 5-part speculative saga exploring Ethiopian heritage, science, and subterranean secrets.',
+      subtitleAm: 'በኢትዮጵያ ስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠሩት አምስቱ ተከታታይ የሳይንስና የስለላ ልቦለዶች።',
+      stageBg: '#dbe4e8',
+      accentColor: '#c9a84c',
+      bookSlugs: ['dertogada', 'ramatohara', 'xantoxara', 'yoratorad', 'yotod'],
+    },
+    {
+      id: 'kibur-dingay',
+      titleEn: 'Kibur Dingay Sequels',
+      titleAm: 'የክቡር ድንጋይ ተከታታይ መጻሕፍት',
+      tagEn: 'KIBUR DINGAY SERIES · 3 NOVELS',
+      tagAm: 'የክቡር ድንጋይ ተከታታይ · 3 ልቦለዶች',
+      subtitleEn: 'The internationally acclaimed masterpiece and its gripping geopolitical thrillers.',
+      subtitleAm: 'በእንግሊዝ አገር የታጨው «ክቡር ድንጋይ»፣ «ደህንነቱ» እና «የኦጋዴን ድመቶች»።',
+      stageBg: '#e6ded4',
+      accentColor: '#b8793b',
+      bookSlugs: ['kebur-dengay', 'dehinetu', 'yeogaden-demetoch'],
+    },
+    {
+      id: 'other-novels',
+      titleEn: 'Other Novels',
+      titleAm: 'ሌሎች ልቦለዶች',
+      tagEn: 'INDEPENDENT NOVELS · 4 MASTERPIECES',
+      tagAm: 'ራሳቸውን የቻሉ 4 ድንቅ ልቦለዶች',
+      subtitleEn: 'Independent masterworks of philosophy, human struggle, and incisive social satire.',
+      subtitleAm: 'ተልሚድ፣ ተከርቸም፣ ዘምራ እና ሜሎስ — የተለያዩ ማህበራዊና ፍልስፍናዊ ድንቅ ልቦለዶች።',
+      stageBg: '#e2dbe6',
+      accentColor: '#8a529e',
+      bookSlugs: ['telmid', 'tekerchem', 'zamra', 'melos'],
+    },
+    {
+      id: 'poetry',
+      titleEn: 'Poetry Books',
+      titleAm: 'የግጥም መጻሕፍት',
+      tagEn: 'POETRY COLLECTIONS · 2 VOLUMES',
+      tagAm: 'የግጥም መድበሎች · 2 ቅጾች',
+      subtitleEn: 'Poignant verses, cultural reflections, and early artistic masterpieces.',
+      subtitleAm: 'የደራሲው የወጣትነት የግጥም መድበሎችና ማህበራዊ ምጸቶች።',
+      stageBg: '#eae6d6',
+      accentColor: '#8f7b2c',
+      bookSlugs: ['yewond-mit', 'yekend-awta-nuro'],
+    },
   ];
 
-  const filteredBooks = useMemo(() => {
-    return verifiedBooks.filter((book) => {
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const matchAm = book.titleAm.toLowerCase().includes(q);
-        const matchEn = book.titleEn.toLowerCase().includes(q);
-        const matchGenre = book.genre?.toLowerCase().includes(q);
-        const matchDesc = book.description?.en?.toLowerCase().includes(q);
-        if (!matchAm && !matchEn && !matchGenre && !matchDesc) return false;
-      }
+  const activeCategory = bookCategories.find((c) => c.id === selectedCategoryQuery);
 
-      if (selectedCategory === 'DERTOGADA') {
-        return book.series?.includes('Dertogada');
-      }
-      if (selectedCategory === 'TRANSLATION') {
-        return Boolean(book.translator);
-      }
-      if (selectedCategory === 'PHILOSOPHY') {
-        return (
-          book.genre?.includes('Philosophical') ||
-          book.genre?.includes('Satire') ||
-          book.genre?.includes('Psychological') ||
-          book.slug === 'kebur-dengay'
-        );
-      }
-      if (selectedCategory === 'POETRY') {
-        return book.genre?.includes('Poetry') || book.slug === 'yewond-mit';
-      }
-
-      return true;
-    });
-  }, [searchQuery, selectedCategory]);
-
-  const dertogadaBook = verifiedBooks.find((b) => b.slug === 'dertogada') || verifiedBooks[0];
+  const selectCategory = (catId) => {
+    if (catId) {
+      setSearchParams({ category: catId });
+    } else {
+      setSearchParams({});
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <div className="jkr-books-page" style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
-      <PageBanner title={lang === 'am' ? 'መጻሕፍት' : 'Books'} />
-
-      {/* Featured Masterpiece */}
-      <section className="jkr-books-featured" style={{
-        background: 'var(--bg-secondary)',
-        padding: '4rem 0 5rem',
-        borderBottom: '1px solid #edeae4',
-      }}>
-        <div className="site-container jkr-books-featured__inner">
-          <div className="jkr-books-featured__cover-wrap">
-            <Link
-              to="/books/dertogada"
-              className="jkr-books-featured__cover"
-              style={{
-                display: 'inline-block',
-                transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.18)',
-                borderRadius: '2px',
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03) translateY(-4px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              <BookCover book={dertogadaBook} size="large" />
-            </Link>
+    <div
+      className="jkr-books-page"
+      style={{
+        background: 'var(--bg-primary)',
+        color: 'var(--text-primary)',
+        fontFamily: 'var(--font-sans)',
+        minHeight: '100vh',
+      }}
+    >
+      {/* Editorial Page Header without background image */}
+      <section className="pt-12 sm:pt-16 pb-8 border-b border-[#e8e2d5]/60 text-center">
+        <div className="site-container max-w-4xl mx-auto px-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1a1714]/5 border border-[#c9a84c]/40 text-[#b8860b] text-[11px] font-bold tracking-widest uppercase mb-4">
+            <Icon name="spark" size={13} />
+            <span>{lang === 'am' ? 'የተሟላ የመጻሕፍት ማህደር' : 'Official Canonical Folios'}</span>
+            <Icon name="spark" size={13} />
           </div>
 
-          <div className="jkr-books-featured__copy">
-          <div className="jkr-books-featured__eyebrow" style={{
-            fontSize: '0.6875rem',
-            fontWeight: 700,
-            color: '#c9a84c',
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
-            marginBottom: '0.5rem',
-          }}>
-            {lang === 'am' ? 'የመጀመሪያው ተከታታይ ቅጽ' : 'DERTOGADA'}
-          </div>
+          <h1
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(2.4rem, 5.5vw, 3.8rem)',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              letterSpacing: '-0.02em',
+              marginBottom: '0.75rem',
+            }}
+          >
+            {activeCategory
+              ? (lang === 'am' ? activeCategory.titleAm : activeCategory.titleEn)
+              : (lang === 'am' ? 'የይስማዕከ ወርቁ መጻሕፍት' : 'The Canonical Works')}
+          </h1>
 
-          <h2 style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
-            fontWeight: 700,
-            color: '#1a1714',
-            marginBottom: '0.5rem',
-            letterSpacing: '-0.01em',
-          }}>
-            {lang === 'am' ? 'የይስማዕከ ወርቁ ዴርቶጋዳ' : "Yismake Worku's Dertogada"}
-          </h2>
-
-          <div style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '0.8125rem',
-            fontStyle: 'italic',
-            color: '#8a857d',
-            marginBottom: '1.25rem',
-          }}>
-            {lang === 'am'
-              ? 'ሜጋ አሳታሚ / ኩራዝ / ዓለም አቀፍ እትሞች'
-              : 'Mega Publishers; Kuraz Publishing; International Editions'}
-          </div>
-
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '1rem',
-            color: '#5a564e',
-            lineHeight: 1.75,
-            maxWidth: '560px',
-            margin: '0 auto 1.5rem',
-          }}>
-            {lang === 'am'
-              ? 'በ2001 ዓ.ም ሲታተም በአንድ ዓመት ውስጥ ብቻ 10 ጊዜ ታትሞ ከ500,000 በላይ ቅጂዎች በመሸጥ በኢትዮጵያ የስነ-ጽሑፍ ታሪክ ውስጥ ትልቅ አብዮት የፈጠረው የአገሪቱ የመጀመሪያው የሳይንስና የስለላ ልቦለድ።'
-              : 'The first Dertogada book, published in 2009, was met with immediate, unprecedented national acclaim. The landmark novel broke Ethiopian publishing records with over 500,000 copies sold in its debut year alone.'}
+          <p
+            className="max-w-2xl mx-auto text-sm sm:text-base text-[#6e685f]"
+            style={{
+              fontFamily: 'var(--font-serif)',
+              lineHeight: 1.7,
+              fontStyle: 'italic',
+            }}
+          >
+            {activeCategory
+              ? (lang === 'am' ? activeCategory.subtitleAm : activeCategory.subtitleEn)
+              : (lang === 'am'
+                  ? 'የዴርቶጋዳ ተከታታይ፣ የክቡር ድንጋይ ስብስብ፣ ፍልስፍናዊ ልቦለዶችና የግጥም መድበሎች በአራት ዋና ዘርፎች።'
+                  : 'Four distinct literary categories: The Dertogada speculative saga, Kibur Dingay thrillers, independent social novels, and early poetry.')}
           </p>
+          <div className="w-16 h-0.5 bg-[#c9a84c] mx-auto mt-4 rounded-full" />
 
-          <div className="jkr-books-featured__actions" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <Link to="/books/dertogada" className="jkr-pill-btn-dark" style={{ fontSize: '0.8125rem', padding: '0.65rem 1.75rem', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <span>{lang === 'am' ? 'ሙሉውን ዝርዝር ያንብቡ' : 'Read Full Book Details'}</span>
-              <Icon name="arrowRight" size={15} />
-            </Link>
-          </div>
+          {/* Category Quick Navigation Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+            <button
+              onClick={() => selectCategory(null)}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                !activeCategory
+                  ? 'bg-[#1a1714] text-[#f5f1eb] shadow-sm'
+                  : 'bg-white border border-[#e8e2d5] text-[#5a564e] hover:border-[#c9a84c]'
+              }`}
+            >
+              {lang === 'am' ? 'ሁሉም 4 ዘርፎች' : 'All 4 Categories'}
+            </button>
+            {bookCategories.map((cat) => {
+              const isSelected = activeCategory?.id === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => selectCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#1a1714] text-[#c9a84c] shadow-sm ring-1 ring-[#c9a84c]'
+                      : 'bg-white border border-[#e8e2d5] text-[#5a564e] hover:border-[#c9a84c]'
+                  }`}
+                >
+                  {lang === 'am' ? cat.titleAm : cat.titleEn}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Catalog */}
-      <div className="site-container jkr-books-catalog" style={{ maxWidth: '1100px', margin: '0 auto', padding: '4rem 1.5rem 5rem' }}>
-        {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <div className="jkr-gold-divider" style={{ marginBottom: '1.5rem' }}>
-            <Icon name="spark" size={15} />
-          </div>
-          <h3 style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-            fontWeight: 700,
-            color: '#1a1714',
-            marginBottom: '0.5rem',
-          }}>
-            {lang === 'am' ? 'የተሟላ 15+ መጻሕፍት ካታሎግ' : 'Complete Published Works'}
-          </h3>
-          <p style={{
-            fontSize: '0.9375rem',
-            color: '#8a857d',
-            maxWidth: '520px',
-            margin: '0 auto',
-            fontFamily: 'var(--font-serif)',
-          }}>
-            {lang === 'am'
-              ? 'ከአገሪቱ የመጀመሪያው የሳይንስ ልቦለድ «ዴርቶጋዳ» እስከ እንግሊዝ አገር እጩው «ክቡር ድንጋይ»'
-              : 'From the pioneering Dertogada to the UK-shortlisted The Lost Spell'}
-          </p>
-        </div>
-
-        {/* Category Filter Pills */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: '999px',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                fontFamily: 'var(--font-sans)',
-                letterSpacing: '0.04em',
-                cursor: 'pointer',
-                border: 'none',
-                transition: 'all 0.25s',
-                background: selectedCategory === cat.id ? '#1a1714' : '#f5f3ef',
-                color: selectedCategory === cat.id ? '#faf8f4' : '#5a564e',
-                boxShadow: selectedCategory === cat.id ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-              }}
-            >
-              {lang === 'am' ? cat.am : cat.en}
-            </button>
-          ))}
-        </div>
-
-        {/* Search Bar */}
-        <div style={{ maxWidth: '420px', margin: '0 auto 3rem' }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              placeholder={lang === 'am' ? 'በርዕስ፣ በዘውግ ወይም በጭብጥ ፈልግ...' : 'Search books by title, genre, theme...'}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: '100%',
-                background: '#fdfcfa',
-                border: '1.5px solid #e8e4de',
-                padding: '0.65rem 1.25rem',
-                borderRadius: '999px',
-                fontSize: '0.875rem',
-                color: '#1a1714',
-                outline: 'none',
-                fontFamily: 'var(--font-sans)',
-                transition: 'border-color 0.25s',
-              }}
-              onFocus={(e) => e.target.style.borderColor = '#c9a84c'}
-              onBlur={(e) => e.target.style.borderColor = '#e8e4de'}
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                style={{
-                  position: 'absolute',
-                  right: '16px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '0.75rem',
-                  color: '#8a857d',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-                >
-                <Icon name="close" size={14} />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Books Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '2rem' }}>
-          {filteredBooks.map((book) => (
-            <article
-              key={book.id}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #edeae4',
-                borderRadius: '8px',
-                padding: '0',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
-              }}
-              className="jkr-book-catalog-card group"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-6px)';
-                e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.08)';
-                e.currentTarget.style.borderColor = '#c9a84c';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.03)';
-                e.currentTarget.style.borderColor = '#edeae4';
-              }}
-            >
-              {/* Cover area */}
-              <div style={{
-                background: 'linear-gradient(135deg, #f5f3ef 0%, #edeae4 100%)',
-                padding: '1.75rem 1.25rem',
-                display: 'flex',
-                justifyContent: 'center',
-              }}>
-                <Link
-                  to={`/books/${book.slug}`}
-                  style={{ display: 'inline-block', transition: 'transform 0.4s' }}
-                  className="group-hover:-translate-y-2"
-                >
-                  <BookCover book={book} size="normal" />
-                </Link>
-              </div>
-
-              <div style={{ padding: '1.25rem 1.5rem 0' }}>
-                {/* Metadata */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  fontSize: '0.6875rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#8a857d',
-                  marginBottom: '0.4rem',
-                }}>
-                  <span>{book.year} ({book.yearEc} ዓ.ም)</span>
-                  {book.seriesOrder && <span style={{ color: '#c9a84c' }}>BOOK {book.seriesOrder}</span>}
-                </div>
-
-                <h2 style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '1.25rem',
-                  fontWeight: 700,
-                  color: '#1a1714',
-                  marginBottom: '0.25rem',
-                  transition: 'color 0.25s',
-                }} className="group-hover:text-[#b8860b]">
-                  <Link to={`/books/${book.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    {lang === 'am' ? book.titleAm : book.titleEn}
-                  </Link>
-                </h2>
-
-                <p style={{
-                  fontSize: '0.6875rem',
-                  color: '#8a857d',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: 600,
-                  marginBottom: '0.5rem',
-                }}>
-                  {lang === 'am' ? book.genreAm : book.genre}
-                </p>
-
-                <p style={{
-                  fontSize: '0.8125rem',
-                  color: '#5a564e',
-                  lineHeight: 1.6,
-                  display: '-webkit-box',
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                }}>
-                  {lang === 'am' ? book.description?.am : book.description?.en}
-                </p>
-              </div>
-
-              {/* Actions */}
-              <div style={{ padding: '1rem 1.5rem 1.25rem', marginTop: 'auto' }}>
-                <div style={{ display: 'flex' }}>
-                  <Link
-                    to={`/books/${book.slug}`}
-                    style={{
-                      width: '100%',
-                      padding: '0.6rem 0.75rem',
-                      background: '#1a1714',
-                      color: '#faf8f4',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      fontFamily: 'var(--font-sans)',
-                      borderRadius: '6px',
-                      border: '1px solid #1a1714',
-                      textDecoration: 'none',
-                      textAlign: 'center',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '6px',
-                      transition: 'all 0.25s',
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#c9a84c'; e.currentTarget.style.borderColor = '#c9a84c'; e.currentTarget.style.color = '#1a1714'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#1a1714'; e.currentTarget.style.borderColor = '#1a1714'; e.currentTarget.style.color = '#faf8f4'; }}
-                  >
-                    <span>{lang === 'am' ? 'ተጨማሪ መረጃ ያንብቡ' : 'Read More & Details'}</span>
-                    <Icon name="arrowRight" size={14} />
-                  </Link>
-                </div>
-
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  fontSize: '0.625rem',
-                  paddingTop: '0.625rem',
-                  marginTop: '0.625rem',
-                  borderTop: '1px solid #f0ece6',
-                  color: '#8a857d',
-                }}>
-                  <button
-                    onClick={() => setInspectionBook(book)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: '#8a857d',
-                      fontSize: '0.625rem',
-                      fontFamily: 'var(--font-sans)',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      fontWeight: 600,
-                      padding: 0,
-                      transition: 'color 0.2s',
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#c9a84c'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#8a857d'}
-                  >
-                    <Icon name="plus" size={13} /> {lang === 'am' ? 'ፈትሽ' : 'Quick Inspect'}
-                  </button>
-                  <span style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                    VERIFIED
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {filteredBooks.length === 0 && (
-          <div style={{
-            textAlign: 'center',
-            padding: '4rem 2rem',
-            background: 'var(--bg-secondary)',
-            border: '1px solid #edeae4',
-            borderRadius: '8px',
-          }}>
-            <Icon name="bookOpen" size={36} className="mx-auto mb-3 text-[#c9a84c] opacity-60" />
-            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#5a564e', marginBottom: '0.5rem' }}>
-              {lang === 'am' ? 'ምንም መጽሐፍ አልተገኘም' : 'No Books Found'}
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#8a857d' }}>
-              {lang === 'am'
-                ? 'እባክዎ የተለየ የፍለጋ ቃል ያስገቡ ወይም ማጣሪያውን ይቀይሩ።'
-                : 'Try adjusting your search query or selecting a different category filter.'}
-            </p>
+      {/* Main Content: Dedicated Category Page OR 4 Animated Slider Stages */}
+      <div className="site-container max-w-6xl mx-auto py-10 sm:py-16 px-4">
+        {activeCategory ? (
+          /* ══════════════════════════════════════════════════════════════
+             DEDICATED CATEGORY PAGE (Directed when user clicks category)
+             ══════════════════════════════════════════════════════════════ */
+          <DedicatedCategoryView
+            category={activeCategory}
+            lang={lang}
+            verifiedBooks={verifiedBooks}
+            onBack={() => selectCategory(null)}
+            setInspectionBook={setInspectionBook}
+          />
+        ) : (
+          /* ══════════════════════════════════════════════════════════════
+             4 CATEGORIES SHOWCASE WITH ANIMATED SLIDERS (Like Image)
+             ══════════════════════════════════════════════════════════════ */
+          <div className="space-y-16 sm:space-y-24">
+            {bookCategories.map((cat, idx) => (
+              <AnimatedCategoryStage
+                key={cat.id}
+                category={cat}
+                categoryIndex={idx}
+                lang={lang}
+                verifiedBooks={verifiedBooks}
+                onOpenCategory={() => selectCategory(cat.id)}
+                setInspectionBook={setInspectionBook}
+              />
+            ))}
           </div>
         )}
       </div>
 
-      {/* Modal Inspection Folio */}
+      {/* Quick Inspection Modal */}
       {inspectionBook && (
         <ModalInspectionFolio
           book={inspectionBook}
@@ -440,7 +197,354 @@ export default function Books() {
           onClose={() => setInspectionBook(null)}
         />
       )}
+    </div>
+  );
+}
 
+/**
+ * Animated Book Slider Stage modeled directly after the user's uploaded image:
+ * - Studio background frame (#dbe4e8 style soft background)
+ * - Category / Author top label (e.g. TIM NOTKE style)
+ * - Top-right counter (e.g. 1/5)
+ * - Large center active book cover with 3D drop shadow
+ * - Flanking smaller preview book covers on left and right
+ * - Elegant typography quote / book description below
+ * - Next / Prev controls and smooth transition
+ * - Direct link button to dedicate category page
+ */
+function AnimatedCategoryStage({ category, categoryIndex, lang, verifiedBooks, onOpenCategory, setInspectionBook }) {
+  const books = category.bookSlugs
+    .map((slug) => verifiedBooks.find((b) => b.slug === slug))
+    .filter(Boolean);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const total = books.length;
+  const currentBook = books[activeIndex] || books[0];
+
+  const goNext = () => {
+    setActiveIndex((prev) => (prev + 1) % total);
+  };
+
+  const goPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  if (!books.length) return null;
+
+  return (
+    <section className="category-stage-section">
+      {/* Category Stage Frame — Soft Studio Card */}
+      <div
+        className="relative rounded-3xl p-6 sm:p-10 md:p-12 overflow-hidden shadow-sm transition-all"
+        style={{
+          background: category.stageBg,
+          border: '1px solid rgba(0,0,0,0.06)',
+        }}
+      >
+        {/* Top Header Row inside the Studio Stage */}
+        <div className="flex items-center justify-between mb-8 sm:mb-12 flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onOpenCategory}
+              className="text-left group cursor-pointer bg-transparent border-none p-0"
+            >
+              <span
+                className="px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase inline-block group-hover:bg-[#1a1714] group-hover:text-[#c9a84c] transition-colors"
+                style={{
+                  background: 'rgba(26,23,20,0.08)',
+                  color: '#1a1714',
+                  letterSpacing: '0.15em',
+                }}
+              >
+                {lang === 'am' ? category.tagAm : category.tagEn}
+              </span>
+            </button>
+          </div>
+
+          {/* Counter (e.g. 1/5) like the top right of the user image */}
+          <div className="flex items-center gap-4">
+            <div
+              className="text-right"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                letterSpacing: '0.05em',
+                color: '#1a1714',
+              }}
+            >
+              <span className="text-2xl sm:text-3xl font-bold">{activeIndex + 1}</span>
+              <span className="text-base sm:text-lg opacity-40 font-light">/{total}</span>
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex items-center gap-1.5 bg-white/70 backdrop-blur-xs p-1 rounded-full border border-black/5 shadow-2xs">
+              <button
+                type="button"
+                onClick={goPrev}
+                aria-label="Previous book"
+                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white text-[#1a1714] transition-colors cursor-pointer"
+              >
+                <Icon name="chevronLeft" size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                aria-label="Next book"
+                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white text-[#1a1714] transition-colors cursor-pointer"
+              >
+                <Icon name="chevronRight" size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════════
+            SLIDER STAGE (Center Active Book + Flanking Books like Image)
+            ══════════════════════════════════════════════════════════════ */}
+        <div className="relative my-4 sm:my-8 flex items-center justify-center overflow-hidden min-h-[340px] sm:min-h-[420px]">
+          
+          {/* Books Row */}
+          <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 w-full max-w-4xl mx-auto select-none">
+            {books.map((b, idx) => {
+              const isCenter = idx === activeIndex;
+              const isPrev = idx === (activeIndex - 1 + total) % total;
+              const isNext = idx === (activeIndex + 1) % total;
+              const isVisible = isCenter || isPrev || isNext;
+
+              // On small screens, hide non-immediate items to keep it clean
+              if (!isVisible && total > 3) return null;
+
+              return (
+                <div
+                  key={b.id}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`transition-all duration-500 ease-out cursor-pointer flex flex-col items-center ${
+                    isCenter
+                      ? 'scale-100 opacity-100 z-20 translate-y-0'
+                      : 'scale-75 sm:scale-80 opacity-60 hover:opacity-90 z-10 hidden xs:flex'
+                  }`}
+                  style={{
+                    filter: isCenter ? 'drop-shadow(0 20px 30px rgba(0,0,0,0.22))' : 'grayscale(15%) drop-shadow(0 8px 16px rgba(0,0,0,0.12))',
+                  }}
+                >
+                  <div className="w-[170px] sm:w-[220px] md:w-[250px] aspect-[1/1.45] rounded-xl overflow-hidden border-2 border-white/60 bg-white shadow-inner">
+                    <img
+                      src={b.coverImage}
+                      alt={b.titleEn}
+                      className="w-full h-full object-cover transition-transform duration-500"
+                    />
+                  </div>
+                  {!isCenter && (
+                    <span className="mt-2 text-[11px] font-bold text-[#3a352e] truncate max-w-[120px] text-center">
+                      {lang === 'am' ? b.titleAm : b.titleEn}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════════
+            BOTTOM EDITORIAL TEXT & ACTIONS (Under the center book)
+            ══════════════════════════════════════════════════════════════ */}
+        <div className="mt-6 sm:mt-8 pt-6 border-t border-black/10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-2 mb-1.5 text-xs font-bold text-[#70685e]">
+              <span>{currentBook.year}</span>
+              <span>•</span>
+              <span className="text-[#b8860b]">{currentBook.subtitleEn || 'Canonical Edition'}</span>
+            </div>
+
+            <h3
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(1.5rem, 3.2vw, 2.2rem)',
+                fontWeight: 800,
+                color: '#1a1714',
+                lineHeight: 1.15,
+                marginBottom: '0.65rem',
+              }}
+            >
+              {lang === 'am' ? currentBook.titleAm : currentBook.titleEn}
+            </h3>
+
+            {/* Quote / Hook text like "Hard work beats talent..." in image */}
+            <p
+              className="text-xs sm:text-sm text-[#4a453d] line-clamp-2"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                lineHeight: 1.6,
+                fontStyle: 'italic',
+              }}
+            >
+              {lang === 'am'
+                ? (currentBook.summaryAm || currentBook.descriptionAm)
+                : (currentBook.summaryEn || currentBook.descriptionEn)}
+            </p>
+          </div>
+
+          {/* Action Links */}
+          <div className="flex items-center flex-wrap gap-3 shrink-0 w-full sm:w-auto">
+            <Link
+              to={`/books/${currentBook.slug}`}
+              className="jkr-pill-btn-dark !py-3 !px-6 !text-xs shadow-md inline-flex items-center gap-2 flex-1 sm:flex-initial justify-center"
+            >
+              <span>{lang === 'am' ? 'የመጽሐፍ ዝርዝርና ቅምሻ' : 'Book Details & Sample'}</span>
+              <Icon name="arrowRight" size={14} />
+            </Link>
+
+            {/* Direct button to open dedicated category page with ALL books */}
+            <button
+              type="button"
+              onClick={onOpenCategory}
+              className="px-5 py-3 rounded-full text-xs font-bold bg-white text-[#1a1714] border border-black/10 hover:border-[#c9a84c] hover:bg-[#faf8f4] transition-all shadow-2xs inline-flex items-center gap-2 flex-1 sm:flex-initial justify-center cursor-pointer"
+            >
+              <span>
+                {lang === 'am'
+                  ? `ሁሉንም ${total} የዚህ ዘርፍ መጻሕፍት ክፈት`
+                  : `View All ${total} Books in this Saga`}
+              </span>
+              <span className="text-[#c9a84c] font-bold">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Dedicated Category Page View:
+ * Shown when user clicks into a category (e.g. Dertogada Sequels)
+ * Displays all books in that specific series with rich cards, synopsis, verified tags, and read sample actions.
+ */
+function DedicatedCategoryView({ category, lang, verifiedBooks, onBack, setInspectionBook }) {
+  const books = category.bookSlugs
+    .map((slug) => verifiedBooks.find((b) => b.slug === slug))
+    .filter(Boolean);
+
+  return (
+    <div className="animate-fade-in">
+      {/* Return to All 4 Categories Button */}
+      <div className="mb-8 flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#8a857d] hover:text-[#1a1714] transition-colors cursor-pointer"
+        >
+          <Icon name="arrowLeft" size={15} />
+          <span>{lang === 'am' ? '← ወደ 4ቱ ዘርፎች ተመለስ' : '← Back to All 4 Categories'}</span>
+        </button>
+
+        <span className="text-xs font-mono font-bold text-[#c9a84c]">
+          {books.length} {lang === 'am' ? 'መጻሕፍት ተመዝግበዋል' : 'Verified Books'}
+        </span>
+      </div>
+
+      {/* Category Banner Highlight */}
+      <div
+        className="p-8 sm:p-10 rounded-3xl mb-12 relative overflow-hidden"
+        style={{
+          background: category.stageBg,
+          border: '1px solid rgba(0,0,0,0.08)',
+        }}
+      >
+        <span className="text-[11px] font-bold tracking-widest uppercase text-[#b8860b] block mb-2">
+          {lang === 'am' ? category.tagAm : category.tagEn}
+        </span>
+        <h2
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+            fontWeight: 800,
+            color: '#1a1714',
+            marginBottom: '0.75rem',
+          }}
+        >
+          {lang === 'am' ? category.titleAm : category.titleEn}
+        </h2>
+        <p
+          className="max-w-3xl text-sm sm:text-base text-[#4a453d]"
+          style={{ fontFamily: 'var(--font-serif)', lineHeight: 1.7 }}
+        >
+          {lang === 'am' ? category.subtitleAm : category.subtitleEn}
+        </p>
+      </div>
+
+      {/* Grid of all books in this category */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {books.map((book, idx) => (
+          <article
+            key={book.id}
+            className="group bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              {/* Cover Stage */}
+              <div className="p-6 bg-[#f8f6f0] flex items-center justify-center border-b border-[#e8dfc8]/60 relative">
+                <span className="absolute top-4 left-4 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-white/80 text-[#8a857d] border border-black/5">
+                  #{idx + 1}
+                </span>
+
+                <div className="w-[140px] sm:w-[160px] aspect-[1/1.48] rounded-lg overflow-hidden shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <BookCover book={book} size="lg" />
+                </div>
+              </div>
+
+              {/* Book Details */}
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#8a857d] mb-1.5">
+                  <span>{book.year}</span>
+                  <span>•</span>
+                  <span>{book.pages ? `${book.pages} pages` : 'Official Edition'}</span>
+                </div>
+
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '1.35rem',
+                    fontWeight: 800,
+                    color: '#1a1714',
+                    lineHeight: 1.25,
+                    marginBottom: '0.5rem',
+                  }}
+                  className="group-hover:text-[#c9a84c] transition-colors"
+                >
+                  {lang === 'am' ? book.titleAm : book.titleEn}
+                </h3>
+
+                <p
+                  className="text-xs text-[#5e584f] line-clamp-3 mb-4"
+                  style={{ fontFamily: 'var(--font-serif)', lineHeight: 1.65 }}
+                >
+                  {lang === 'am'
+                    ? (book.summaryAm || book.descriptionAm)
+                    : (book.summaryEn || book.descriptionEn)}
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom Actions */}
+            <div className="p-6 pt-0 border-t border-transparent flex items-center justify-between gap-3">
+              <Link
+                to={`/books/${book.slug}`}
+                className="jkr-pill-btn-dark !py-2.5 !px-5 !text-xs flex-1 text-center inline-flex items-center justify-center gap-2"
+              >
+                <span>{lang === 'am' ? 'ሙሉ መረጃ' : 'Read Folio'}</span>
+                <Icon name="arrowRight" size={13} />
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setInspectionBook(book)}
+                className="p-2.5 rounded-full border border-[#e8dfc8] hover:border-[#c9a84c] text-[#8a857d] hover:text-[#1a1714] transition-colors cursor-pointer"
+                title={lang === 'am' ? 'ፈጣን ምርመራ' : 'Quick inspect'}
+              >
+                <Icon name="spark" size={15} />
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
