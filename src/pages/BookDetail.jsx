@@ -4,7 +4,7 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import { getBookSample } from '../data/bookSamples';
 import BookCover from '../components/BookCover';
-import LanguageToggle from '../components/LanguageToggle';
+import ThemeToggle from '../components/ThemeToggle';
 import Icon from '../components/Icon';
 
 export default function BookDetail() {
@@ -257,8 +257,26 @@ export default function BookDetail() {
       ).toFixed(1)
     : '5.0';
 
+  // Determine book category info
+  const getCategoryInfo = (b) => {
+    if (!b) return { id: 'dertogada', titleEn: 'Dertogada Sequels', titleAm: 'የዴርቶጋዳ ተከታታይ መጻሕፍት' };
+    if (['dertogada', 'ramatohara', 'xantoxara', 'yoratorad', 'yotod'].includes(b.slug)) {
+      return { id: 'dertogada', titleEn: 'Dertogada Sequels', titleAm: 'የዴርቶጋዳ ተከታታይ መጻሕፍት' };
+    }
+    if (['kebur-dengay', 'dehinetu', 'yeogaden-demetoch'].includes(b.slug)) {
+      return { id: 'kibur-dingay', titleEn: 'Kibur Dingay Sequels', titleAm: 'የክቡር ድንጋይ ተከታታይ መጻሕፍት' };
+    }
+    if (['telmid', 'tekerchem', 'zamra', 'melos', 'gefuan'].includes(b.slug)) {
+      return { id: 'other-novels', titleEn: 'Other Novels', titleAm: 'ሌሎች ልቦለዶች' };
+    }
+    return { id: 'poetry', titleEn: 'Poetry Books', titleAm: 'የግጥም መጻሕፍት' };
+  };
+
+  const categoryInfo = getCategoryInfo(book);
+
+  // Related books from the SAME category first
   const relatedBooks = verifiedBooks
-    .filter((b) => b.id !== book.id && (b.series === book.series || b.isFeatured))
+    .filter((b) => b.id !== book?.id && getCategoryInfo(b).id === categoryInfo.id)
     .slice(0, 3);
 
   return (
@@ -337,23 +355,41 @@ export default function BookDetail() {
               </span>
             </button>
 
-            <LanguageToggle variant="dark" size="sm" className="ml-1" />
+            <ThemeToggle variant="compact" size="sm" className="ml-1" />
           </div>
         </div>
       </div>
 
-      <div className="site-container max-w-5xl mx-auto py-10 sm:py-16">
-        {/* Breadcrumb Trail */}
-        <div className="pb-4 mb-10 border-b border-[#e8e2d5] text-xs text-[#736d65] flex items-center gap-2">
-          <Link to="/" className="hover:text-[#c9a84c] transition-colors">
-            {lang === 'am' ? 'መነሻ' : 'Home'}
+      <div className="site-container max-w-5xl mx-auto py-8 sm:py-14 px-4">
+        {/* Top: Return to Category Link + Breadcrumb Trail */}
+        <div className="pb-4 mb-8 border-b border-[#e8e2d5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#736d65]">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link to="/" className="hover:text-[#c9a84c] transition-colors">
+              {lang === 'am' ? 'መነሻ' : 'Home'}
+            </Link>
+            <span className="text-[#c9a84c]">/</span>
+            <Link to="/books" className="hover:text-[#c9a84c] transition-colors">
+              {lang === 'am' ? 'መጻሕፍት' : 'Books'}
+            </Link>
+            <span className="text-[#c9a84c]">/</span>
+            <Link to={`/books?category=${categoryInfo.id}`} className="hover:text-[#c9a84c] transition-colors font-medium">
+              {lang === 'am' ? categoryInfo.titleAm : categoryInfo.titleEn}
+            </Link>
+            <span className="text-[#c9a84c]">/</span>
+            <span className="text-[#1a1714] font-semibold">{lang === 'am' ? book.titleAm : book.titleEn}</span>
+          </div>
+
+          <Link
+            to={`/books?category=${categoryInfo.id}`}
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#b8860b] hover:text-[#1a1714] transition-colors shrink-0"
+          >
+            <Icon name="arrowLeft" size={13} />
+            <span>
+              {lang === 'am'
+                ? `ወደ «${categoryInfo.titleAm}» ዘርፍ ተመለስ`
+                : `Return to ${categoryInfo.titleEn} Series`}
+            </span>
           </Link>
-          <span className="text-[#c9a84c]">/</span>
-          <Link to="/books" className="hover:text-[#c9a84c] transition-colors">
-            {lang === 'am' ? 'መጻሕፍት' : 'Books'}
-          </Link>
-          <span className="text-[#c9a84c]">/</span>
-          <span className="text-[#1a1714] font-semibold">{lang === 'am' ? book.titleAm : book.titleEn}</span>
         </div>
 
         {/* ─────────────────────────────────────────────────────────────

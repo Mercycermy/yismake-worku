@@ -41,13 +41,13 @@ export default function Books() {
       id: 'other-novels',
       titleEn: 'Other Novels',
       titleAm: 'ሌሎች ልቦለዶች',
-      tagEn: 'INDEPENDENT NOVELS · 4 MASTERPIECES',
-      tagAm: 'ራሳቸውን የቻሉ 4 ድንቅ ልቦለዶች',
-      subtitleEn: 'Independent masterworks of philosophy, human struggle, and incisive social satire.',
-      subtitleAm: 'ተልሚድ፣ ተከርቸም፣ ዘምራ እና ሜሎስ — የተለያዩ ማህበራዊና ፍልስፍናዊ ድንቅ ልቦለዶች።',
+      tagEn: 'INDEPENDENT WORKS · 5 MASTERPIECES',
+      tagAm: 'ራሳቸውን የቻሉ 5 ድንቅ ስራዎች',
+      subtitleEn: 'Independent masterworks of philosophy, human struggle, and incisive sociopolitical critique.',
+      subtitleAm: 'ተልሚድ፣ ተከርቸም፣ ዘምራ፣ ሜሎስ እና ግፉዓን የተሰኙ የተለያዩ ማህበራዊና ፍልስፍናዊ ድንቅ ልቦለዶች።',
       stageBg: '#e2dbe6',
       accentColor: '#8a529e',
-      bookSlugs: ['telmid', 'tekerchem', 'zamra', 'melos'],
+      bookSlugs: ['telmid', 'tekerchem', 'zamra', 'melos', 'gefuan'],
     },
     {
       id: 'poetry',
@@ -218,6 +218,8 @@ function AnimatedCategoryStage({ category, categoryIndex, lang, verifiedBooks, o
     .filter(Boolean);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const total = books.length;
   const currentBook = books[activeIndex] || books[0];
@@ -228,6 +230,37 @@ function AnimatedCategoryStage({ category, categoryIndex, lang, verifiedBooks, o
 
   const goPrev = () => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 45) {
+      goNext();
+    } else if (distance < -45) {
+      goPrev();
+    }
+  };
+
+  const getBookSnippet = (b, l) => {
+    if (b.tagline) {
+      const tag = typeof b.tagline === 'object' ? (b.tagline[l] || b.tagline.en) : b.tagline;
+      if (tag) return tag;
+    }
+    if (b.description) {
+      const desc = typeof b.description === 'object' ? (b.description[l] || b.description.en) : b.description;
+      if (desc) return desc;
+    }
+    return l === 'am' ? (b.summaryAm || b.descriptionAm || '') : (b.summaryEn || b.descriptionEn || '');
   };
 
   if (!books.length) return null;
@@ -241,6 +274,9 @@ function AnimatedCategoryStage({ category, categoryIndex, lang, verifiedBooks, o
           background: category.stageBg,
           border: '1px solid rgba(0,0,0,0.06)',
         }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Top Header Row inside the Studio Stage */}
         <div className="flex items-center justify-between mb-8 sm:mb-12 flex-wrap gap-4">
@@ -378,9 +414,7 @@ function AnimatedCategoryStage({ category, categoryIndex, lang, verifiedBooks, o
                 fontStyle: 'italic',
               }}
             >
-              {lang === 'am'
-                ? (currentBook.summaryAm || currentBook.descriptionAm)
-                : (currentBook.summaryEn || currentBook.descriptionEn)}
+              {getBookSnippet(currentBook, lang)}
             </p>
           </div>
 
@@ -516,9 +550,17 @@ function DedicatedCategoryView({ category, lang, verifiedBooks, onBack, setInspe
                   className="text-xs text-[#5e584f] line-clamp-3 mb-4"
                   style={{ fontFamily: 'var(--font-serif)', lineHeight: 1.65 }}
                 >
-                  {lang === 'am'
-                    ? (book.summaryAm || book.descriptionAm)
-                    : (book.summaryEn || book.descriptionEn)}
+                  {(() => {
+                    if (book.tagline) {
+                      const t = typeof book.tagline === 'object' ? (book.tagline[lang] || book.tagline.en) : book.tagline;
+                      if (t) return t;
+                    }
+                    if (book.description) {
+                      const d = typeof book.description === 'object' ? (book.description[lang] || book.description.en) : book.description;
+                      if (d) return d;
+                    }
+                    return lang === 'am' ? (book.summaryAm || book.descriptionAm || '') : (book.summaryEn || book.descriptionEn || '');
+                  })()}
                 </p>
               </div>
             </div>
