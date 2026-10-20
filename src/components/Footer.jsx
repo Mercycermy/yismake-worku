@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from './LanguageContext';
+import Icon from './Icon';
 
 export default function Footer() {
   const { lang } = useLanguage();
@@ -49,70 +50,31 @@ export default function Footer() {
   ];
 
   return (
-    <footer
-      style={{
-        background: '#120d09',
-        color: '#d4cebe',
-        padding: '3.5rem 0 2.5rem',
-        borderTop: '2px solid #c9a84c',
-      }}
-    >
-      <div className="site-container max-w-5xl mx-auto px-4">
-        {/* Top: Brand signature & Social Channels */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#3d2a1b]/60">
-          <div className="text-center md:text-left">
-            <h3
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.25rem',
-                fontWeight: 800,
-                color: '#f5f0e6',
-                letterSpacing: '0.04em',
-                marginBottom: '0.2rem',
-              }}
-            >
-              YISMAKE WORKU · ይስማዕከ ወርቁ
-            </h3>
-            <p className="text-xs text-[#a69c8e]">
-              {lang === 'am' ? 'ይፋዊ የደራሲው ማህደርና የስነ-ጽሑፍ ቢሮ' : 'Official Author Archive & Literary Desk'}
-            </p>
+    <footer className="author-footer">
+      <div className="site-container">
+        <div className="author-footer__top">
+          <div className="author-footer__invitation">
+            <span className="editorial-eyebrow">{lang === 'am' ? 'ታሪኩ ይቀጥላል' : 'THE STORY CONTINUES'}</span>
+            <h2>{lang === 'am' ? 'ቀጣዩ ዓለምዎ እየጠበቀዎት ነው።' : 'Another world is waiting.'}</h2>
+            <p>{lang === 'am' ? 'ልቦለዶች፣ ግጥሞችና ለማሰብ የሚጋብዙ ታሪኮች።' : 'Novels, poetry, and stories that stay with you.'}</p>
+            <Link to="/books" className="collection-button collection-button--gold">{lang === 'am' ? 'መጻሕፍቱን ያስሱ' : 'Explore the books'}<Icon name="arrowRight" size={16} /></Link>
           </div>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
-            {socialLinks.map((s, idx) => (
-              <a
-                key={idx}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={s.title}
-                className="w-9 h-9 rounded-full bg-[#241a12] border border-[#4a3525] text-[#c9a84c] hover:bg-[#c9a84c] hover:text-[#120d09] transition-all flex items-center justify-center text-xs"
-              >
-                {s.icon}
-              </a>
-            ))}
+          <nav className="author-footer__links" aria-label={lang === 'am' ? 'የግርጌ ማሰሻ' : 'Footer navigation'}>
+            <h3>{lang === 'am' ? 'ያስሱ' : 'Explore'}</h3>
+            {navLinks.map(link => <Link key={link.to} to={link.to}>{lang === 'am' ? link.am : link.en}<Icon name="arrowRight" size={13} /></Link>)}
+          </nav>
+          <div className="author-footer__links author-footer__social">
+            <h3>{lang === 'am' ? 'ይከተሉ' : 'Stay connected'}</h3>
+            {socialLinks.map(link => <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" title={link.title}><span className="author-footer__social-icon">{link.icon}</span><span>{link.label}</span><Icon name="external" size={13} /></a>)}
           </div>
         </div>
-
-        {/* Middle: Clean Navigation Links (replacing the book list directory) */}
-        <div className="py-6 border-b border-[#3d2a1b]/40 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold uppercase tracking-wider text-[#a69c8e]">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="hover:text-[#c9a84c] transition-colors"
-            >
-              {lang === 'am' ? link.am : link.en}
-            </Link>
-          ))}
+        <div className="author-footer__signature">
+          <Link to="/">Yismake Worku<span>ይስማዕከ ወርቁ</span></Link>
+          <span>{lang === 'am' ? 'ይፋዊ የደራሲው ድረ-ገጽ' : 'THE OFFICIAL AUTHOR WEBSITE'}</span>
         </div>
-
-        {/* Legal Copyright */}
-        <div className="pt-6 text-center text-xs text-[#8a7e70] font-mono">
-          <p>
-            &copy; {new Date().getFullYear()} YISMAKE WORKU. ALL RIGHTS RESERVED.
-          </p>
+        <div className="author-footer__bottom">
+          <p>&copy; {new Date().getFullYear()} Yismake Worku. {lang === 'am' ? 'መብቱ በሕግ የተጠበቀ ነው።' : 'All rights reserved.'}</p>
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>{lang === 'am' ? 'ወደ ላይ' : 'Back to top'}<Icon name="arrowRight" size={14} /></button>
         </div>
       </div>
     </footer>

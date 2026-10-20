@@ -69,99 +69,52 @@ export default function Contact() {
 
       {/* Main Content Area */}
       <div className="site-container max-w-5xl mx-auto py-10 sm:py-16 px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="jkr-contact-grid grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Left Column: Direct Official Channels */}
+          {/* Left Column: Direct Official Channels — Telegram Card */}
           <div className="lg:col-span-5 space-y-6">
             {/* Telegram Card */}
-            <div className="p-6 sm:p-7 rounded-2xl border border-[#e8dfc8] bg-white shadow-sm hover:shadow-md transition-all">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="w-12 h-12 rounded-2xl bg-[#0088cc]/10 text-[#0088cc] flex items-center justify-center shrink-0">
-                  <Icon name="send" size={22} />
+            <div className="jkr-contact-telegram-card p-6 sm:p-8 rounded-3xl border border-[#d9e8ed] bg-white shadow-sm transition-all relative overflow-hidden">
+              <div className="jkr-contact-telegram-glow absolute top-0 right-0 w-40 h-40 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="jkr-contact-telegram-card__profile flex items-center gap-4 mb-5">
+                <span className="jkr-contact-telegram-card__icon w-14 h-14 rounded-2xl bg-[#0088cc]/10 text-[#0088cc] flex items-center justify-center shrink-0 shadow-xs">
+                  <Icon name="send" size={26} />
                 </span>
-                <div>
-                  <span className="text-[10px] font-bold text-[#b8860b] uppercase tracking-wider block">
-                    {lang === 'am' ? 'ይፋዊ ቻናል' : 'Primary Community'}
-                  </span>
-                  <h3 className="text-lg font-bold text-[#1a1714]" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Telegram Community
+                <div className="jkr-contact-telegram-card__identity">
+                  <div className="jkr-contact-telegram-card__label inline-flex items-center gap-1.5 text-[#1688b8] text-[10px] font-bold uppercase tracking-[0.16em] mb-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1688b8]" />
+                    {lang === 'am' ? 'ይፋዊ ቻናል' : 'Official Channel'}
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1a1714]" style={{ fontFamily: 'var(--font-serif)' }}>
+                    Telegram Channel
                   </h3>
-                  <p className="text-xs text-[#8a857d]">@yismakeworku • 18,600+ Readers</p>
+                  <p className="text-xs text-[#667781]">@yismakeworku <span aria-hidden="true">·</span> 18,600+ readers</p>
                 </div>
               </div>
 
-              <p className="text-xs text-[#5e584f] leading-relaxed mb-5" style={{ fontFamily: 'var(--font-serif)' }}>
+              <p className="text-sm text-[#55616a] leading-relaxed mb-0">
                 {lang === 'am'
-                  ? 'አዳዲስ የግጥም ማስታወሻዎችን፣ ይፋዊ የመጽሐፍ መግለጫዎችንና የቀጥታ ጽሑፎችን በየቀኑ በቴሌግራም ይከታተሉ።'
-                  : 'Join the daily literary salon for authentic announcements, book releases, poems, and direct reader dialogue.'}
+                  ? 'ስለ አዳዲስ መጻሕፍትና የደራሲውን ማስታወሻዎች ይከታተሉ።'
+                  : 'Follow new releases and notes from the author.'}
               </p>
 
               <a
                 href="https://t.me/yismakeworku"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-[#0088cc] text-white text-xs font-bold hover:bg-[#0077b5] transition-colors shadow-sm"
+                className="jkr-contact-telegram-card__link jkr-contact-telegram-link w-full inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-2xl bg-[#1688b8] text-white text-xs font-bold transition-all active:scale-[0.98]"
               >
-                <span>{lang === 'am' ? 'ቻናሉን በቴሌግራም ይክፈቱ' : 'Open Official Telegram'}</span>
+                <Icon name="send" size={15} />
+                <span>{lang === 'am' ? 'በቴሌግራም ይከተሉ' : 'Follow on Telegram'}</span>
                 <Icon name="arrowRight" size={15} />
               </a>
-            </div>
-
-            {/* Direct Editorial Details */}
-            <div className="p-6 sm:p-7 rounded-2xl border border-[#e8dfc8] bg-[#fdfcfa]">
-              <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#1a1714] mb-4 pb-2 border-b border-[#e8e2d5]">
-                {lang === 'am' ? 'የቢሮ መረጃዎች' : 'Institutional Credentials'}
-              </h4>
-
-              <div className="space-y-4 text-xs">
-                <div className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon name="bookOpen" size={14} />
-                  </span>
-                  <div>
-                    <span className="font-bold text-[#1a1714] block">
-                      {lang === 'am' ? 'አካዳሚያዊ ማዕቀፍ' : 'Academic Affiliation'}
-                    </span>
-                    <span className="text-[#6e685f]">
-                      {lang === 'am' ? 'ደብረ ማርቆስ ዩኒቨርሲቲ፣ ኢትዮጵያ' : 'Debre Markos University, Ethiopia'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon name="archive" size={14} />
-                  </span>
-                  <div>
-                    <span className="font-bold text-[#1a1714] block">
-                      {lang === 'am' ? 'ዓለም አቀፍ የትርጉም መብቶች' : 'International Rights'}
-                    </span>
-                    <span className="text-[#6e685f]">
-                      Henningham Family Press (London, UK) &amp; Society of Authors
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-[#c9a84c]/10 text-[#c9a84c] flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon name="check" size={14} />
-                  </span>
-                  <div>
-                    <span className="font-bold text-[#1a1714] block">
-                      {lang === 'am' ? 'ይፋዊ ISBN ምዝገባ' : 'National Registry'}
-                    </span>
-                    <span className="text-[#6e685f]">
-                      National Archives and Library of Ethiopia (NALE)
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           {/* Right Column: Inquiries Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl border border-[#e8dfc8] bg-white shadow-sm">
+            <div className="jkr-contact-inquiry p-6 sm:p-8 md:p-10 rounded-3xl border border-[#e8dfc8] bg-white shadow-sm">
               <h2
                 style={{
                   fontFamily: 'var(--font-serif)',

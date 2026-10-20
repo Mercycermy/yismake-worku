@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Icon from './Icon';
 
-/**
- * Premium Light / Dark Mode Toggle
- * Replaces the old EN/AM language toggle.
- * Supports compact (mobile) and default (desktop) variants.
- */
-export default function ThemeToggle({ variant = 'light', size = 'md', className = '' }) {
+export default function ThemeToggle({ className = '' }) {
   const [theme, setTheme] = useState(() => {
     try {
       const saved = localStorage.getItem('yismake_theme');
-      if (saved) return saved;
+      if (saved === 'light' || saved === 'dark') return saved;
       return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     } catch {
       return 'light';
@@ -35,7 +31,6 @@ export default function ThemeToggle({ variant = 'light', size = 'md', className 
   }, [theme]);
 
   const isDark = theme === 'dark';
-  const isCompact = size === 'sm' || variant === 'compact';
 
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
@@ -43,36 +38,17 @@ export default function ThemeToggle({ variant = 'light', size = 'md', className 
     <button
       type="button"
       onClick={toggleTheme}
-      className={`theme-toggle theme-toggle--${variant} theme-toggle--${size} ${className}`}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={isDark ? 'Light Mode' : 'Dark Mode'}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '0.45rem',
-        padding: isCompact ? '0.35rem 0.65rem' : '0.45rem 0.9rem',
-        borderRadius: '999px',
-        border: '1px solid',
-        borderColor: isDark ? 'rgba(201,168,76,0.45)' : '#e5dfd5',
-        background: isDark ? 'rgba(201,168,76,0.12)' : '#f5f3ef',
-        color: isDark ? '#c9a84c' : '#4a453e',
-        cursor: 'pointer',
-        fontSize: isCompact ? '0.75rem' : '0.8125rem',
-        fontWeight: 650,
-        fontFamily: 'var(--font-sans)',
-        transition: 'all 0.25s ease',
-        lineHeight: 1,
-      }}
+      className={`theme-toggle${isDark ? ' is-dark' : ''} ${className}`}
+      role="switch"
+      aria-checked={isDark}
+      aria-label="Dark mode"
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <span style={{ fontSize: isCompact ? '0.85rem' : '0.95rem' }}>
-        {isDark ? '☀️' : '🌙'}
+      <span className="theme-toggle__track" aria-hidden="true">
+        <span className="theme-toggle__thumb" />
+        <span className="theme-toggle__icon theme-toggle__sun"><Icon name="sun" size={16} /></span>
+        <span className="theme-toggle__icon theme-toggle__moon"><Icon name="moon" size={15} /></span>
       </span>
-      {!isCompact && (
-        <span style={{ letterSpacing: '0.04em' }}>
-          {isDark ? 'Light' : 'Dark'}
-        </span>
-      )}
     </button>
   );
 }

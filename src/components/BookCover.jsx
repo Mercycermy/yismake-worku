@@ -9,8 +9,10 @@ export default function BookCover({ book, size = 'normal', showSpine = true, cla
   if (!book) return null;
 
   const sizeStyles = {
+    fill: 'w-full h-full text-sm',
     small: 'w-36 h-52 text-xs',
     normal: 'w-56 h-80 text-sm',
+    lg: 'w-full h-full text-sm',
     large: 'w-72 h-[420px] text-base',
     hero: 'w-72 sm:w-84 md:w-96 h-[440px] sm:h-[500px] md:h-[540px] text-lg'
   }[size] || 'w-56 h-80 text-sm';

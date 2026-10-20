@@ -50,81 +50,51 @@ export default function Navbar() {
           {/* Logo / Author Signature */}
           <Link
             to="/"
-            className="flex items-center gap-2 group text-decoration-none"
+            className="jkr-navbar-brand flex items-center gap-2.5 group text-decoration-none py-1"
             style={{ textDecoration: 'none' }}
           >
             <div className="flex flex-col">
-              <span className="group-hover:text-[#c9a84c] navbar-author-name">
+              <span className="group-hover:text-[#c9a84c] navbar-author-name transition-colors font-serif font-black tracking-wider text-base text-[#1a1714]">
                 {lang === 'am' ? 'ይስማዕከ ወርቁ' : 'YISMAKE WORKU'}
+              </span>
+              <span className="text-[9px] uppercase tracking-widest text-[#8a857d] font-mono -mt-0.5 hidden sm:block">
+                {lang === 'am' ? 'ይፋዊ የስነ-ጽሑፍ ማህደር' : 'Official Author Archive'}
               </span>
             </div>
           </Link>
 
-          {/* Desktop Right Side: Nav Links + Translation Toggle (Hidden on Mobile) */}
-          <div className="hidden lg:flex items-center gap-8">
-            <nav className="flex items-center gap-7">
+          {/* One theme control stays in sync across responsive layouts. */}
+          <div className="jkr-navbar-controls flex items-center gap-2 sm:gap-5 lg:gap-8">
+            <nav className="jkr-navbar-links hidden lg:flex items-center gap-7" aria-label={lang === 'am' ? 'ዋና ማሰሻ' : 'Main navigation'}>
               {navItems.map((item) => {
                 const active = isActive(item.to);
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.8125rem',
-                      fontWeight: active ? 700 : 600,
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      color: active ? '#1a1714' : '#736d65',
-                      textDecoration: 'none',
-                      position: 'relative',
-                      padding: '6px 0',
-                      transition: 'all 0.2s',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!active) e.currentTarget.style.color = '#c9a84c';
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!active) e.currentTarget.style.color = '#736d65';
-                    }}
+                    className={`jkr-navbar-link${active ? ' is-active' : ''}`}
+                    aria-current={active ? 'page' : undefined}
                   >
                     <span>{lang === 'am' ? item.am : item.en}</span>
-                    {active && (
-                      <span
-                        style={{
-                          position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          height: '2px',
-                          background: 'linear-gradient(90deg, #c9a84c, #b8860b)',
-                          borderRadius: '2px',
-                        }}
-                      />
-                    )}
                   </Link>
                 );
               })}
             </nav>
 
-            <ThemeToggle variant="light" size="md" />
-          </div>
-
-          {/* Mobile Right Controls: Translation Toggle + Hamburger (STRICTLY lg:hidden) */}
-          <div className="flex lg:hidden items-center gap-2">
-            <ThemeToggle variant="compact" size="sm" />
+            <ThemeToggle />
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#1a1714] bg-transparent border-none cursor-pointer rounded-md hover:bg-gray-100 transition-colors"
-              aria-label="Toggle Navigation Menu"
+              className="jkr-navbar-menu-toggle lg:hidden p-2 text-[#1a1714] bg-transparent border-none cursor-pointer rounded-md hover:bg-gray-100 transition-colors"
+              aria-label={mobileMenuOpen ? (lang === 'am' ? 'ማሰሻውን ዝጋ' : 'Close navigation menu') : (lang === 'am' ? 'ማሰሻውን ክፈት' : 'Open navigation menu')}
+              aria-expanded={mobileMenuOpen}
             >
               <div style={{ width: '22px', height: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <span
                   style={{
                     height: '2px',
                     width: '100%',
-                    background: '#1a1714',
+                    background: 'currentColor',
                     transition: 'all 0.3s',
                     borderRadius: '2px',
                     transform: mobileMenuOpen ? 'rotate(45deg) translateY(7px)' : 'none',
@@ -134,7 +104,7 @@ export default function Navbar() {
                   style={{
                     height: '2px',
                     width: '100%',
-                    background: '#1a1714',
+                    background: 'currentColor',
                     transition: 'all 0.3s',
                     borderRadius: '2px',
                     opacity: mobileMenuOpen ? 0 : 1,
@@ -144,7 +114,7 @@ export default function Navbar() {
                   style={{
                     height: '2px',
                     width: '100%',
-                    background: '#1a1714',
+                    background: 'currentColor',
                     transition: 'all 0.3s',
                     borderRadius: '2px',
                     transform: mobileMenuOpen ? 'rotate(-45deg) translateY(-7px)' : 'none',
@@ -159,39 +129,23 @@ export default function Navbar() {
       {/* Mobile Slide-down Drawer (STRICTLY lg:hidden) */}
       {mobileMenuOpen && (
         <div
-          className="lg:hidden animate-fade-in"
+          className="jkr-mobile-navigation lg:hidden animate-fade-in"
           style={{
-            marginTop: '12px',
-            padding: '16px 20px 24px',
-            background: '#fdfcfa',
-            borderBottom: '2px solid #c9a84c',
-            boxShadow: '0 12px 32px rgba(0,0,0,0.08)',
+            marginTop: '0',
           }}
         >
-          <nav className="flex flex-col gap-2">
+          <nav className="jkr-mobile-navigation__links flex flex-col gap-2" aria-label={lang === 'am' ? 'ዋና ማሰሻ' : 'Main navigation'}>
             {navItems.map((item) => {
               const active = isActive(item.to);
               return (
                 <Link
                   key={item.to}
                   to={item.to}
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '1.0625rem',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    textDecoration: 'none',
-                    fontWeight: active ? 700 : 500,
-                    color: active ? '#1a1714' : '#5a564e',
-                    background: active ? '#f5f3ef' : 'transparent',
-                    borderLeft: active ? '3px solid #c9a84c' : '3px solid transparent',
-                  }}
+                  className={`jkr-mobile-navigation__link${active ? ' is-active' : ''}`}
+                  aria-current={active ? 'page' : undefined}
                 >
                   <span>{lang === 'am' ? item.am : item.en}</span>
-                  <span style={{ color: active ? '#c9a84c' : '#c4bfb5', fontSize: '0.875rem' }}>→</span>
+                  <span aria-hidden="true">→</span>
                 </Link>
               );
             })}

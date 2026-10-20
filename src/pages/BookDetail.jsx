@@ -4,7 +4,6 @@ import { useLanguage } from '../components/LanguageContext';
 import { verifiedBooks } from '../data/yismakeData';
 import { getBookSample } from '../data/bookSamples';
 import BookCover from '../components/BookCover';
-import ThemeToggle from '../components/ThemeToggle';
 import Icon from '../components/Icon';
 
 export default function BookDetail() {
@@ -280,7 +279,7 @@ export default function BookDetail() {
     .slice(0, 3);
 
   return (
-    <div className="jkr-book-detail-page" style={{ background: 'var(--bg-primary)', color: '#1a1714', fontFamily: 'var(--font-sans)' }}>
+    <div className="jkr-book-detail-page" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
       {/* ─────────────────────────────────────────────────────────────
           1. STICKY ACTION ANCHOR BAR (The 4 Pillars)
           ───────────────────────────────────────────────────────────── */}
@@ -337,7 +336,7 @@ export default function BookDetail() {
               }}
             >
               <Icon name="shield" size={14} />
-              <span>{lang === 'am' ? 'ትክክለኛነትን ያረጋግጡ' : 'Verify Authenticity'}</span>
+              <span>{lang === 'am' ? 'ትክክለኛነትን ያረጋግጡ' : 'Verify copy'}</span>
             </button>
 
             <button
@@ -355,14 +354,13 @@ export default function BookDetail() {
               </span>
             </button>
 
-            <ThemeToggle variant="compact" size="sm" className="ml-1" />
           </div>
         </div>
       </div>
 
       <div className="site-container max-w-5xl mx-auto py-8 sm:py-14 px-4">
         {/* Top: Return to Category Link + Breadcrumb Trail */}
-        <div className="pb-4 mb-8 border-b border-[#e8e2d5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#736d65]">
+        <div className="jkr-book-breadcrumbs pb-4 mb-8 border-b border-[#e8e2d5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#736d65]">
           <div className="flex items-center gap-2 flex-wrap">
             <Link to="/" className="hover:text-[#c9a84c] transition-colors">
               {lang === 'am' ? 'መነሻ' : 'Home'}
@@ -396,7 +394,7 @@ export default function BookDetail() {
             HERO EDITORIAL SHOWCASE
             ───────────────────────────────────────────────────────────── */}
         <div className="jkr-book-hero mb-20">
-          <div className="flex flex-col items-center">
+          <div className="jkr-book-hero__cover flex flex-col items-center">
             <div className="w-full max-w-sm flex flex-col items-center">
               <div className="jkr-book-cover-frame relative group w-full">
                 <div className="overflow-hidden rounded-lg group-hover:scale-102 transition-transform duration-300 flex justify-center">
@@ -404,22 +402,29 @@ export default function BookDetail() {
                 </div>
               </div>
 
-              {/* Read Sample */}
-              <div className="mt-7 w-full space-y-3">
+              {/* Action Buttons */}
+              <div className="jkr-book-hero__actions mt-7 w-full space-y-2.5">
                 <button
                   onClick={() => scrollToSection(sampleRef)}
-                  className="w-full py-3 px-5 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] hover:bg-[#fbf9f4] text-[#1a1714] font-semibold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+                  className="w-full py-3.5 px-5 bg-[#1a1714] text-white hover:bg-black font-bold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.99]"
                 >
                   <Icon name="bookOpen" size={16} />
                   <span>{lang === 'am' ? 'የመጽሐፉን ቅምሻ ያንብቡ' : 'Read Free Sample Chapter'}</span>
                 </button>
-              </div>
 
+                <button
+                  onClick={() => scrollToSection(verifyRef)}
+                  className="w-full py-3 px-5 bg-white border border-[#e8e2d5] hover:border-[#c9a84c] hover:bg-[#fbf9f4] text-[#1a1714] font-semibold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-2xs hover:shadow-sm"
+                >
+                  <Icon name="shield" size={15} />
+                  <span>{lang === 'am' ? 'ትክክለኛ ቅጂን ያረጋግጡ' : 'Verify Original Copy'}</span>
+                </button>
+              </div>
 
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="jkr-book-hero__content space-y-6">
             <div>
               <div className="text-xs font-bold text-[#8a857d] uppercase tracking-widest mb-2.5 flex items-center gap-2 flex-wrap">
                 <span className="px-2.5 py-0.5 rounded bg-[#1a1714] text-[#c9a84c] text-[10px] font-mono tracking-wider">
@@ -430,7 +435,7 @@ export default function BookDetail() {
                 {book.seriesOrder && (
                   <>
                     <span>•</span>
-                    <span className="text-[#c9a84c] font-bold">TRILOGY PART 0{book.seriesOrder}</span>
+                    <span className="text-[#c9a84c] font-bold">{lang === 'am' ? 'ቅጽ' : 'VOLUME'} {String(book.seriesOrder).padStart(2, '0')}</span>
                   </>
                 )}
               </div>
@@ -440,7 +445,7 @@ export default function BookDetail() {
                   fontFamily: 'var(--font-serif)',
                   fontSize: 'clamp(2.25rem, 4.5vw, 3.25rem)',
                   fontWeight: 800,
-                  color: '#1a1714',
+                  color: 'var(--text-primary)',
                   lineHeight: 1.15,
                   marginBottom: '0.5rem',
                 }}
@@ -462,7 +467,7 @@ export default function BookDetail() {
 
             {/* Tagline */}
             <div
-              className="p-5 rounded-xl border relative overflow-hidden"
+              className="jkr-book-hero__tagline p-5 rounded-xl border relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, #fbf9f4 0%, #f5efe3 100%)',
                 borderLeft: '4px solid #c9a84c',
@@ -484,7 +489,7 @@ export default function BookDetail() {
 
             {/* Synopsis */}
             <div
-              className="space-y-4 text-base sm:text-lg text-[#3d372e] leading-relaxed"
+              className="jkr-book-hero__synopsis space-y-4 text-base sm:text-lg text-[#3d372e] leading-relaxed"
               style={{ fontFamily: 'var(--font-serif)' }}
             >
               <p>{lang === 'am' ? book.description?.am : book.description?.en}</p>
@@ -557,7 +562,7 @@ export default function BookDetail() {
                 marginBottom: '4px',
               }}
             >
-              {lang === 'am' ? 'ምዕራፍ ፪ · ነፃ ቅምሻ' : 'Section II · Free Manuscript Sample'}
+              {lang === 'am' ? 'ነፃ የንባብ ቅምሻ' : 'A FEW PAGES TO BEGIN'}
             </span>
             <h2
               style={{
@@ -568,7 +573,7 @@ export default function BookDetail() {
                 marginBottom: '0.5rem',
               }}
             >
-              {lang === 'am' ? 'የመጽሐፉ ቅምሻ አንባቢ' : 'Interactive Manuscript Reader'}
+              {lang === 'am' ? 'የመጽሐፉን ቅምሻ ያንብቡ' : 'Step inside the story'}
             </h2>
             <p className="text-sm text-[#6e685f] mt-2 font-serif">
               {lang === 'am'
@@ -787,7 +792,7 @@ export default function BookDetail() {
                 marginBottom: '4px',
               }}
             >
-              {lang === 'am' ? 'ምዕራፍ ፫ · ትክክለኛነት ማረጋገጫ' : 'Section III · Security Verification'}
+              {lang === 'am' ? 'የመጽሐፉ ትክክለኛነት' : 'YOUR ORIGINAL EDITION'}
             </span>
             <h2
               style={{
@@ -984,7 +989,7 @@ export default function BookDetail() {
                 marginBottom: '4px',
               }}
             >
-              {lang === 'am' ? 'ምዕራፍ ፬ · የአንባቢዎች ውይይት' : 'Section IV · Reader Discussion & Canon'}
+              {lang === 'am' ? 'የአንባቢዎች ድምፅ' : 'VOICES FROM THE READING ROOM'}
             </span>
             <h2
               style={{
@@ -995,7 +1000,7 @@ export default function BookDetail() {
                 marginBottom: '0.5rem',
               }}
             >
-              {lang === 'am' ? 'የአንባቢዎች ውይይትና አስተያየቶች' : 'Reader Discussion & Reviews'}
+              {lang === 'am' ? 'የአንባቢዎች አስተያየቶች' : 'A story worth discussing'}
             </h2>
             <p className="text-sm text-[#6e685f] mt-2 font-serif">
               {lang === 'am'
@@ -1287,7 +1292,7 @@ export default function BookDetail() {
                   color: '#1a1714',
                 }}
               >
-                {lang === 'am' ? 'ሌሎች የይስማዕከ ወርቁ ስራዎች' : 'More Works in the Canon'}
+                {lang === 'am' ? 'ሌሎች የይስማዕከ ወርቁ ስራዎች' : 'Continue your reading journey'}
               </h2>
             </div>
 

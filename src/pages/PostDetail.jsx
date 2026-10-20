@@ -2,122 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import Icon from '../components/Icon';
+import { curatedNewsArticles } from '../data/newsData';
 
-export const curatedNewsArticles = [
-  {
-    id: 'lost-spell-award',
-    date: '24 SEPTEMBER 2026',
-    readTime: '4 min read',
-    category: 'NEWS',
-    categoryAm: 'ዜና',
-    titleEn: "The Lost Spell Shortlisted for the TA First Translation Prize in the United Kingdom",
-    titleAm: "«ክቡር ድንጋይ» (The Lost Spell) በእንግሊዝ ለታላቁ የ2022 TA First Translation Prize እጩ ሆነ",
-    image: '/images/the-lost-spell-award.jpg',
-    imageCaptionEn: 'Official shortlist announcement by the Society of Authors in London celebrating Bethlehem Attfield’s translation.',
-    imageCaptionAm: 'በለንደን የደራሲያን ማህበር ይፋ የተደረገው የትርጉም ሽልማት እጩነት ማስታወቂያ።',
-    summaryEn:
-      "Henningham Family Press and the Society of Authors in the UK announced the prestigious shortlist for the TA First Translation Prize, celebrating Dr. Bethlehem Attfield's English translation of Yismake Worku's satirical masterpiece 'The Lost Spell' (Kebur Dengay).",
-    summaryAm:
-      "በዶ/ር ቤተልሔም አትፊልድ ወደ እንግሊዝኛ ተተርጉሞ በለንደን ሄኒንግሃም ፋሚሊ ፕሬስ የታተመው የይስማዕከ ወርቁ «ክቡር ድንጋይ» (The Lost Spell) በታላቋ ብሪታንያ የስነ-ጽሑፍ ማህበር ለ2022 TA First Translation Prize ሽልማት እጩ መሆኑ ይፋ ተደረገ።",
-    pullQuoteEn: "Worku’s storytelling offers an unsparing, inventive mirror of human hypocrisy, balancing the gravitas of Ethiopian folklore with modern existential philosophy.",
-    pullQuoteAm: "የይስማዕከ ወርቁ ስራ የሰው ልጅን እብሪትና የፖለቲካ ግብዝነት ከመሬት ተነስቶ በውሻ እይታ የመረመረበት አስደናቂ ማህበራዊ ምጸት ነው።",
-    fullTextEn: [
-      "The Society of Authors in London has formally announced the shortlist for the prestigious TA First Translation Prize. Among the distinguished nominees is 'The Lost Spell', the English translation of Yismake Worku’s iconic 2013 Amharic novel 'Kebur Dengay', translated by Dr. Bethlehem Attfield (PhD, University of Birmingham) and published by the esteemed British indie publisher Henningham Family Press.",
-      "The judges commended the novel's biting allegorical genius: 'A powerful, satirical examination of human arrogance, power dynamics, and urban vulnerability seen through the eyes of a corrupt businessman magically transformed into a street dog. Attfield’s translation brings Worku’s rich Ethiopian idiom and layered social humor alive with extraordinary fidelity.'",
-      "This milestone represents one of the highest international literary acknowledgments for contemporary Amharic speculative literature, introducing Yismake Worku’s narrative universe to readers across the United Kingdom, Europe, and North America.",
-      "Dr. Bethlehem Attfield noted in an interview: 'Translating Yismake Worku was an exhilarating journey into contemporary Amharic prose, packed with layers of Ethiopian cultural humor, street philosophy, and profound existential questions.'"
-    ],
-    fullTextAm: [
-      "የብሪታንያ የደራሲያን ማህበር (Society of Authors) ለ2022 TA First Translation Prize ሽልማት እጩዎችን በይፋ አሳውቋል። በዚህ ዝርዝር ውስጥ በዶ/ር ቤተልሔም አትፊልድ ተተርጉሞ በሄኒንግሃም ፕሬስ የታተመው የይስማዕከ ወርቁ ድንቅ ልቦለድ «ክቡር ድንጋይ» (The Lost Spell) ተካቷል።",
-      "የዳኞች ቡድኑ ስለ ልቦለዱ በሰጠው አስተያየት፡ 'የሰው ልጅን እብሪትና የፖለቲካ ግብዝነት ከመሬት ተነስቶ በውሻ እይታ የመረመረበት አስደናቂ ማህበራዊ ምጸት ነው። የትርጉም ስራውም የኢትዮጵያን ጥልቅ ባህልና የአማርኛን ጣዕም ሳይለቅ ለአለም አቀፍ አንባቢ አቅርቦታል' ሲሉ አድንቀዋል።",
-      "ይህ ታላቅ እውቅና የዘመናዊው የኢትዮጵያ ስነ-ጽሑፍ በዓለም አቀፍ መድረክ ተወዳዳሪ መሆኑን ያረጋገጠ ድንቅ ድል ነው።",
-      "ዶ/ር ቤተልሔም አትፊልድ በሰጡት አስተያየት፡ 'የይስማዕከ ወርቁን ስራ መተርጎም የአማርኛ ቋንቋን ጣዕምና የአገራችንን ውስብስብ ማህበራዊ እውነታ ለአለም ለማስተዋወቅ ትልቅ እድል ፈጥሮልኛል' ብለዋል።"
-    ]
-  },
-  {
-    id: 'telegram-community',
-    date: '12 AUGUST 2026',
-    readTime: '3 min read',
-    category: 'INSIGHT',
-    categoryAm: 'ግንዛቤ',
-    titleEn: "The Living Archive: Yismake Worku Surpasses 18,600+ Subscribers on Official Telegram",
-    titleAm: "በይፋዊ የቴሌግራም ቻናል ከ18,600 በላይ አንባቢዎች ጋር የተደረገ የቀጥታ ውይይት",
-    image: '/images/library-bg.jpg',
-    imageCaptionEn: 'Archival library notes and direct reader communications from the official salon.',
-    imageCaptionAm: 'ከደራሲው ማህደርና ከአንባቢው ማህበረሰብ የተሰባሰቡ ማስታወሻዎች።',
-    summaryEn:
-      "The official digital community of Yismake Worku has crossed 18,600 verified readers, serving as an active literary salon for unpublished poems, reflections, and direct author discussions.",
-    summaryAm:
-      "የይስማዕከ ወርቁ ይፋዊ የቴሌግራም ማህበረሰብ ከ18,600 በላይ ተከታዮችን አሰባስቧል። በቻናሉ አማካኝነት አዳዲስ ግጥሞች፣ የስነ-ጽሑፍ ምክሮችና የቀጥታ የውይይት መድረኮች ይቀርባሉ።",
-    pullQuoteEn: "Without your steadfast companionship through every trial and milestone, this literary journey would be incomplete. You are the guardians of our written word.",
-    pullQuoteAm: "በእያንዳንዱ የህይወት ፈተናና ደስታ ውስጥ ከጎኔ ለቆማችሁ አንባቢዎቼ ሁሉ ምስጋናዬ ከልብ ነው። የእኔ ትልቁ ሀብት እናንተ ናችሁ።",
-    fullTextEn: [
-      "In an era where unauthorized reprints and digital bootlegs circulate freely, Yismake Worku's official Telegram channel (@yismakeworku) has become the direct heartbeat connecting the author with more than 18,600 readers worldwide.",
-      "Subscribers receive exclusive access to early manuscript snippets, personal reflections on Ethiopian cultural sovereignty, and verified alerts regarding legitimate authorized book editions.",
-      "The author expressed his deep gratitude to the community: 'Without your steadfast companionship through every trial and milestone, this literary journey would be incomplete. You are the guardians of our written word.'"
-    ],
-    fullTextAm: [
-      "በይስማዕከ ወርቁ ይፋዊ የቴሌግራም ቻናል (@yismakeworku) በኩል ከአገር ውስጥና ከመላው ዓለም የተውጣጡ ከ18,600 በላይ አንባቢዎች ተሰባስበው ጽሑፎቹን ይከታተላሉ።",
-      "ይህ መድረክ ያልታተሙ አጫጭር ግጥሞች፣ ደራሲያዊ ምክሮችና ህጋዊ የመጽሐፍ እትሞች መረጃዎች የሚቀርቡበት ዋነኛ ይፋዊ መስኮት ነው።",
-      "ደራሲው ለአንባቢዎቹ ባስተላለፈው መልእክት፡ 'በእያንዳንዱ የህይወት ፈተናና ደስታ ውስጥ ከጎኔ ለቆማችሁ አንባቢዎቼ ሁሉ ምስጋናዬ ከልብ ነው። የእኔ ትልቁ ሀብት እናንተ ናችሁ' ብሏል።"
-    ]
-  },
-  {
-    id: 'academic-study',
-    date: '18 JULY 2026',
-    readTime: '5 min read',
-    category: 'IDEA',
-    categoryAm: 'ሀሳብ',
-    titleEn: "Taylor & Francis Academic Journal Publishes In-Depth Analysis of Dertogada",
-    titleAm: "ስለ ዴርቶጋዳ የቀረበ ዓለም አቀፍ አካዳሚያዊ ጥናት በታይለር ኤንድ ፍራንሲስ ታተመ",
-    image: '/images/dertogada-art.jpg',
-    imageCaptionEn: 'Theoretical rendering of the subterranean scientific sanctum beneath ancient Lake Tana.',
-    imageCaptionAm: 'በጣና ሐይቅ ስር የተሰወረው የዴርቶጋዳ ሳይንሳዊ ማዕከል ምናባዊ ስዕል።',
-    summaryEn:
-      "A peer-reviewed academic study titled 'Modernisation from the Shadows: Conspiracy, Monasticism and Techno-Utopia in Dertogada' explores the synthesis of Ethiopian ecclesiastical history and speculative fiction.",
-    summaryAm:
-      "በታዋቂው የታይለር ኤንድ ፍራንሲስ ዓለም አቀፍ የጥናት ጆርናል ላይ የዴርቶጋዳን ገዳማዊ እውቀትና የሳይንስ ልቦለድ ይዘት የመረመረ አጠቃላይ ጥናት ታትሞ ወጣ።",
-    pullQuoteEn: "Worku challenged Western-centric science fiction paradigms by demonstrating that ancient Ge'ez scholarship and national sovereignty provide a potent framework for technological imagination.",
-    pullQuoteAm: "ይስማዕከ ወርቁ የምዕራባውያንን ሳይንስ ልቦለድ ከመኮረጅ ይልቅ፣ የራሱን አገራዊ ቅርስና የግዕዝ እውቀት ተጠቅሞ የሳይንስ ነጻነትን ማሳየቱ ትልቅ ፋይዳ አለው።",
-    fullTextEn: [
-      "Published in Eastern African Literary and Cultural Studies by researchers Sara Marzagora and Tom Boylston, the paper 'Modernisation from the Shadows: Conspiracy, Monasticism and Techno-Utopia in the Amharic novel Dertogada' critically examines how Yismake Worku bridged traditional Ethiopian monastic science with contemporary Afrofuturism.",
-      "The study demonstrates how Dertogada broke new ground by portraying Lake Tana not as a passive relic of the past, but as an active, subterranean center of quantum computing and aerospace development.",
-      "The scholars note: 'Worku challenged Western-centric science fiction paradigms by demonstrating that ancient Ge'ez scholarship and national sovereignty provide a potent framework for technological imagination.'"
-    ],
-    fullTextAm: [
-      "በሳራ ማርዛጎራና ቶም ቦይልስተን የተዘጋጀው ይህ ጥናት፣ ዴርቶጋዳ እንዴት ጥንታዊውን የጣና ሐይቅ ገዳማት ታሪክ ወደ ዘመናዊ የጠፈርና የሳይንስ ማዕከልነት እንደቀየረው ይመረምራል።",
-      "ተመራማሪዎቹ እንደገለጹት፤ 'ይስማዕከ ወርቁ የምዕራባውያንን ሳይንስ ልቦለድ ከመኮረጅ ይልቅ፣ የራሱን አገራዊ ቅርስና የግዕዝ እውቀት ተጠቅሞ የሳይንስ ነጻነትን ማሳየቱ ትልቅ አካዳሚያዊ ፋይዳ አለው' ብለዋል።"
-    ]
-  },
-  {
-    id: 'writers-solitude',
-    date: '14 APRIL 2026',
-    readTime: '4 min read',
-    category: 'THOUGHT',
-    categoryAm: 'አሰላስል',
-    titleEn: "A Writer's Solitude: Reflections from Lake Tana & The Blue Nile Gorge",
-    titleAm: "የብዕር ብቸኝነት፡ ከጣና ሐይቅና ከዓባይ ሸለቆ የተወለዱ ማስታወሻዎች",
-    image: '/images/writers-desk.jpg',
-    imageCaptionEn: 'Original writing sanctuary in Gojjam overlooking ancient monastic contours.',
-    imageCaptionAm: 'በጎጃም የጣና ሐይቅና የገዳማት ዳርቻ የሚገኘው የደራሲው ጸጥተኛ የሥራ ጠረጴዛ።',
-    summaryEn:
-      "A personal contemplation on silence, landscape, and why genuine literature requires stepping outside the clamor of everyday life into deep contemplative stillness.",
-    summaryAm:
-      "ስለ ጸጥታ፣ ተፈጥሮና እውነተኛ የስነ-ጽሑፍ ስራ ከዕለት ተዕለት ጫጫታ ርቆ ወደ ጥልቅ ውስጣዊ አርምሞ መግባትን የሚጠይቅ መሆኑን የሚዳስስ የግል ማስታወሻ።",
-    pullQuoteEn: "The silence around Lake Tana is not empty; it is crowded with the whispering ink of seven hundred years of monastic scribes.",
-    pullQuoteAm: "የጣና ሐይቅ ጸጥታ ባዶ አይደለም፤ የሰባት መቶ ዓመታት የገዳማት ብራናዎችና የጸሎት ድምፆች የሞሉት የተቀደሰ ዝምታ እንጂ።",
-    fullTextEn: [
-      "True stories do not arrive in hurry. When writing Dertogada and Ramatohara, the quiet waters of Tana provided not just scenery, but spiritual architecture.",
-      "Ethiopian literature possesses an ancient soul. Long before modern printing presses arrived, our monastic masters spent lifetimes grinding minerals to make indelible ink.",
-      "When a modern African author sits down to write, we do not begin from zero. We inherit mountains, ancient parchment, and the collective heartbeat of our sovereign people."
-    ],
-    fullTextAm: [
-      "እውነተኛ ታሪኮች በችኮላ አይወለዱም። ዴርቶጋዳና ራማቶሓራን ስጽፍ፣ የጣና ጸጥተኛ ሞገዶች ገጽታ ብቻ ሳይሆኑ መንፈሳዊ ምሰሶዎች ነበሩ።",
-      "የኢትዮጵያ ስነ-ጽሑፍ ጥንታዊ መንፈስ አለው። ዘመናዊው የህትመት ማሽን ከመምጣቱ በፊት፣ ገዳማውያን አባቶቻችን ቀለማቸውን ከዕፅዋትና ከማዕድናት እየቀመሙ ለትውልድ የሚቆይ ብራና ጽፈዋል።",
-      "የአፍሪካ ደራሲ ብዕር ሲያነሳ ከመሰረቱ አይጀምርም። ከጀርባው ጥንታዊ ታሪክ፣ ታላላቅ ተራሮችና የህዝቡ የነጻነት መንፈስ አብረውት ይቆማሉ።"
-    ]
-  }
-];
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -139,7 +25,20 @@ export default function PostDetail() {
   }, []);
 
   useEffect(() => {
-    const found = curatedNewsArticles.find((a) => a.id === id);
+    let found = curatedNewsArticles.find((a) => a.id === id);
+    if (!found && id) {
+      const lower = id.toLowerCase();
+      if (lower.includes('spell') || lower.includes('translation') || lower.includes('kebur') || lower.includes('prize') || lower.includes('award')) {
+        found = curatedNewsArticles.find((a) => a.id === 'lost-spell-award');
+      } else if (lower.includes('telegram') || lower.includes('community')) {
+        found = curatedNewsArticles.find((a) => a.id === 'telegram-community');
+      } else if (lower.includes('dertogada') || lower.includes('academic') || lower.includes('taylor')) {
+        found = curatedNewsArticles.find((a) => a.id === 'academic-study');
+      } else if (lower.includes('solitude') || lower.includes('writer') || lower.includes('tana')) {
+        found = curatedNewsArticles.find((a) => a.id === 'writers-solitude');
+      }
+    }
+
     if (found) {
       setPost(found);
       setLoading(false);
@@ -224,7 +123,7 @@ export default function PostDetail() {
         fontFamily: 'var(--font-sans)',
         minHeight: '100vh',
       }}
-      className="relative pt-6 sm:pt-10 pb-20 sm:pb-28"
+      className="jkr-post-detail-page relative pt-6 sm:pt-10 pb-20 sm:pb-28"
     >
       {/* Top Reading Progress Bar */}
       <div
@@ -232,10 +131,10 @@ export default function PostDetail() {
         style={{ width: `${scrollProgress}%` }}
       />
 
-      <div className="site-container max-w-3xl mx-auto px-4 sm:px-6">
+      <div className="jkr-post-detail-content site-container max-w-3xl mx-auto px-4 sm:px-6">
         
         {/* Navigation & Share Floating Pill Bar */}
-        <div className="flex items-center justify-between text-xs text-[#8a857d] mb-8 pb-4 border-b border-[#e8e2d5]/60 gap-3">
+        <div className="jkr-post-detail-toolbar flex items-center justify-between text-xs text-[#8a857d] mb-8 pb-4 border-b border-[#e8e2d5]/60 gap-3">
           <Link
             to="/news"
             className="inline-flex items-center gap-1.5 font-bold text-[#1a1714] hover:text-[#c9a84c] transition-colors"
@@ -254,7 +153,7 @@ export default function PostDetail() {
         </div>
 
         {/* Grand Editorial Article Header */}
-        <header className="mb-8 sm:mb-12 text-left">
+        <header className="jkr-post-detail-header mb-8 sm:mb-12 text-left">
           <div className="flex items-center gap-3 text-xs font-bold mb-4 flex-wrap">
             <span className="px-3 py-1 rounded-full bg-[#1a1714] text-[#c9a84c] text-[10px] tracking-widest uppercase font-mono">
               {lang === 'am' ? post.categoryAm : post.category}
@@ -278,7 +177,7 @@ export default function PostDetail() {
           </h1>
 
           <div
-            className="p-4 sm:p-5 rounded-xl border-l-4 border-[#c9a84c] bg-[#faf8f4] text-[#4a443b]"
+            className="jkr-post-detail-summary p-4 sm:p-5 rounded-xl border-l-4 border-[#c9a84c] bg-[#faf8f4] text-[#4a443b]"
             style={{
               fontFamily: 'var(--font-serif)',
               fontSize: 'clamp(1rem, 2vw, 1.15rem)',
@@ -292,7 +191,7 @@ export default function PostDetail() {
 
         {/* Featured Archival Image */}
         {post.image && (
-          <div className="mb-10 sm:mb-14">
+          <div className="jkr-post-detail-featured mb-10 sm:mb-14">
             <div className="rounded-2xl overflow-hidden shadow-lg border border-[#e8dfc8] bg-black">
               <img
                 src={post.image}
@@ -311,7 +210,7 @@ export default function PostDetail() {
         {/* Pull Quote Box */}
         {(post.pullQuoteEn || post.pullQuoteAm) && (
           <div
-            className="my-8 sm:my-12 p-6 sm:p-8 rounded-2xl border relative shadow-xs"
+            className="jkr-post-detail-quote my-8 sm:my-12 p-6 sm:p-8 rounded-2xl border relative shadow-xs"
             style={{
               background: 'linear-gradient(135deg, #fbf9f4 0%, #f4efe6 100%)',
               borderColor: 'rgba(201,168,76,0.4)',
@@ -335,7 +234,7 @@ export default function PostDetail() {
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)',
                 fontStyle: 'italic',
-                color: '#2a251e',
+                color: 'var(--text-primary)',
                 lineHeight: 1.75,
               }}
             >
@@ -346,11 +245,12 @@ export default function PostDetail() {
 
         {/* Editorial Body Text */}
         <div
-          className="space-y-6 text-[#2d2822] mb-12 sm:mb-16"
+          className="jkr-post-detail-body space-y-6 mb-12 sm:mb-16"
           style={{
             fontFamily: 'var(--font-serif)',
             fontSize: 'clamp(1.05rem, 2vw, 1.15rem)',
             lineHeight: 1.95,
+            color: 'var(--text-primary)',
           }}
         >
           {(lang === 'am' ? post.fullTextAm : post.fullTextEn).map((paragraph, idx) => (
@@ -361,7 +261,7 @@ export default function PostDetail() {
         </div>
 
         {/* Official Author Attribution Seal */}
-        <div className="p-6 rounded-2xl bg-[#faf8f4] border border-[#e8dfc8] border-l-4 border-l-[#c9a84c] mb-12 shadow-xs">
+        <div className="jkr-post-detail-attribution p-6 rounded-2xl bg-[#faf8f4] border border-[#e8dfc8] border-l-4 border-l-[#c9a84c] mb-12 shadow-xs">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-xs font-bold text-[#c9a84c]">
               <span>❖</span>
@@ -377,7 +277,7 @@ export default function PostDetail() {
         </div>
 
         {/* Telegram Direct Salon Banner */}
-        <div className="p-6 sm:p-7 rounded-2xl bg-[#1a1714] text-[#f5f1eb] mb-14 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="jkr-post-detail-telegram p-6 sm:p-7 rounded-2xl bg-[#1a1714] text-[#f5f1eb] mb-14 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h4 className="font-serif text-base sm:text-lg font-bold text-[#f5f1eb] mb-1">
               {lang === 'am' ? 'በቴሌግራም የቀጥታ ውይይቶች ይሳተፉ' : 'Join the Live Literary Salon'}
@@ -399,7 +299,7 @@ export default function PostDetail() {
 
         {/* Related Articles */}
         {relatedArticles.length > 0 && (
-          <div className="pt-10 border-t border-[#e8e2d5]">
+          <div className="jkr-post-detail-related pt-10 border-t border-[#e8e2d5]">
             <h3
               style={{
                 fontFamily: 'var(--font-serif)',
@@ -417,8 +317,10 @@ export default function PostDetail() {
                 <Link
                   key={rel.id}
                   to={`/news/${rel.id}`}
-                  className="p-5 bg-white border border-[#e8dfc8] rounded-xl hover:border-[#c9a84c] shadow-xs hover:shadow-md transition-all group block"
+                  className="jkr-post-related-card bg-white border border-[#e8dfc8] rounded-xl hover:border-[#c9a84c] shadow-xs hover:shadow-md transition-all group block"
                 >
+                  <img src={rel.image} alt="" loading="lazy" />
+                  <div className="jkr-post-related-card__content">
                   <span className="text-[10px] font-bold text-[#c9a84c] uppercase tracking-wider block mb-1">
                     {rel.date}
                   </span>
@@ -438,6 +340,8 @@ export default function PostDetail() {
                   <p className="text-xs text-[#6e685f] line-clamp-2">
                     {lang === 'am' ? rel.summaryAm : rel.summaryEn}
                   </p>
+                  <span className="jkr-post-related-card__link">{lang === 'am' ? 'ጽሑፉን ያንብቡ' : 'Read dispatch'}<Icon name="arrowRight" size={14} /></span>
+                  </div>
                 </Link>
               ))}
             </div>

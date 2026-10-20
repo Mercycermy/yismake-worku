@@ -1,8 +1,13 @@
 import React from 'react';
 
 const glyphs = {
+  sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>,
+  moon: <><path d="M20.6 13.2A8.8 8.8 0 0 1 10.8 3.4a8.8 8.8 0 1 0 9.8 9.8Z" /></>,
   arrowRight: <><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></>,
+  arrowLeft: <><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></>,
   arrowDown: <><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></>,
+  chevronLeft: <><path d="m15 18-6-6 6-6" /></>,
+  chevronRight: <><path d="m9 18 6-6-6-6" /></>,
   external: <><path d="M14 3h7v7" /><path d="M10 14 21 3" /><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6" /></>,
   book: <><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z" /><path d="M4 5.5v12M8 7h8M8 11h7" /></>,
   bookOpen: <><path d="M12 7v14" /><path d="M3 18V5a1 1 0 0 1 1-1h3a5 5 0 0 1 5 5 5 5 0 0 1 5-5h3a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-3a5 5 0 0 0-5 2 5 5 0 0 0-5-2H4a1 1 0 0 1-1-1Z" /></>,
@@ -25,6 +30,7 @@ const glyphs = {
   image: <><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></>,
   scale: <><path d="m16 16 3-8 3 8a5 5 0 0 1-6 0ZM2 16l3-8 3 8a5 5 0 0 1-6 0ZM7 21h10M12 3v18M3 7h2c4 0 5-2 7-4 2 2 3 4 7 4h2" /></>,
   play: <><path d="m8 5 12 7-12 7z" /></>,
+  pause: <><path d="M8 5v14M16 5v14" /></>,
   feather: <><path d="M20.2 3.8a5.5 5.5 0 0 0-7.8 0L4 12.2a6 6 0 0 0 7.8 7.8l8.4-8.4a5.5 5.5 0 0 0 0-7.8Z" /><path d="m7 17 7-7M5 21l3-3" /></>,
   telescope: <><path d="m3 7 8-4 4 8-8 4zM13 9l7-3 2 4-7 3M7 15l-2 6M15 13l3 8M8 21h12" /></>,
   theatre: <><path d="M2 10c0 4 2.5 7 6 7s6-3 6-7c0-3-2-5-6-5s-6 2-6 5Z" /><path d="M10 18c1.4 2.1 3.5 3 6 3 3.5 0 6-3 6-7 0-3-2-5-6-5h-2M5 10h.01M9 10h.01M5 13c1 .8 3 .8 4 0M16 13h.01M20 13h.01M16 16c1 .8 3 .8 4 0" /></>,

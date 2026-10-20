@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
-import PageBanner from '../components/PageBanner';
 import Icon from '../components/Icon';
-import { curatedNewsArticles } from './PostDetail';
+import { curatedNewsArticles } from '../data/newsData';
 
 export default function News() {
   const { lang } = useLanguage();
@@ -61,29 +60,48 @@ export default function News() {
 
   return (
     <div className="jkr-news-page" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)', minHeight: '100vh' }}>
-      <PageBanner title={lang === 'am' ? 'ዜናዎችና ይፋዊ ማስታወቂያዎች' : 'News & Literary Dispatches'} />
-
-      <div className="site-container jkr-news-content max-w-5xl mx-auto py-12 sm:py-20 px-4">
-        {/* Editorial hero & dispatch filters */}
-        <div className="jkr-news-intro text-center mb-10 max-w-3xl mx-auto">
-          <div className="jkr-gold-divider mb-4">
-            <Icon name="spark" size={15} />
+      {/* Editorial Page Header — Consistent with Books and Contact */}
+      <section className="jkr-news-header pt-12 sm:pt-16 pb-8 border-b border-[#e8e2d5]/60 text-center">
+        <div className="site-container max-w-4xl mx-auto px-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1a1714]/5 border border-[#c9a84c]/40 text-[#b8860b] text-[11px] font-bold tracking-widest uppercase mb-4">
+            <Icon name="spark" size={13} />
+            <span>{lang === 'am' ? 'ከደራሲው የሥራ ጠረጴዛ' : "From the Writer's Desk"}</span>
+            <Icon name="spark" size={13} />
           </div>
-          <span className="jkr-section-badge mb-4">
-            {lang === 'am' ? 'ከደራሲው የሥራ ጠረጴዛ' : "From the Writer's Desk"}
-          </span>
-          <h2 className="jkr-section-heading mb-4">
-            {lang === 'am' ? 'ዜናና ማስታወሻዎች' : 'News & Notes'}
-          </h2>
-          <p className="jkr-section-lead font-semibold text-[#2a251e]">
+
+          <h1
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(2.4rem, 5.5vw, 3.8rem)',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              letterSpacing: '-0.02em',
+              marginBottom: '0.75rem',
+            }}
+          >
+            {lang === 'am' ? 'ዜናዎችና ይፋዊ ማስታወቂያዎች' : 'News & Literary Dispatches'}
+          </h1>
+
+          <p
+            className="max-w-2xl mx-auto text-sm sm:text-base text-[#6e685f]"
+            style={{
+              fontFamily: 'var(--font-serif)',
+              lineHeight: 1.7,
+              fontStyle: 'italic',
+            }}
+          >
             {lang === 'am'
-              ? 'ከይስማዕከ ወርቁ የመጽሐፍ ዜናዎች፣ ማስታወሻዎችና የስነ-ጽሑፍ ዜናዎች።'
-              : 'Book news, occasional notes, and literary updates from Yismake Worku.'}
+              ? 'የመጽሐፍ ዜናዎች፣ የትርጉም ሽልማቶች፣ የስነ-ጽሑፍ ማስታወሻዎችና ይፋዊ መግለጫዎች።'
+              : 'Book announcements, international translation honors, occasional reflections, and verified literary dispatches.'}
           </p>
+          <div className="w-16 h-0.5 bg-[#c9a84c] mx-auto mt-4 rounded-full" />
         </div>
+      </section>
+
+      <div className="site-container jkr-news-content max-w-5xl mx-auto py-10 sm:py-16 px-4">
 
         {/* Category Filter Tabs */}
-        <div className="jkr-dispatch-tabs mb-14 flex flex-wrap justify-center gap-2">
+        <div className="jkr-dispatch-tabs mb-14 flex flex-wrap justify-center gap-2" role="group" aria-label={lang === 'am' ? 'ማስታወቂያዎችን በዘርፍ አጣራ' : 'Filter dispatches by category'}>
           {categories.map((cat) => {
             const isSelected = activeCategory === cat.id;
             const count = categoryCounts[cat.id] || 0;
@@ -91,15 +109,15 @@ export default function News() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                className={`jkr-dispatch-tab inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#1a1714] text-[#c9a84c] shadow-sm ring-1 ring-[#c9a84c]'
+                    ? 'jkr-dispatch-tab--active bg-[#1a1714] text-[#c9a84c] shadow-sm ring-1 ring-[#c9a84c]'
                     : 'bg-white border border-[#e8dfc8] text-[#5a564e] hover:border-[#c9a84c]'
                 }`}
               >
                 <Icon name={cat.icon} size={13} />
                 <span>{lang === 'am' ? cat.am : cat.en}</span>
-                <span className="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-black/5 text-[#8a857d]">
+                <span className="jkr-dispatch-tab__count px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-black/5 text-[#8a857d]">
                   {count}
                 </span>
               </button>
@@ -108,15 +126,15 @@ export default function News() {
         </div>
 
         {/* Article Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <div className="jkr-dispatch-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {filteredArticles.map((article) => (
             <article
               key={article.id}
-              className="bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+              className="jkr-dispatch-card bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 {/* Image */}
-                <div className="h-52 overflow-hidden bg-black relative">
+                <div className="jkr-dispatch-card__image h-52 overflow-hidden bg-black relative">
                   <img
                     src={article.image}
                     alt={article.titleEn}
@@ -130,8 +148,8 @@ export default function News() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-xs text-[#8a857d] mb-2 font-mono">
+                <div className="jkr-dispatch-card__body p-6">
+                  <div className="jkr-dispatch-card__meta flex items-center gap-2 text-xs text-[#8a857d] mb-2 font-mono">
                     <span>{article.date}</span>
                     <span>•</span>
                     <span>{article.readTime}</span>
@@ -146,13 +164,13 @@ export default function News() {
                       lineHeight: 1.3,
                       marginBottom: '0.65rem',
                     }}
-                    className="group-hover:text-[#c9a84c] transition-colors"
+                    className="jkr-dispatch-card__title group-hover:text-[#c9a84c] transition-colors"
                   >
                     {lang === 'am' ? article.titleAm : article.titleEn}
                   </h3>
 
                   <p
-                    className="text-xs text-[#5e584f] line-clamp-3 leading-relaxed"
+                    className="jkr-dispatch-card__summary text-xs text-[#5e584f] line-clamp-3 leading-relaxed"
                     style={{ fontFamily: 'var(--font-serif)' }}
                   >
                     {lang === 'am' ? article.summaryAm : article.summaryEn}
@@ -161,7 +179,7 @@ export default function News() {
               </div>
 
               {/* Card Footer Link */}
-              <div className="p-6 pt-0 border-t border-transparent flex items-center justify-between gap-3">
+              <div className="jkr-dispatch-card__actions p-6 pt-0 border-t border-transparent flex items-center justify-between gap-3">
                 <Link
                   to={`/news/${article.id}`}
                   className="jkr-pill-btn-dark !py-2.5 !px-5 !text-xs inline-flex items-center gap-2 flex-1 justify-center"
@@ -183,24 +201,31 @@ export default function News() {
           ))}
         </div>
 
+        {filteredArticles.length === 0 && (
+          <section className="jkr-dispatch-empty" aria-live="polite">
+            <span className="jkr-dispatch-empty__mark" aria-hidden="true">
+              <Icon name="archive" size={22} />
+            </span>
+            <p className="jkr-dispatch-empty__eyebrow">{lang === 'am' ? 'ማህደሩ' : 'THE ARCHIVE'}</p>
+            <h2>{lang === 'am' ? 'እስካሁን የታተሙ ማስታወቂያዎች የሉም' : 'No Published Dispatches Yet'}</h2>
+            <p>{lang === 'am' ? 'በዚህ ዘርፍ አዲስ ጽሑፎች ሲጨመሩ እዚህ ይታያሉ።' : 'New writing in this category will appear here.'}</p>
+            <button type="button" onClick={() => setActiveCategory('ALL')}>
+              {lang === 'am' ? 'ሁሉንም ማስታወቂያዎች ይመልከቱ' : 'Browse all dispatches'}
+              <Icon name="arrowRight" size={14} />
+            </button>
+          </section>
+        )}
+
         {/* Press Desk Callout */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-[#1a1714] text-white text-center">
-          <span className="text-[10px] font-bold text-[#c9a84c] uppercase tracking-widest block mb-2 font-mono">
-            PRESS & LITERARY CORRESPONDENCE
-          </span>
-          <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-white mb-3">
-            {lang === 'am' ? 'ለጋዜጠኞች፣ ተመራማሪዎችና አንባቢዎች' : 'For Journalists, Researchers & Readers'}
-          </h3>
-          <p className="text-sm text-[#d8d1c7] max-w-xl mx-auto mb-6 font-serif">
-            {lang === 'am'
-              ? 'ለቃለ-መጠይቅ፣ ለምርምር ወይም ለትርጉም ጥያቄ በቀጥታ ይገናኙ።'
-              : "For interviews, research, or translation inquiries, get in touch with Yismake's team."}
-          </p>
-          <Link to="/contact" className="jkr-pill-btn-gold !py-3 !px-7 !text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2">
-            <span>{lang === 'am' ? 'ይፋዊ ግንኙነት ይክፈቱ' : 'Contact Official Desk'}</span>
-            <Icon name="arrowRight" size={14} />
-          </Link>
-        </div>
+        <section className="press-correspondence" aria-labelledby="press-title">
+          <div className="press-correspondence__seal" aria-hidden="true"><Icon name="feather" size={34} /></div>
+          <div className="press-correspondence__copy">
+            <span className="editorial-eyebrow">{lang === 'am' ? 'ፕሬስና የሥነ-ጽሑፍ ግንኙነት' : 'PRESS & LITERARY CORRESPONDENCE'}</span>
+            <h2 id="press-title">{lang === 'am' ? 'ውይይቱ ከዚህ ይጀምራል።' : 'A conversation starts here.'}</h2>
+            <p>{lang === 'am' ? 'ለቃለ-መጠይቅ፣ ለምርምር ወይም ለትርጉም ጥያቄ ይገናኙ።' : 'For interviews, research, translation inquiries, and thoughtful conversations about literature.'}</p>
+          </div>
+          <Link to="/contact" className="collection-button collection-button--gold">{lang === 'am' ? 'መልእክት ይላኩ' : 'Get in touch'}<Icon name="arrowRight" size={16} /></Link>
+        </section>
       </div>
 
       {/* Quick Read Modal Folio */}
