@@ -4021,8 +4021,10 @@ img {
   align-items: center;
   overflow: hidden;
   isolation: isolate;
-  background: #0b1113;
-  color: #f5f1eb;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #1a1714;
   padding: 1.5rem 0 2rem;
 }
 
@@ -4032,9 +4034,9 @@ img {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 75% 44%, rgba(41, 75, 76, 0.28), transparent 35%),
-    radial-gradient(ellipse at 15% 78%, rgba(201, 168, 76, 0.1), transparent 38%),
-    linear-gradient(115deg, #0b1113 0%, #111719 56%, #0b1113 100%);
+    radial-gradient(ellipse at 78% 38%, rgba(201, 168, 76, 0.12), transparent 45%),
+    radial-gradient(ellipse at 12% 80%, rgba(201, 168, 76, 0.08), transparent 45%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(253, 252, 250, 0.2) 100%);
 }
 
 .hero-atmosphere__glow {
@@ -4044,14 +4046,15 @@ img {
   width: min(50vw, 42rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: rgba(201, 168, 76, 0.08);
+  background: rgba(201, 168, 76, 0.06);
   filter: blur(90px);
 }
 
 .hero-atmosphere__grain {
   position: absolute;
   inset: 0;
-  opacity: 0.12;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
   pointer-events: none;
 }
@@ -4082,7 +4085,7 @@ img {
 .hero-eyebrow {
   display: inline-flex;
   margin-bottom: 1.1rem;
-  color: #d0af5c;
+  color: #b8860b;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -4093,7 +4096,7 @@ img {
   flex-wrap: wrap;
   gap: 0 0.2em;
   margin: 0;
-  color: #f6f1e8;
+  color: #1a1714;
   font-family: var(--font-serif);
   font-size: clamp(3.5rem, 6.5vw, 6.4rem);
   font-weight: 800;
@@ -4103,12 +4106,12 @@ img {
 }
 
 .hero-copy__accent {
-  color: #d2b15f;
+  color: #b8860b;
 }
 
 .hero-role {
   margin-top: 1.25rem;
-  color: #d0c6b5;
+  color: #5a564e;
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.17em;
@@ -4117,7 +4120,7 @@ img {
 .hero-intro {
   max-width: 34rem;
   margin-top: 0.9rem;
-  color: #c2beb6;
+  color: #38332b;
   font-family: var(--font-serif);
   font-size: clamp(1.1rem, 1.65vw, 1.35rem);
   line-height: 1.65;
@@ -4153,33 +4156,37 @@ img {
 
 .hero-action--primary {
   background: linear-gradient(125deg, #f0d58d, #c69c3a);
-  box-shadow: 0 12px 28px rgba(201, 168, 76, 0.18);
+  box-shadow: 0 12px 28px rgba(201, 168, 76, 0.28);
   color: #17150f;
   cursor: pointer;
 }
 
 .hero-action--primary:hover {
-  background: #f4dfaa;
+  background: #e5be56;
+  color: #120f0a;
 }
 
 .hero-action--secondary {
-  border-color: rgba(238, 225, 195, 0.28);
-  background: rgba(255, 255, 255, 0.035);
-  color: #f2eee6;
+  border-color: rgba(26, 23, 20, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #1a1714;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .hero-action--secondary:hover {
   border-color: #c9a84c;
-  background: rgba(201, 168, 76, 0.08);
-  color: #f2d78e;
+  background: #ffffff;
+  color: #9b7212;
 }
 
 .hero-proofpoints {
   grid-area: proof;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid rgba(232, 207, 120, 0.24);
-  border-bottom: 1px solid rgba(232, 207, 120, 0.16);
+  border-top: 1px solid rgba(26, 23, 20, 0.1);
+  border-bottom: 1px solid rgba(26, 23, 20, 0.08);
 }
 
 .hero-proofpoint {
@@ -4192,11 +4199,11 @@ img {
 
 .hero-proofpoint + .hero-proofpoint {
   padding-left: 0.9rem;
-  border-left: 1px solid rgba(232, 207, 120, 0.17);
+  border-left: 1px solid rgba(26, 23, 20, 0.08);
 }
 
 .hero-proofpoint strong {
-  color: #f2dfad;
+  color: #1a1714;
   font-family: var(--font-serif);
   font-size: clamp(1.08rem, 1.8vw, 1.5rem);
   font-weight: 800;
@@ -4205,7 +4212,7 @@ img {
 }
 
 .hero-proofpoint span {
-  color: #aaa59b;
+  color: #6e685f;
   font-size: 0.65rem;
   line-height: 1.35;
 }
@@ -4222,7 +4229,7 @@ img {
   position: absolute;
   inset: 7% 2% 7% 14%;
   z-index: -1;
-  border: 1px solid rgba(201, 168, 76, 0.25);
+  border: 1px solid rgba(201, 168, 76, 0.35);
   border-radius: 48% 48% 1.4rem 1.4rem;
   content: '';
   transform: rotate(3deg);
@@ -4232,10 +4239,10 @@ img {
   position: absolute;
   inset: 0 2% 0 15%;
   overflow: hidden;
-  border: 1px solid rgba(231, 207, 143, 0.36);
+  border: 1px solid rgba(201, 168, 76, 0.4);
   border-radius: 48% 48% 1.2rem 1.2rem;
   background: #1b2526;
-  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.42);
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.16);
 }
 
 .hero-artwork__portrait {
@@ -4381,7 +4388,7 @@ img {
 .hero-book-switcher button:focus-visible,
 .hero-action:focus-visible,
 .hero-book-feature__title a:focus-visible {
-  outline: 2px solid #f2d47f;
+  outline: 2px solid #8c6716;
   outline-offset: 3px;
 }
 
