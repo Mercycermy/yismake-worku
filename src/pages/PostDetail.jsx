@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import Icon from '../components/Icon';
-import { curatedNewsArticles } from '../data/newsData';
-
 
 export default function PostDetail() {
   const { id } = useParams();
   const { lang } = useLanguage();
   const [post, setPost] = useState(null);
+  const [relatedArticles, setRelatedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -25,53 +24,54 @@ export default function PostDetail() {
   }, []);
 
   useEffect(() => {
-    let found = curatedNewsArticles.find((a) => a.id === id);
-    if (!found && id) {
-      const lower = id.toLowerCase();
-      if (lower.includes('spell') || lower.includes('translation') || lower.includes('kebur') || lower.includes('prize') || lower.includes('award')) {
-        found = curatedNewsArticles.find((a) => a.id === 'lost-spell-award');
-      } else if (lower.includes('telegram') || lower.includes('community')) {
-        found = curatedNewsArticles.find((a) => a.id === 'telegram-community');
-      } else if (lower.includes('dertogada') || lower.includes('academic') || lower.includes('taylor')) {
-        found = curatedNewsArticles.find((a) => a.id === 'academic-study');
-      } else if (lower.includes('solitude') || lower.includes('writer') || lower.includes('tana')) {
-        found = curatedNewsArticles.find((a) => a.id === 'writers-solitude');
-      }
-    }
-
-    if (found) {
-      setPost(found);
-      setLoading(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
     fetch('/api/news')
       .then((r) => r.json())
       .then((data) => {
-        const item = data.find((a) => a.id === id);
-        if (item) {
-          setPost({
-            id: item.id,
-            date: item.date || 'LATEST',
-            readTime: '3 min read',
-            category: (item.category || 'NEWS').toUpperCase(),
-            categoryAm: item.category || 'ዜና',
-            titleEn: item.title,
-            titleAm: item.title,
-            image: item.image || '/images/writers-desk.jpg',
-            summaryEn: item.excerpt || '',
-            summaryAm: item.excerpt || '',
-            pullQuoteEn: item.excerpt || '',
-            pullQuoteAm: item.excerpt || '',
-            fullTextEn: [item.body || item.excerpt],
-            fullTextAm: [item.body || item.excerpt]
-          });
+        if (Array.isArray(data)) {
+          const item = data.find((a) => a.id === id);
+          if (item) {
+            setPost({
+              id: item.id,
+              date: item.date || 'LATEST',
+              readTime: '3 min read',
+              category: (item.category || 'NEWS').toUpperCase(),
+              categoryAm: item.category || 'ዜና',
+              titleEn: item.title,
+              titleAm: item.title,
+              image: item.image || '/images/writers-desk.jpg',
+              summaryEn: item.excerpt || '',
+              summaryAm: item.excerpt || '',
+              pullQuoteEn: item.excerpt || '',
+              pullQuoteAm: item.excerpt || '',
+              fullTextEn: [item.body || item.excerpt],
+              fullTextAm: [item.body || item.excerpt]
+            });
+            const others = data
+              .filter((a) => a.id !== item.id)
+              .slice(0, 2)
+              .map((other) => ({
+                id: other.id,
+                date: other.date || 'LATEST',
+                category: (other.category || 'NEWS').toUpperCase(),
+                categoryAm: other.category || 'ዜና',
+                titleEn: other.title,
+                titleAm: other.title,
+                image: other.image || '/images/writers-desk.jpg',
+                summaryEn: other.excerpt || '',
+                summaryAm: other.excerpt || '',
+              }));
+            setRelatedArticles(others);
+          } else {
+            setPost(null);
+          }
+        } else {
+          setPost(null);
         }
         setLoading(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch(() => {
+        setPost(null);
         setLoading(false);
       });
   }, [id]);
@@ -112,8 +112,6 @@ export default function PostDetail() {
       </main>
     );
   }
-
-  const relatedArticles = curatedNewsArticles.filter((a) => a.id !== post.id).slice(0, 2);
 
   return (
     <article

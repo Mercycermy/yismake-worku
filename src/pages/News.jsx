@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../components/LanguageContext';
 import Icon from '../components/Icon';
-import { curatedNewsArticles } from '../data/newsData';
 
 export default function News() {
   const { lang } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [serverArticles, setServerArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/news')
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           const formatted = data.map((item) => ({
             id: item.id,
             date: item.date || 'LATEST',
@@ -32,10 +32,15 @@ export default function News() {
           setServerArticles(formatted);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        setServerArticles([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  const allArticles = serverArticles.length > 0 ? serverArticles : curatedNewsArticles;
+  const allArticles = serverArticles;
 
   const categories = [
     { id: 'ALL', en: 'All', am: 'ሁሉም', icon: 'archive' },
@@ -125,95 +130,106 @@ export default function News() {
           })}
         </div>
 
-        {/* Article Cards Grid */}
-        <div className="jkr-dispatch-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          {filteredArticles.map((article) => (
-            <article
-              key={article.id}
-              className="jkr-dispatch-card bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                {/* Image */}
-                <div className="jkr-dispatch-card__image h-52 overflow-hidden bg-black relative">
-                  <img
-                    src={article.image}
-                    alt={article.titleEn}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-[#1a1714]/85 text-[#c9a84c] text-[10px] font-bold tracking-widest uppercase font-mono">
-                      {lang === 'am' ? article.categoryAm : article.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="jkr-dispatch-card__body p-6">
-                  <div className="jkr-dispatch-card__meta flex items-center gap-2 text-xs text-[#8a857d] mb-2 font-mono">
-                    <span>{article.date}</span>
-                    <span>•</span>
-                    <span>{article.readTime}</span>
-                  </div>
-
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '1.25rem',
-                      fontWeight: 800,
-                      color: '#1a1714',
-                      lineHeight: 1.3,
-                      marginBottom: '0.65rem',
-                    }}
-                    className="jkr-dispatch-card__title group-hover:text-[#c9a84c] transition-colors"
+        {/* Content Section */}
+        {loading ? (
+          <div className="py-24 text-center font-serif text-[#8a857d] animate-pulse">
+            <p className="text-base sm:text-lg">{lang === 'am' ? 'ዜናዎች በመጫን ላይ...' : 'Loading dispatches from official archive...'}</p>
+          </div>
+        ) : (
+          <>
+            {/* Article Cards Grid */}
+            {filteredArticles.length > 0 && (
+              <div className="jkr-dispatch-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+                {filteredArticles.map((article) => (
+                  <article
+                    key={article.id}
+                    className="jkr-dispatch-card bg-white rounded-2xl border border-[#e8dfc8] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between group"
                   >
-                    {lang === 'am' ? article.titleAm : article.titleEn}
-                  </h3>
+                    <div>
+                      {/* Image */}
+                      <div className="jkr-dispatch-card__image h-52 overflow-hidden bg-black relative">
+                        <img
+                          src={article.image}
+                          alt={article.titleEn}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-2">
+                          <span className="px-3 py-1 rounded-full bg-[#1a1714]/85 text-[#c9a84c] text-[10px] font-bold tracking-widest uppercase font-mono">
+                            {lang === 'am' ? article.categoryAm : article.category}
+                          </span>
+                        </div>
+                      </div>
 
-                  <p
-                    className="jkr-dispatch-card__summary text-xs text-[#5e584f] line-clamp-3 leading-relaxed"
-                    style={{ fontFamily: 'var(--font-serif)' }}
-                  >
-                    {lang === 'am' ? article.summaryAm : article.summaryEn}
-                  </p>
-                </div>
+                      {/* Content */}
+                      <div className="jkr-dispatch-card__body p-6">
+                        <div className="jkr-dispatch-card__meta flex items-center gap-2 text-xs text-[#8a857d] mb-2 font-mono">
+                          <span>{article.date}</span>
+                          <span>•</span>
+                          <span>{article.readTime}</span>
+                        </div>
+
+                        <h3
+                          style={{
+                            fontFamily: 'var(--font-serif)',
+                            fontSize: '1.25rem',
+                            fontWeight: 800,
+                            color: '#1a1714',
+                            lineHeight: 1.3,
+                            marginBottom: '0.65rem',
+                          }}
+                          className="jkr-dispatch-card__title group-hover:text-[#c9a84c] transition-colors"
+                        >
+                          {lang === 'am' ? article.titleAm : article.titleEn}
+                        </h3>
+
+                        <p
+                          className="jkr-dispatch-card__summary text-xs text-[#5e584f] line-clamp-3 leading-relaxed"
+                          style={{ fontFamily: 'var(--font-serif)' }}
+                        >
+                          {lang === 'am' ? article.summaryAm : article.summaryEn}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Card Footer Link */}
+                    <div className="jkr-dispatch-card__actions p-6 pt-0 border-t border-transparent flex items-center justify-between gap-3">
+                      <Link
+                        to={`/news/${article.id}`}
+                        className="jkr-pill-btn-dark !py-2.5 !px-5 !text-xs inline-flex items-center gap-2 flex-1 justify-center"
+                      >
+                        <span>{lang === 'am' ? 'ሙሉ ጽሑፉን ያንብቡ' : 'Read Full Dispatch'}</span>
+                        <Icon name="arrowRight" size={13} />
+                      </Link>
+
+                      <button
+                        type="button"
+                        onClick={() => setSelectedArticle(article)}
+                        className="p-2.5 rounded-full border border-[#e8dfc8] hover:border-[#c9a84c] text-[#8a857d] hover:text-[#1a1714] transition-colors cursor-pointer"
+                        title={lang === 'am' ? 'ፈጣን ንባብ' : 'Quick read'}
+                      >
+                        <Icon name="spark" size={15} />
+                      </button>
+                    </div>
+                  </article>
+                ))}
               </div>
+            )}
 
-              {/* Card Footer Link */}
-              <div className="jkr-dispatch-card__actions p-6 pt-0 border-t border-transparent flex items-center justify-between gap-3">
-                <Link
-                  to={`/news/${article.id}`}
-                  className="jkr-pill-btn-dark !py-2.5 !px-5 !text-xs inline-flex items-center gap-2 flex-1 justify-center"
-                >
-                  <span>{lang === 'am' ? 'ሙሉ ጽሑፉን ያንብቡ' : 'Read Full Dispatch'}</span>
-                  <Icon name="arrowRight" size={13} />
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedArticle(article)}
-                  className="p-2.5 rounded-full border border-[#e8dfc8] hover:border-[#c9a84c] text-[#8a857d] hover:text-[#1a1714] transition-colors cursor-pointer"
-                  title={lang === 'am' ? 'ፈጣን ንባብ' : 'Quick read'}
-                >
-                  <Icon name="spark" size={15} />
+            {filteredArticles.length === 0 && (
+              <section className="jkr-dispatch-empty" aria-live="polite">
+                <span className="jkr-dispatch-empty__mark" aria-hidden="true">
+                  <Icon name="archive" size={22} />
+                </span>
+                <p className="jkr-dispatch-empty__eyebrow">{lang === 'am' ? 'ማህደሩ' : 'THE ARCHIVE'}</p>
+                <h2>{lang === 'am' ? 'እስካሁን የታተሙ ማስታወቂያዎች የሉም' : 'No Published Dispatches Yet'}</h2>
+                <p>{lang === 'am' ? 'በዚህ ዘርፍ አዲስ ጽሑፎች ሲጨመሩ እዚህ ይታያሉ።' : 'New writing in this category will appear here.'}</p>
+                <button type="button" onClick={() => setActiveCategory('ALL')}>
+                  {lang === 'am' ? 'ሁሉንም ማስታወቂያዎች ይመልከቱ' : 'Browse all dispatches'}
+                  <Icon name="arrowRight" size={14} />
                 </button>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {filteredArticles.length === 0 && (
-          <section className="jkr-dispatch-empty" aria-live="polite">
-            <span className="jkr-dispatch-empty__mark" aria-hidden="true">
-              <Icon name="archive" size={22} />
-            </span>
-            <p className="jkr-dispatch-empty__eyebrow">{lang === 'am' ? 'ማህደሩ' : 'THE ARCHIVE'}</p>
-            <h2>{lang === 'am' ? 'እስካሁን የታተሙ ማስታወቂያዎች የሉም' : 'No Published Dispatches Yet'}</h2>
-            <p>{lang === 'am' ? 'በዚህ ዘርፍ አዲስ ጽሑፎች ሲጨመሩ እዚህ ይታያሉ።' : 'New writing in this category will appear here.'}</p>
-            <button type="button" onClick={() => setActiveCategory('ALL')}>
-              {lang === 'am' ? 'ሁሉንም ማስታወቂያዎች ይመልከቱ' : 'Browse all dispatches'}
-              <Icon name="arrowRight" size={14} />
-            </button>
-          </section>
+              </section>
+            )}
+          </>
         )}
 
         {/* Press Desk Callout */}
